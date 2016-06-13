@@ -18,27 +18,8 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface PlayerStrategy {
+public enum TurnAction {
 
-    /**
-     * @return
-     */
-    Move makeMove() throws MoveNotMadeException;
-
-    /**
-     * @param opponent
-     * @param board
-     */
-    void gameStart(Player opponent, Board board);
-
-    /**
-     * @param move
-     */
-    void moveIllegal(Move move);
-
-    /**
-     * @return
-     */
-    TurnAction pickTurnAction();
+    DRAW_OFFER
 
 }

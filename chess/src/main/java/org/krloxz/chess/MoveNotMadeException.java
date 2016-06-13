@@ -18,27 +18,8 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface PlayerStrategy {
+public final class MoveNotMadeException extends Exception {
 
-    /**
-     * @return
-     */
-    Move makeMove() throws MoveNotMadeException;
-
-    /**
-     * @param opponent
-     * @param board
-     */
-    void gameStart(Player opponent, Board board);
-
-    /**
-     * @param move
-     */
-    void moveIllegal(Move move);
-
-    /**
-     * @return
-     */
-    TurnAction pickTurnAction();
+    private static final long serialVersionUID = 2877193919174351267L;
 
 }

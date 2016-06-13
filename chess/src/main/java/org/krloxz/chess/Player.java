@@ -18,30 +18,16 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class Player {
-
-    private final PlayerStrategy strategy;
-    private final Board board;
-    private final Player opponent;
+public interface Player {
 
     /**
-     * @param strategy
-     * @param board
-     * @param opponent
+     * @return
      */
-    public Player(final PlayerStrategy strategy, final Board board, final Player opponent) {
-        this.strategy = strategy;
-        this.board = board;
-        this.opponent = opponent;
-    }
+    GameStatus yourTurn();
 
     /**
-     *
+     * @return
      */
-    public void youtTurn() {
-        final Move move = this.strategy.createMove();
-        this.board.update(move);
-        this.opponent.youtTurn();
-    }
+    boolean acceptDraw();
 
 }

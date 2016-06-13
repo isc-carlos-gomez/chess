@@ -18,14 +18,11 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class Board {
+public interface Board {
 
     /**
      * @param move
      */
-    public void update(final Move move) {
-        // TODO Auto-generated method stub
-
-    }
+    boolean update(Move move);
 
 }

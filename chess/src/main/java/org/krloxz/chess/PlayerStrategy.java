@@ -26,12 +26,6 @@ public interface PlayerStrategy {
     Move makeMove() throws MoveNotMadeException;
 
     /**
-     * @param opponent
-     * @param board
-     */
-    void gameStart(Player opponent, Board board);
-
-    /**
      * @param move
      */
     void moveIllegal(Move move);

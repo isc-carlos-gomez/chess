@@ -50,11 +50,11 @@ public final class StrategicPlayer implements Player {
             } catch (final MoveNotMadeException e) {
                 final TurnAction action = this.strategy.pickTurnAction();
                 switch (action) {
-                case DRAW_OFFER:
-                    final boolean drawAccepted = this.opponent.acceptDraw();
-                    return GameStatus.DRAW_BY_AGREEMENT;
-                default:
-                    throw new IllegalArgumentException("Turn action not supported: " + action);
+                    case DRAW_OFFER:
+                        final boolean drawAccepted = this.opponent.acceptDraw();
+                        return GameStatus.DRAW_BY_AGREEMENT;
+                    default:
+                        throw new IllegalArgumentException("Turn action not supported: " + action);
                 }
             }
             boardUpdated = this.board.update(move);

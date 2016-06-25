@@ -75,7 +75,6 @@ public class StrategicPlayerTest {
     @Test
     public void yourTurnOnDrawOfferAccepted() throws MoveNotMadeException {
         // Arrange
-        final Move move = mock(Move.class);
         final TurnAction action = TurnAction.DRAW_OFFER;
         when(this.strategy.makeMove()).thenThrow(new MoveNotMadeException());
         when(this.strategy.pickTurnAction()).thenReturn(action);

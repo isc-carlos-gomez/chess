@@ -42,26 +42,26 @@ public final class StrategicPlayer implements Player {
      */
     @Override
     public GameStatus yourTurn() {
-        boolean boardUpdated = false;
-        do {
-            Move move = null;
-            try {
-                move = this.strategy.makeMove();
-            } catch (final MoveNotMadeException e) {
-                final TurnAction action = this.strategy.pickTurnAction();
-                switch (action) {
-                    case DRAW_OFFER:
-                        final boolean drawAccepted = this.opponent.acceptDraw();
-                        return GameStatus.DRAW_BY_AGREEMENT;
-                    default:
-                        throw new IllegalArgumentException("Turn action not supported: " + action);
-                }
-            }
-            boardUpdated = this.board.update(move);
-            if (!boardUpdated) {
-                this.strategy.moveIllegal(move);
-            }
-        } while (!boardUpdated);
+        // boolean boardUpdated = false;
+        // do {
+        // Move move = null;
+        // try {
+        // move = this.strategy.makeMove();
+        // } catch (final MoveNotMadeException e) {
+        // final PlayerAction action = this.strategy.pickTurnAction();
+        // switch (action) {
+        // case DRAW_OFFER:
+        // final boolean drawAccepted = this.opponent.acceptDraw();
+        // return GameStatus.DRAW_BY_AGREEMENT;
+        // default:
+        // throw new IllegalArgumentException("Turn action not supported: " + action);
+        // }
+        // }
+        // boardUpdated = this.board.update(move);
+        // if (!boardUpdated) {
+        // this.strategy.moveIllegal(move);
+        // }
+        // } while (!boardUpdated);
         return GameStatus.PLAYING;
     }
 

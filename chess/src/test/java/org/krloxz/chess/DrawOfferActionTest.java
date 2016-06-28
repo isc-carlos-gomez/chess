@@ -15,13 +15,32 @@
  */
 package org.krloxz.chess;
 
+import org.junit.Before;
+import org.junit.Test;
+
 /**
+ * Unit tests {@link DrawOfferAction}.
+ *
  * @author Carlos Gomez
  */
-public interface PlayerStrategy {
+public class DrawOfferActionTest {
 
-    TurnAction getTurnAction();
+    private DrawOfferAction action;
 
-    void turnActionRejected(TurnAction action);
+    @Before
+    public void setUp() {
+        this.action = new DrawOfferAction();
+    }
+
+    @Test
+    public void rejected() {
+        // TODO: design using lambda expressions
+        // Arrange
+
+        // Act
+        // final TurnAction result = this.action.rejected();
+
+        // Assert
+    }
 
 }

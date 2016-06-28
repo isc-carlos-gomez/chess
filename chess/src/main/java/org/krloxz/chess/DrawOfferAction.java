@@ -18,10 +18,16 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface PlayerStrategy {
+public final class DrawOfferAction implements TurnAction {
 
-    TurnAction getTurnAction();
-
-    void turnActionRejected(TurnAction action);
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.player.TurnAction#accept(org.krloxz.chess.player.TurnActionVisitor)
+     */
+    @Override
+    public <R> R accept(final TurnActionVisitor<R> visitor) {
+        return visitor.visit(this);
+    }
 
 }

@@ -18,10 +18,11 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface PlayerStrategy {
+public interface PlayerActionVisitor<T> {
 
-    TurnAction getTurnAction();
-
-    void turnActionRejected(TurnAction action);
+    /**
+     * @return
+     */
+    T visitDrawOffer();
 
 }

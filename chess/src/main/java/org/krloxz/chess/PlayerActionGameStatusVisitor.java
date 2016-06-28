@@ -18,10 +18,24 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface PlayerStrategy {
+public class PlayerActionGameStatusVisitor implements PlayerActionVisitor<GameStatus> {
 
-    TurnAction getTurnAction();
+    /**
+     * @param player
+     * @param opponent
+     */
+    public PlayerActionGameStatusVisitor(final Player player, final Player opponent) {
+        // TODO Auto-generated constructor stub
+    }
 
-    void turnActionRejected(TurnAction action);
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.PlayerActionVisitor#visitDrawOffer()
+     */
+    @Override
+    public GameStatus visitDrawOffer() {
+        return GameStatus.DRAW_BY_AGREEMENT;
+    }
 
 }

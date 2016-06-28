@@ -18,8 +18,8 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public enum TurnAction {
+public interface TurnAction {
 
-    DRAW_OFFER
+    <R> R accept(TurnActionVisitor<R> visitor);
 
 }

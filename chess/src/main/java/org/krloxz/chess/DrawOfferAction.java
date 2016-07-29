@@ -15,10 +15,21 @@
  */
 package org.krloxz.chess;
 
+import java.util.function.Supplier;
+
 /**
  * @author Carlos Gomez
  */
 public final class DrawOfferAction implements TurnAction {
+
+    private final Supplier<TurnAction> rejectFunction;
+
+    /**
+     * @param rejectFunction
+     */
+    public DrawOfferAction(final Supplier<TurnAction> rejectFunction) {
+        this.rejectFunction = rejectFunction;
+    }
 
     /*
      * (non-Javadoc)
@@ -28,6 +39,13 @@ public final class DrawOfferAction implements TurnAction {
     @Override
     public <R> R accept(final TurnActionVisitor<R> visitor) {
         return visitor.visit(this);
+    }
+
+    /**
+     * @return
+     */
+    public TurnAction rejected() {
+        return this.rejectFunction.get();
     }
 
 }

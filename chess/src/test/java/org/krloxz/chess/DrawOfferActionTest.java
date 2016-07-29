@@ -15,6 +15,10 @@
  */
 package org.krloxz.chess;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,21 +30,40 @@ import org.junit.Test;
 public class DrawOfferActionTest {
 
     private DrawOfferAction action;
+    private TurnAction anyAction;
 
     @Before
     public void setUp() {
-        this.action = new DrawOfferAction();
+        this.action = new DrawOfferAction(() -> rejectFunction());
+        this.anyAction = mock(TurnAction.class);
+    }
+
+    @Test
+    public void accept() {
+        // Arrange
+        final String visitorResult = "Result";
+        @SuppressWarnings("unchecked")
+        final TurnActionVisitor<String> visitor = mock(TurnActionVisitor.class);
+        when(visitor.visit(this.action)).thenReturn(visitorResult);
+
+        // Act
+        final String result = this.action.accept(visitor);
+
+        // Assert
+        assertEquals(visitorResult, result);
     }
 
     @Test
     public void rejected() {
-        // TODO: design using lambda expressions
-        // Arrange
-
         // Act
-        // final TurnAction result = this.action.rejected();
+        final TurnAction result = this.action.rejected();
 
         // Assert
+        assertEquals(rejectFunction(), result);
+    }
+
+    private TurnAction rejectFunction() {
+        return this.anyAction;
     }
 
 }

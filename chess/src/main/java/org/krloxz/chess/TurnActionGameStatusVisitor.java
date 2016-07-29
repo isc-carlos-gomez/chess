@@ -47,8 +47,7 @@ public final class TurnActionGameStatusVisitor implements TurnActionVisitor<Game
             return GameStatus.DRAW_BY_AGREEMENT;
         } else {
             this.drawAlreadyOffered = true;
-            this.strategy.turnActionRejected(action);
-            return this.strategy.getTurnAction().accept(this);
+            return action.rejected().accept(this);
         }
     }
 

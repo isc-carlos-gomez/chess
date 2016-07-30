@@ -50,10 +50,10 @@ public class StrategicPlayerTest {
         when(this.board.update(move)).thenReturn(true);
 
         // Act
-        final GameStatus status = this.player.yourTurn();
+        final GameState status = this.player.yourTurn();
 
         // Assert
-        assertEquals(GameStatus.PLAYING, status);
+        assertEquals(GameState.RUNNING, status);
     }
 
     @Test
@@ -79,10 +79,10 @@ public class StrategicPlayerTest {
         when(this.opponent.acceptDraw()).thenReturn(true);
 
         // Act
-        final GameStatus gameStatus = this.player.yourTurn();
+        final GameState gameStatus = this.player.yourTurn();
 
         // Assert
-        assertEquals(GameStatus.DRAW_BY_AGREEMENT, gameStatus);
+        assertEquals(GameState.DRAW_BY_AGREEMENT, gameStatus);
     }
 
 }

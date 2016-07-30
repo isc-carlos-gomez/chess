@@ -18,7 +18,7 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class PlayerActionGameStatusVisitor implements PlayerActionVisitor<GameStatus> {
+public class PlayerActionGameStatusVisitor implements PlayerActionVisitor<GameState> {
 
     /**
      * @param player
@@ -34,8 +34,8 @@ public class PlayerActionGameStatusVisitor implements PlayerActionVisitor<GameSt
      * @see org.krloxz.chess.PlayerActionVisitor#visitDrawOffer()
      */
     @Override
-    public GameStatus visitDrawOffer() {
-        return GameStatus.DRAW_BY_AGREEMENT;
+    public GameState visitDrawOffer() {
+        return GameState.DRAW_BY_AGREEMENT;
     }
 
 }

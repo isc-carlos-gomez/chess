@@ -18,21 +18,8 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface Player {
+public enum GameState {
 
-    /**
-     * @return
-     */
-    PlayerAction yourTurn();
-
-    /**
-     * @return
-     */
-    boolean acceptDraw();
-
-    /**
-     * @param state
-     */
-    void gameOver(GameState state);
+    RUNNING, DRAW_BY_AGREEMENT
 
 }

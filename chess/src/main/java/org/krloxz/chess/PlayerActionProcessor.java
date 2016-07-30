@@ -18,8 +18,11 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public enum GameStatus {
+public interface PlayerActionProcessor<T> {
 
-    PLAYING, DRAW_BY_AGREEMENT
+    /**
+     * @param action
+     */
+    T process(final PlayerAction action);
 
 }

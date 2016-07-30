@@ -53,24 +53,24 @@ public class PlayerActionGameStatusVisitorTest {
         when(this.opponent.acceptDraw()).thenReturn(true);
 
         // Act
-        final GameStatus result = this.visitor.visitDrawOffer();
+        final GameState result = this.visitor.visitDrawOffer();
 
         // Assert
-        assertEquals(GameStatus.DRAW_BY_AGREEMENT, result);
+        assertEquals(GameState.DRAW_BY_AGREEMENT, result);
     }
 
     @Test
     public void visitDrawOfferOnRejection() {
         // Arrange
         when(this.opponent.acceptDraw()).thenReturn(false);
-        when(this.player.yourTurn()).thenReturn(GameStatus.PLAYING);
+        // when(this.player.yourTurn()).thenReturn(GameState.RUNNING);
 
         // Act
-        final GameStatus result = this.visitor.visitDrawOffer();
+        final GameState result = this.visitor.visitDrawOffer();
 
         // Assert
         // verify(this.player).actionRejected(PlayerAction.DRAW_OFFER);
-        assertEquals(GameStatus.PLAYING, result);
+        assertEquals(GameState.RUNNING, result);
     }
 
     @Ignore

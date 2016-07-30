@@ -18,7 +18,7 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public final class TurnActionGameStatusVisitor implements TurnActionVisitor<GameStatus> {
+public final class TurnActionGameStatusVisitor implements TurnActionVisitor<GameState> {
 
     private final PlayerStrategy strategy;
     private final Player opponent;
@@ -39,12 +39,12 @@ public final class TurnActionGameStatusVisitor implements TurnActionVisitor<Game
      * @return
      */
     @Override
-    public GameStatus visit(final DrawOfferAction action) {
+    public GameState visit(final DrawOfferAction action) {
         if (this.drawAlreadyOffered) {
             throw new IllegalStateException("A draw offer can not be made twice in the same turn");
         }
         if (this.opponent.acceptDraw()) {
-            return GameStatus.DRAW_BY_AGREEMENT;
+            return GameState.DRAW_BY_AGREEMENT;
         } else {
             this.drawAlreadyOffered = true;
             return action.rejected().accept(this);

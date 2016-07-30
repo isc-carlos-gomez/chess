@@ -18,21 +18,14 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface Player {
+public class GameStateComputer {
 
     /**
      * @return
      */
-    PlayerAction yourTurn();
-
-    /**
-     * @return
-     */
-    boolean acceptDraw();
-
-    /**
-     * @param state
-     */
-    void gameOver(GameState state);
+    public GameState compute() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

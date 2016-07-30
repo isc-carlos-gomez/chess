@@ -59,14 +59,14 @@ public class TurnActionGameStatusVisitorTest {
     @Test
     public void visitDrawOffer() {
         // Arrange
-        final DrawOfferAction drawOffer = 
-        when(this.opponent.acceptDraw()).thenReturn(true);
+        // final DrawOfferAction drawOffer =
+        // when(this.opponent.acceptDraw()).thenReturn(true);
 
         // Act
-        final GameStatus result = this.visitor.visit(this.drawOfferAction);
+        final GameState result = this.visitor.visit(this.drawOfferAction);
 
         // Assert
-        assertEquals(GameStatus.DRAW_BY_AGREEMENT, result);
+        assertEquals(GameState.DRAW_BY_AGREEMENT, result);
     }
 
     @Test
@@ -75,14 +75,14 @@ public class TurnActionGameStatusVisitorTest {
         final TurnAction anotherAction = mock(TurnAction.class);
         when(this.opponent.acceptDraw()).thenReturn(false);
         when(this.strategy.getTurnAction()).thenReturn(anotherAction);
-        when(anotherAction.accept(this.visitor)).thenReturn(GameStatus.PLAYING);
+        when(anotherAction.accept(this.visitor)).thenReturn(GameState.RUNNING);
 
         // Act
-        final GameStatus result = this.visitor.visit(this.drawOfferAction);
+        final GameState result = this.visitor.visit(this.drawOfferAction);
 
         // Assert
         verify(this.strategy).turnActionRejected(this.drawOfferAction);
-        assertEquals(GameStatus.PLAYING, result);
+        assertEquals(GameState.RUNNING, result);
     }
 
     @Test(expected = IllegalStateException.class)

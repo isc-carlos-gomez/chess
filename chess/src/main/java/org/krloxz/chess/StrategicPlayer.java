@@ -18,7 +18,7 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public final class StrategicPlayer implements Player {
+public final class StrategicPlayer {
 
     private final PlayerStrategy strategy;
     private final Board board;
@@ -40,8 +40,7 @@ public final class StrategicPlayer implements Player {
      *
      * @see org.krloxz.chess.Player#youtTurn()
      */
-    @Override
-    public GameStatus yourTurn() {
+    public GameState yourTurn() {
         // boolean boardUpdated = false;
         // do {
         // Move move = null;
@@ -62,7 +61,7 @@ public final class StrategicPlayer implements Player {
         // this.strategy.moveIllegal(move);
         // }
         // } while (!boardUpdated);
-        return GameStatus.PLAYING;
+        return GameState.RUNNING;
     }
 
     /*
@@ -70,7 +69,6 @@ public final class StrategicPlayer implements Player {
      *
      * @see org.krloxz.chess.Player#acceptDraw()
      */
-    @Override
     public boolean acceptDraw() {
         // TODO Auto-generated method stub
         return false;

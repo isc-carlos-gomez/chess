@@ -18,19 +18,19 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class PlayerActionGameStatusVisitor implements PlayerActionVisitor<GameState> {
+public class PlayerActionGameStateVisitor implements PlayerActionVisitor<GameState> {
 
     /**
      * @param player
      * @param opponent
      */
-    public PlayerActionGameStatusVisitor(final Player player, final Player opponent) {
+    public PlayerActionGameStateVisitor(/* final Player player, final Player opponent */) {
         // TODO Auto-generated constructor stub
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.DrawOfferAction)
      */
     @Override

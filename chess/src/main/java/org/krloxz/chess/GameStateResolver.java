@@ -20,11 +20,13 @@ package org.krloxz.chess;
  *
  * @author Carlos Gomez
  */
-public interface GameStateResolver {
+public class GameStateResolver {
 
     /**
      * @param action
      */
-    GameState process(final PlayerAction action);
+    public GameState resolve(final PlayerAction action) {
+        return action.accept(new PlayerActionGameStateVisitor());
+    }
 
 }

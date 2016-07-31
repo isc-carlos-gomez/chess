@@ -48,7 +48,7 @@ public class Game {
         do {
             action = this.actionExecutor.execute(playerInTurn.yourTurn());
             playerInTurn = getOpponent(playerInTurn);
-            gameState = this.stateResolver.process(action);
+            gameState = this.stateResolver.resolve(action);
         } while (gameState == GameState.RUNNING);
         this.lightPlayer.gameOver(gameState);
         this.darkPlayer.gameOver(gameState);

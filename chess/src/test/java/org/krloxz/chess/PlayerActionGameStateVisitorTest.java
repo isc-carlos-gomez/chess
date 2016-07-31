@@ -23,13 +23,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Unit tests {@link PlayerActionGameStatusVisitor}.
+ * Unit tests {@link PlayerActionGameStateVisitor}.
  *
  * @author Carlos Gomez
  */
-public class PlayerActionGameStatusVisitorTest {
+public class PlayerActionGameStateVisitorTest {
 
-    private PlayerActionGameStatusVisitor visitor;
+    private PlayerActionGameStateVisitor visitor;
     private Player player;
     private Player opponent;
 
@@ -37,7 +37,7 @@ public class PlayerActionGameStatusVisitorTest {
     public void setUp() {
         this.player = mock(Player.class);
         this.opponent = mock(Player.class);
-        this.visitor = new PlayerActionGameStatusVisitor(this.player, this.opponent);
+        this.visitor = new PlayerActionGameStateVisitor(/* this.player, this.opponent */);
     }
 
     @Ignore

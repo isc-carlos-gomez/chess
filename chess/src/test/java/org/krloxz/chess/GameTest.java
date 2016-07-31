@@ -51,7 +51,7 @@ public class GameTest {
         // Arrange
         final PlayerAction anyAction = mock(PlayerAction.class);
         when(this.lightPlayer.yourTurn()).thenReturn(anyAction);
-        when(this.stateResolver.process(anyAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
+        when(this.stateResolver.resolve(anyAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
 
         // Act
         this.game.play();
@@ -66,8 +66,8 @@ public class GameTest {
         final PlayerAction anyAction = mock(PlayerAction.class);
         final PlayerAction finalAction = mock(PlayerAction.class);
         when(this.actionExecutor.execute(any())).thenReturn(anyAction, anyAction, finalAction);
-        when(this.stateResolver.process(anyAction)).thenReturn(GameState.RUNNING);
-        when(this.stateResolver.process(finalAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
+        when(this.stateResolver.resolve(anyAction)).thenReturn(GameState.RUNNING);
+        when(this.stateResolver.resolve(finalAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
 
         // Act
         this.game.play();
@@ -81,7 +81,7 @@ public class GameTest {
     public void playNotifyGameOver() {
         // Arrange
         final GameState state = GameState.DRAW_BY_AGREEMENT;
-        when(this.stateResolver.process(any())).thenReturn(state);
+        when(this.stateResolver.resolve(any())).thenReturn(state);
 
         // Act
         this.game.play();

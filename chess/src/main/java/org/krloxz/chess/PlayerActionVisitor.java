@@ -17,12 +17,10 @@ package org.krloxz.chess;
 
 /**
  * @author Carlos Gomez
+ * @param <R>
  */
-public interface PlayerActionVisitor<T> {
+public interface PlayerActionVisitor<R> {
 
-    /**
-     * @return
-     */
-    T visitDrawOffer();
+    R visit(final DrawOfferAction action);
 
 }

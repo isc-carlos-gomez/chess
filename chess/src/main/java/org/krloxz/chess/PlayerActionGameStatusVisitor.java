@@ -30,11 +30,11 @@ public class PlayerActionGameStatusVisitor implements PlayerActionVisitor<GameSt
 
     /*
      * (non-Javadoc)
-     *
-     * @see org.krloxz.chess.PlayerActionVisitor#visitDrawOffer()
+     * 
+     * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.DrawOfferAction)
      */
     @Override
-    public GameState visitDrawOffer() {
+    public GameState visit(final DrawOfferAction action) {
         return GameState.DRAW_BY_AGREEMENT;
     }
 

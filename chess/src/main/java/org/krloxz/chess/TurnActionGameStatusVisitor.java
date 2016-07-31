@@ -18,7 +18,7 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public final class TurnActionGameStatusVisitor implements TurnActionVisitor<GameState> {
+public final class TurnActionGameStatusVisitor implements PlayerActionVisitor<GameState> {
 
     private final PlayerStrategy strategy;
     private final Player opponent;
@@ -47,7 +47,8 @@ public final class TurnActionGameStatusVisitor implements TurnActionVisitor<Game
             return GameState.DRAW_BY_AGREEMENT;
         } else {
             this.drawAlreadyOffered = true;
-            return action.rejected().accept(this);
+            return null;
+            // return action.rejected().accept(this);
         }
     }
 

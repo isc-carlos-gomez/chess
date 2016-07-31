@@ -20,14 +20,14 @@ import java.util.function.Supplier;
 /**
  * @author Carlos Gomez
  */
-public final class DrawOfferAction implements TurnAction {
+public final class DrawOfferAction implements PlayerAction {
 
-    private final Supplier<TurnAction> rejectFunction;
+    private final Supplier<PlayerAction> rejectFunction;
 
     /**
      * @param rejectFunction
      */
-    public DrawOfferAction(final Supplier<TurnAction> rejectFunction) {
+    public DrawOfferAction(final Supplier<PlayerAction> rejectFunction) {
         this.rejectFunction = rejectFunction;
     }
 
@@ -37,14 +37,14 @@ public final class DrawOfferAction implements TurnAction {
      * @see org.krloxz.chess.player.TurnAction#accept(org.krloxz.chess.player.TurnActionVisitor)
      */
     @Override
-    public <R> R accept(final TurnActionVisitor<R> visitor) {
+    public <R> R accept(final PlayerActionVisitor<R> visitor) {
         return visitor.visit(this);
     }
 
     /**
      * @return
      */
-    public TurnAction rejected() {
+    public PlayerAction rejected() {
         return this.rejectFunction.get();
     }
 

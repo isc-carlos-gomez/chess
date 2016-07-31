@@ -21,10 +21,10 @@ package org.krloxz.chess;
 public class PlayerActionExecutor {
 
     /**
-     * @param anyAction
+     * @param action
      */
-    public PlayerAction execute(final PlayerAction anyAction) {
-        return null;
+    public PlayerAction execute(final PlayerAction action) {
+        return action.accept(new PlayerActionExecutorVisitor());
     }
 
 }

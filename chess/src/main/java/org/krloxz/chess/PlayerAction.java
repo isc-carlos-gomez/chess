@@ -18,20 +18,8 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public enum PlayerAction {
+public interface PlayerAction {
 
-    DRAW_OFFER {
-
-        @Override
-        public <T> T accept(final PlayerActionVisitor<T> visitor) {
-            return visitor.visitDrawOffer();
-        }
-    };
-
-    /**
-     * @param visitor
-     * @return
-     */
-    public abstract <T> T accept(PlayerActionVisitor<T> visitor);
+    <R> R accept(PlayerActionVisitor<R> visitor);
 
 }

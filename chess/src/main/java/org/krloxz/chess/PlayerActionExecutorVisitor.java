@@ -18,8 +18,17 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface TurnAction {
+public class PlayerActionExecutorVisitor implements PlayerActionVisitor<PlayerAction> {
 
-    <R> R accept(TurnActionVisitor<R> visitor);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.DrawOfferAction)
+     */
+    @Override
+    public PlayerAction visit(final DrawOfferAction action) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

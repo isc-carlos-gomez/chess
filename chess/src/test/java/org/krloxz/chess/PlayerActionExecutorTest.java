@@ -15,12 +15,27 @@
  */
 package org.krloxz.chess;
 
-/**
- * @author Carlos Gomez
- * @param <R>
- */
-public interface TurnActionVisitor<R> {
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.notNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-    R visit(final DrawOfferAction action);
+import org.junit.Test;
+
+/**
+ * Unit tests {@link PlayerActionExecutor}.
+ *
+ * @author Carlos Gomez
+ */
+public class PlayerActionExecutorTest {
+
+    @Test
+    public void execute() {
+        final PlayerActionExecutor executor = new PlayerActionExecutor();
+        final PlayerAction action = mock(PlayerAction.class);
+        when(action.accept(notNull(PlayerActionExecutorVisitor.class))).thenReturn(action);
+        final PlayerAction result = executor.execute(action);
+        assertEquals(action, result);
+    }
 
 }

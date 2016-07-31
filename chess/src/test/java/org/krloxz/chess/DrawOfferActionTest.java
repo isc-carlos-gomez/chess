@@ -30,12 +30,12 @@ import org.junit.Test;
 public class DrawOfferActionTest {
 
     private DrawOfferAction action;
-    private TurnAction anyAction;
+    private PlayerAction anyAction;
 
     @Before
     public void setUp() {
         this.action = new DrawOfferAction(() -> rejectFunction());
-        this.anyAction = mock(TurnAction.class);
+        this.anyAction = mock(PlayerAction.class);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class DrawOfferActionTest {
         // Arrange
         final String visitorResult = "Result";
         @SuppressWarnings("unchecked")
-        final TurnActionVisitor<String> visitor = mock(TurnActionVisitor.class);
+        final PlayerActionVisitor<String> visitor = mock(PlayerActionVisitor.class);
         when(visitor.visit(this.action)).thenReturn(visitorResult);
 
         // Act
@@ -56,13 +56,13 @@ public class DrawOfferActionTest {
     @Test
     public void rejected() {
         // Act
-        final TurnAction result = this.action.rejected();
+        final PlayerAction result = this.action.rejected();
 
         // Assert
         assertEquals(rejectFunction(), result);
     }
 
-    private TurnAction rejectFunction() {
+    private PlayerAction rejectFunction() {
         return this.anyAction;
     }
 

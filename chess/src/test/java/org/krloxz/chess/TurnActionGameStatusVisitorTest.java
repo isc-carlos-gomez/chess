@@ -41,7 +41,7 @@ public class TurnActionGameStatusVisitorTest {
         this.strategy = mock(PlayerStrategy.class);
         this.opponent = mock(Player.class);
         this.visitor = new TurnActionGameStatusVisitor(this.strategy, this.opponent);
-        this.drawOfferAction = new DrawOfferAction(() -> mock(TurnAction.class));
+        this.drawOfferAction = new DrawOfferAction(() -> mock(PlayerAction.class));
     }
 
     @Ignore
@@ -72,7 +72,7 @@ public class TurnActionGameStatusVisitorTest {
     @Test
     public void visitDrawOfferOnRejection() {
         // Arrange
-        final TurnAction anotherAction = mock(TurnAction.class);
+        final PlayerAction anotherAction = mock(PlayerAction.class);
         when(this.opponent.acceptDraw()).thenReturn(false);
         when(this.strategy.getTurnAction()).thenReturn(anotherAction);
         when(anotherAction.accept(this.visitor)).thenReturn(GameState.RUNNING);

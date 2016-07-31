@@ -20,8 +20,8 @@ package org.krloxz.chess;
  */
 public interface PlayerStrategy {
 
-    TurnAction getTurnAction();
+    PlayerAction getTurnAction();
 
-    void turnActionRejected(TurnAction action);
+    void turnActionRejected(PlayerAction action);
 
 }

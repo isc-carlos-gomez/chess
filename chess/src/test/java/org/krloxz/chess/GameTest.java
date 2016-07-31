@@ -34,15 +34,30 @@ public class GameTest {
     private Game game;
     private Player lightPlayer;
     private Player darkPlayer;
-    private PlayerActionProcessor<GameState> actionProcessor;
+    private PlayerActionExecutor actionExecutor;
+    private GameStateResolver stateResolver;
 
     @Before
-    @SuppressWarnings("unchecked")
     public void setUp() {
         this.lightPlayer = mock(Player.class);
         this.darkPlayer = mock(Player.class);
-        this.actionProcessor = mock(PlayerActionProcessor.class);
-        this.game = new Game(this.lightPlayer, this.darkPlayer, this.actionProcessor);
+        this.actionExecutor = mock(PlayerActionExecutor.class);
+        this.stateResolver = mock(GameStateResolver.class);
+        this.game = new Game(this.lightPlayer, this.darkPlayer, this.actionExecutor, this.stateResolver);
+    }
+
+    @Test
+    public void playExecutesActions() {
+        // Arrange
+        final PlayerAction anyAction = mock(PlayerAction.class);
+        when(this.lightPlayer.yourTurn()).thenReturn(anyAction);
+        when(this.stateResolver.process(anyAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
+
+        // Act
+        this.game.play();
+
+        // Assert
+        verify(this.actionExecutor).execute(anyAction);
     }
 
     @Test
@@ -50,10 +65,9 @@ public class GameTest {
         // Arrange
         final PlayerAction anyAction = mock(PlayerAction.class);
         final PlayerAction finalAction = mock(PlayerAction.class);
-        when(this.lightPlayer.yourTurn()).thenReturn(anyAction, finalAction);
-        when(this.darkPlayer.yourTurn()).thenReturn(anyAction);
-        when(this.actionProcessor.process(anyAction)).thenReturn(GameState.RUNNING);
-        when(this.actionProcessor.process(finalAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
+        when(this.actionExecutor.execute(any())).thenReturn(anyAction, anyAction, finalAction);
+        when(this.stateResolver.process(anyAction)).thenReturn(GameState.RUNNING);
+        when(this.stateResolver.process(finalAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
 
         // Act
         this.game.play();
@@ -67,7 +81,7 @@ public class GameTest {
     public void playNotifyGameOver() {
         // Arrange
         final GameState state = GameState.DRAW_BY_AGREEMENT;
-        when(this.actionProcessor.process(any())).thenReturn(state);
+        when(this.stateResolver.process(any())).thenReturn(state);
 
         // Act
         this.game.play();

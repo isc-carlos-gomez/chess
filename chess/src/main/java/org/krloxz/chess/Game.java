@@ -22,17 +22,20 @@ public class Game {
 
     private final Player lightPlayer;
     private final Player darkPlayer;
-    private final PlayerActionProcessor<GameState> actionProcessor;
+    private final PlayerActionExecutor actionExecutor;
+    private final GameStateResolver stateResolver;
 
     /**
-     * @param actionProcessor
+     * @param stateResolver
      * @param lightPlayer
+     * @param actionExecutor
      */
-    public Game(final Player lightPlayer, final Player darkPlayer,
-            final PlayerActionProcessor<GameState> actionProcessor) {
+    public Game(final Player lightPlayer, final Player darkPlayer, final PlayerActionExecutor actionExecutor,
+            final GameStateResolver stateResolver) {
         this.lightPlayer = lightPlayer;
         this.darkPlayer = darkPlayer;
-        this.actionProcessor = actionProcessor;
+        this.actionExecutor = actionExecutor;
+        this.stateResolver = stateResolver;
     }
 
     /**
@@ -43,9 +46,9 @@ public class Game {
         PlayerAction action = null;
         Player playerInTurn = this.lightPlayer;
         do {
-            action = playerInTurn.yourTurn();
+            action = this.actionExecutor.execute(playerInTurn.yourTurn());
             playerInTurn = getOpponent(playerInTurn);
-            gameState = this.actionProcessor.process(action);
+            gameState = this.stateResolver.process(action);
         } while (gameState == GameState.RUNNING);
         this.lightPlayer.gameOver(gameState);
         this.darkPlayer.gameOver(gameState);

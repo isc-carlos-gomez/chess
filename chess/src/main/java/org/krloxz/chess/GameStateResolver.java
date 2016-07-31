@@ -16,13 +16,15 @@
 package org.krloxz.chess;
 
 /**
+ * Resolves player actions into a game state...
+ *
  * @author Carlos Gomez
  */
-public interface PlayerActionProcessor<T> {
+public interface GameStateResolver {
 
     /**
      * @param action
      */
-    T process(final PlayerAction action);
+    GameState process(final PlayerAction action);
 
 }

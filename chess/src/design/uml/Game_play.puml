@@ -1,0 +1,19 @@
+@startuml
+
+Controller -> Game : play()
+loop gameStatus == RUNNING
+	Game -> Player : yourTurn()
+	
+	alt turn played
+		Game <-- Player : true
+		Game -> GameStatusResolver : resolveGameStatus()
+		Game <-- GameStatusResolver : gameStatus
+	
+	else turn not played
+		Game <-- Player : false
+		Game -> Game : setGameStatusToResignation()
+	end
+end
+
+hide footbox
+@enduml

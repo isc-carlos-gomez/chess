@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 /**
  * @author Carlos Gomez
  */
-public final class DrawOfferAction implements PlayerAction {
+public class DrawOfferAction implements PlayerAction {
 
     private final Supplier<PlayerAction> rejectFunction;
 

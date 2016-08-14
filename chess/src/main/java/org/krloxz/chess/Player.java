@@ -35,4 +35,9 @@ public interface Player {
      */
     void gameOver(GameState state);
 
+    /**
+     * @return
+     */
+    Player getOpponent();
+
 }

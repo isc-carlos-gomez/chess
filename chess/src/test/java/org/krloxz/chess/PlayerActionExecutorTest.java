@@ -31,10 +31,15 @@ public class PlayerActionExecutorTest {
 
     @Test
     public void execute() {
+        // Arrange
         final PlayerActionExecutor executor = new PlayerActionExecutor();
         final PlayerAction action = mock(PlayerAction.class);
         when(action.accept(notNull(PlayerActionExecutorVisitor.class))).thenReturn(action);
+
+        // Act
         final PlayerAction result = executor.execute(action);
+
+        // Assert
         assertEquals(action, result);
     }
 

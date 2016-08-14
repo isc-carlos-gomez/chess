@@ -20,15 +20,33 @@ package org.krloxz.chess;
  */
 public class PlayerActionExecutorVisitor implements PlayerActionVisitor<PlayerAction> {
 
+    private boolean drawAlreadyOffered;
+    private final Player player;
+
+    /**
+     * @param player
+     */
+    public PlayerActionExecutorVisitor(final Player player) {
+        this.drawAlreadyOffered = false;
+        this.player = player;
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.DrawOfferAction)
      */
     @Override
     public PlayerAction visit(final DrawOfferAction action) {
-        // TODO Auto-generated method stub
-        return null;
+        if (this.drawAlreadyOffered) {
+            throw new IllegalArgumentException("Draw can't be offered twice in a turn");
+        }
+        this.drawAlreadyOffered = true;
+        if (this.player.getOpponent().acceptDraw()) {
+            return action;
+        } else {
+            return action.rejected().accept(this);
+        }
     }
 
 }

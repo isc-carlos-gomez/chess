@@ -31,11 +31,16 @@ public class GameStateResolverTest {
 
     @Test
     public void execute() {
+        // Arrange
         final GameStateResolver resolver = new GameStateResolver();
         final PlayerAction action = mock(PlayerAction.class);
         final GameState state = GameState.RUNNING;
         when(action.accept(notNull(PlayerActionGameStateVisitor.class))).thenReturn(state);
+
+        // Act
         final GameState result = resolver.resolve(action);
+
+        // Assert
         assertEquals(state, result);
     }
 

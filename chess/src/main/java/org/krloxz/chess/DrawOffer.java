@@ -16,15 +16,21 @@
 package org.krloxz.chess;
 
 /**
+ * Encapsulates a draw offer made by the player in turn. Please note that, for a more convenient processing, a draw
+ * offer is also a visitable player action.
+ * 
  * @author Carlos Gomez
  */
-public class PlayerActionExecutor {
+public class DrawOffer implements PlayerAction {
 
-    /**
-     * @param action
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.player.TurnAction#accept(org.krloxz.chess.player.TurnActionVisitor)
      */
-    public PlayerAction execute(final PlayerAction action) {
-        return action.accept(new PlayerActionExecutorVisitor());
+    @Override
+    public <R> R accept(final PlayerActionVisitor<R> visitor) {
+        return visitor.visit(this);
     }
 
 }

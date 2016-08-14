@@ -16,19 +16,48 @@
 package org.krloxz.chess;
 
 /**
+ * A visitor that executes and realize player actions generated in a single turn. Please note that it's mandatory create
+ * new instances to process different turns.
+ *
  * @author Carlos Gomez
  */
-public class PlayerActionExecutorVisitor implements PlayerActionVisitor<PlayerAction> {
+public class PlayerActionExecutorVisitor implements PlayerActionVisitor<Boolean> {
 
     private boolean drawAlreadyOffered;
-    private final Player player;
+    private final Board board;
+    private final PlayerStrategy strategy;
+    private final Player opponent;
 
     /**
-     * @param player
+     * Creates a new instance.
+     * 
+     * @param board
+     *        the board where the game is being played.
+     * @param strategy
+     *        the strategy of the player in turn, which should be using this visitor.
+     * @param opponent
+     *        the opponent of the player in turn, which should be using this visitor.
      */
-    public PlayerActionExecutorVisitor(final Player player) {
+    public PlayerActionExecutorVisitor(final Board board, final PlayerStrategy strategy, final Player opponent) {
+        this.board = board;
         this.drawAlreadyOffered = false;
-        this.player = player;
+        this.strategy = strategy;
+        this.opponent = opponent;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.Move)
+     */
+    @Override
+    public Boolean visit(final Move move) {
+        if (this.board.update(move)) {
+            return true;
+        } else {
+            this.strategy.actionRejected(move);
+            return false;
+        }
     }
 
     /*
@@ -37,16 +66,27 @@ public class PlayerActionExecutorVisitor implements PlayerActionVisitor<PlayerAc
      * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.DrawOfferAction)
      */
     @Override
-    public PlayerAction visit(final DrawOfferAction action) {
+    public Boolean visit(final DrawOffer action) {
         if (this.drawAlreadyOffered) {
-            throw new IllegalArgumentException("Draw can't be offered twice in a turn");
+            throw new IllegalStateException("Draw can't be offered twice in a turn");
         }
         this.drawAlreadyOffered = true;
-        if (this.player.getOpponent().acceptDraw()) {
-            return action;
+        if (this.opponent.acceptDraw()) {
+            return true;
         } else {
-            return action.rejected().accept(this);
+            this.strategy.actionRejected(action);
+            return false;
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.Resignation)
+     */
+    @Override
+    public Boolean visit(final Resignation resignation) {
+        return true;
     }
 
 }

@@ -22,6 +22,6 @@ public interface PlayerStrategy {
 
     PlayerAction getTurnAction();
 
-    void turnActionRejected(PlayerAction action);
+    void actionRejected(PlayerAction action);
 
 }

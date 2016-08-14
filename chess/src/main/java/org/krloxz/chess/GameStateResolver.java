@@ -26,7 +26,7 @@ public class GameStateResolver {
      * @param action
      */
     public GameState resolve(final PlayerAction action) {
-        return action.accept(new PlayerActionGameStateVisitor());
+        return null;
     }
 
 }

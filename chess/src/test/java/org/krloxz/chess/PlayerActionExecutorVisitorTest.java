@@ -15,8 +15,10 @@
  */
 package org.krloxz.chess;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -30,59 +32,92 @@ import org.junit.Test;
 public class PlayerActionExecutorVisitorTest {
 
     private PlayerActionExecutorVisitor visitor;
-    private Player player;
+    private Board board;
+    private PlayerStrategy strategy;
     private Player opponent;
+    private Move move;
+    private DrawOffer drawOffer;
 
     @Before
     public void setUp() {
-        this.player = mock(Player.class);
+        this.board = mock(Board.class);
+        this.strategy = mock(PlayerStrategy.class);
         this.opponent = mock(Player.class);
-        this.visitor = new PlayerActionExecutorVisitor(this.player);
+        this.visitor = new PlayerActionExecutorVisitor(this.board, this.strategy, this.opponent);
+        this.move = mock(Move.class);
+        this.drawOffer = mock(DrawOffer.class);
     }
 
     @Test
-    public void visitDrawOfferOnAccept() {
+    public void visitMove() {
         // Arrange
-        final DrawOfferAction drawOffer = mock(DrawOfferAction.class);
-        when(this.player.getOpponent()).thenReturn(this.opponent);
+        when(this.board.update(this.move)).thenReturn(true);
+
+        // Act
+        final boolean result = this.visitor.visit(this.move);
+
+        // Assert
+        assertTrue("Move must be accepted", result);
+    }
+
+    @Test
+    public void visitMoveOnIllegal() {
+        // Arrange
+        when(this.board.update(this.move)).thenReturn(false);
+
+        // Act
+        final boolean result = this.visitor.visit(this.move);
+
+        // Assert
+        assertFalse("Move must be rejected", result);
+        verify(this.strategy).actionRejected(this.move);
+    }
+
+    @Test
+    public void visitDrawOffer() {
+        // Arrange
         when(this.opponent.acceptDraw()).thenReturn(true);
 
         // Act
-        final PlayerAction result = this.visitor.visit(drawOffer);
+        final boolean result = this.visitor.visit(this.drawOffer);
 
         // Assert
-        assertEquals(drawOffer, result);
+        assertTrue("Draw must be accepted", result);
     }
 
     @Test
     public void visitDrawOfferOnRejection() {
         // Arrange
-        final DrawOfferAction drawOffer = mock(DrawOfferAction.class);
-        final PlayerAction otherAction = mock(PlayerAction.class);
-        final PlayerAction anyOtherAction = mock(PlayerAction.class);
-        when(this.player.getOpponent()).thenReturn(this.opponent);
         when(this.opponent.acceptDraw()).thenReturn(false);
-        when(drawOffer.rejected()).thenReturn(otherAction);
-        when(otherAction.accept(this.visitor)).thenReturn(anyOtherAction);
 
         // Act
-        final PlayerAction result = this.visitor.visit(drawOffer);
+        final boolean result = this.visitor.visit(this.drawOffer);
 
         // Assert
-        assertEquals(anyOtherAction, result);
+        assertFalse("Draw must be rejected", result);
+        verify(this.strategy).actionRejected(this.drawOffer);
     }
 
     @Test(expected = IllegalStateException.class)
     public void visitDrawOfferTwice() {
         // Arrange
-        final DrawOfferAction drawOffer = mock(DrawOfferAction.class);
-        final PlayerAction secondDrawOffer = mock(DrawOfferAction.class);
-        when(this.player.getOpponent()).thenReturn(this.opponent);
         when(this.opponent.acceptDraw()).thenReturn(false);
-        when(drawOffer.rejected()).thenReturn(secondDrawOffer);
 
         // Act
-        this.visitor.visit(drawOffer);
+        this.visitor.visit(this.drawOffer);
+        this.visitor.visit(this.drawOffer);
+    }
+
+    @Test
+    public void visitResignation() {
+        // Arrange
+        final Resignation resignation = mock(Resignation.class);
+
+        // Act
+        final boolean result = this.visitor.visit(resignation);
+
+        // Assert
+        assertTrue("Resignation must be always accepted", result);
     }
 
 }

@@ -15,27 +15,11 @@
  */
 package org.krloxz.chess;
 
+
 /**
  * @author Carlos Gomez
+ *
  */
-public class PlayerActionGameStateVisitor implements PlayerActionVisitor<GameState> {
-
-    /**
-     * @param player
-     * @param opponent
-     */
-    public PlayerActionGameStateVisitor(/* final Player player, final Player opponent */) {
-        // TODO Auto-generated constructor stub
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.DrawOfferAction)
-     */
-    @Override
-    public GameState visit(final DrawOfferAction action) {
-        return GameState.DRAW_BY_AGREEMENT;
-    }
+public class Position {
 
 }

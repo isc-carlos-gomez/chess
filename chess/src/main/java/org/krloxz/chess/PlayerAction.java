@@ -16,10 +16,20 @@
 package org.krloxz.chess;
 
 /**
+ * Encapsulates the possible actions that a player can take along his turn. Please note that this class is visitable to
+ * enable the <b>Visitor Pattern</b> and improve processing of all the different kind of actions.
+ *
  * @author Carlos Gomez
  */
 public interface PlayerAction {
 
+    /**
+     * Enables the <b>Visitor Pattern</b> by accepting a {@link PlayerActionVisitor}.
+     * 
+     * @param visitor
+     *        a {@link PlayerActionVisitor} which will visit and process this action.
+     * @return the result of visiting this action.
+     */
     <R> R accept(PlayerActionVisitor<R> visitor);
 
 }

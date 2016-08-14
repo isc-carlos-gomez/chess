@@ -15,11 +15,38 @@
  */
 package org.krloxz.chess;
 
-
 /**
- * @author Carlos Gomez
+ * Encapsulates a chess move generated in a player turn. Please note that, for a more convenient processing, a move is
+ * also a visitable player action.
  *
+ * @author Carlos Gomez
  */
-public class Move {
+public class Move implements PlayerAction {
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.player.TurnAction#accept(org.krloxz.chess.player.TurnActionVisitor)
+     */
+    @Override
+    public <R> R accept(final PlayerActionVisitor<R> visitor) {
+        return visitor.visit(this);
+    }
+
+    /**
+     * @return
+     */
+    public Position getFrom() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public Position getTo() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

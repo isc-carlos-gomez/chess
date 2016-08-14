@@ -15,33 +15,11 @@
  */
 package org.krloxz.chess;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.notNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-
 /**
  * Unit tests {@link GameStateResolver}.
  *
  * @author Carlos Gomez
  */
 public class GameStateResolverTest {
-
-    @Test
-    public void execute() {
-        // Arrange
-        final GameStateResolver resolver = new GameStateResolver();
-        final PlayerAction action = mock(PlayerAction.class);
-        final GameState state = GameState.RUNNING;
-        when(action.accept(notNull(PlayerActionGameStateVisitor.class))).thenReturn(state);
-
-        // Act
-        final GameState result = resolver.resolve(action);
-
-        // Assert
-        assertEquals(state, result);
-    }
 
 }

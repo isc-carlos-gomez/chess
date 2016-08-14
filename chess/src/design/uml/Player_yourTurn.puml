@@ -28,14 +28,14 @@ Player <-- Opponent : false
 Player -> Strategy : actionRejected(drawOffer)
 Game <-- Player : true
 
-== Threefold Claim Rejected ==
+== Rule Claim Rejected ==
 Game -> Player : yourTurn()
 Player -> Strategy : nextAction()
-Player <-- Strategy : threefoldClaim
+Player <-- Strategy : ruleClaim
 
 Player -> Player : verifyThreefoldClaim()
 
-Player -> Strategy : actionRejected(threefoldClaim)
+Player -> Strategy : actionRejected(ruleClaim)
 Game <-- Player : true
 
 == Resignation ==

@@ -25,4 +25,11 @@ public interface Board {
      */
     boolean update(Move move);
 
+    /**
+     * @param from
+     * @param to
+     * @return
+     */
+    boolean movePiece(Position from, Position to);
+
 }

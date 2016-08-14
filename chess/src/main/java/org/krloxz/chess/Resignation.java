@@ -15,21 +15,13 @@
  */
 package org.krloxz.chess;
 
-import java.util.function.Supplier;
-
 /**
+ * Encapsulates the resignation decision taken by the player in turn. Please note that, for a more convenient
+ * processing, resignation is also a visitable player action.
+ * 
  * @author Carlos Gomez
  */
-public class DrawOfferAction implements PlayerAction {
-
-    private final Supplier<PlayerAction> rejectFunction;
-
-    /**
-     * @param rejectFunction
-     */
-    public DrawOfferAction(final Supplier<PlayerAction> rejectFunction) {
-        this.rejectFunction = rejectFunction;
-    }
+public class Resignation implements PlayerAction {
 
     /*
      * (non-Javadoc)
@@ -39,13 +31,6 @@ public class DrawOfferAction implements PlayerAction {
     @Override
     public <R> R accept(final PlayerActionVisitor<R> visitor) {
         return visitor.visit(this);
-    }
-
-    /**
-     * @return
-     */
-    public PlayerAction rejected() {
-        return this.rejectFunction.get();
     }
 
 }

@@ -21,6 +21,22 @@ package org.krloxz.chess;
  */
 public interface PlayerActionVisitor<R> {
 
-    R visit(final DrawOfferAction action);
+    /**
+     * @param action
+     * @return
+     */
+    R visit(DrawOffer drawOffer);
+
+    /**
+     * @param move
+     * @return
+     */
+    R visit(Move move);
+
+    /**
+     * @param resignation
+     * @return
+     */
+    R visit(Resignation resignation);
 
 }

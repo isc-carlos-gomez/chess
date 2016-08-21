@@ -15,6 +15,7 @@
  */
 package org.krloxz.chess;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -46,10 +47,14 @@ public class GameTest {
     @Test
     public void playLoopPlayerTurnsTillGameNotRunning() {
         // Arrange
+        final PlayerAction anyAction = mock(PlayerAction.class);
+        final PlayerAction finalAction = mock(PlayerAction.class);
+        when(this.lightPlayer.yourTurn()).thenReturn(anyAction, finalAction);
+        when(this.darkPlayer.yourTurn()).thenReturn(anyAction);
+        when(this.stateResolver.resolve(anyAction)).thenReturn(GameState.RUNNING);
+        when(this.stateResolver.resolve(finalAction)).thenReturn(GameState.DRAW_BY_AGREEMENT);
         when(this.lightPlayer.getOpponent()).thenReturn(this.darkPlayer);
         when(this.darkPlayer.getOpponent()).thenReturn(this.lightPlayer);
-        when(this.stateResolver.resolve()).thenReturn(GameState.RUNNING, GameState.RUNNING,
-                GameState.DRAW_BY_AGREEMENT);
 
         // Act
         this.game.play();
@@ -63,7 +68,7 @@ public class GameTest {
     public void playNotifyGameOver() {
         // Arrange
         final GameState state = GameState.DRAW_BY_AGREEMENT;
-        when(this.stateResolver.resolve()).thenReturn(state);
+        when(this.stateResolver.resolve(any())).thenReturn(state);
         when(this.lightPlayer.getOpponent()).thenReturn(this.darkPlayer);
 
         // Act

@@ -23,8 +23,9 @@ package org.krloxz.chess;
 public class GameStateResolver {
 
     /**
+     * @param action
      */
-    public GameState resolve() {
+    public GameState resolve(final PlayerAction action) {
         return null;
     }
 

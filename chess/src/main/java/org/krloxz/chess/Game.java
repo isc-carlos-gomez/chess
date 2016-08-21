@@ -37,15 +37,16 @@ public class Game {
      *
      */
     public void play() {
-        GameState gameState = null;
+        GameState state = null;
+        PlayerAction action = null;
         Player player = this.lightPlayer;
         do {
-            player.yourTurn();
+            action = player.yourTurn();
             player = player.getOpponent();
-            gameState = this.stateResolver.resolve();
-        } while (gameState == GameState.RUNNING);
-        this.lightPlayer.gameOver(gameState);
-        this.lightPlayer.getOpponent().gameOver(gameState);
+            state = this.stateResolver.resolve(action);
+        } while (state == GameState.RUNNING);
+        this.lightPlayer.gameOver(state);
+        this.lightPlayer.getOpponent().gameOver(state);
     }
 
 }

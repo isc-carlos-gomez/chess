@@ -16,9 +16,7 @@
 package org.krloxz.chess;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.mock;
@@ -61,10 +59,10 @@ public class PlayerTest {
         when(action.accept(any())).thenReturn(true);
 
         // Act
-        final boolean result = this.player.yourTurn();
+        final PlayerAction result = this.player.yourTurn();
 
         // Assert
-        assertTrue("Turn must be always completed for actions other than resignation", result);
+        assertEquals(action, result);
     }
 
     @Test
@@ -84,21 +82,6 @@ public class PlayerTest {
         verify(action, times(2)).accept(visitorCaptor.capture());
         assertSame("The same visitor instance must be used along a turn", visitorCaptor.getAllValues().get(0),
                 visitorCaptor.getAllValues().get(1));
-    }
-
-    @Test
-    public void yourTurnOnResignation() {
-        // Arrange
-        final Resignation resignation = mock(Resignation.class);
-
-        when(this.strategy.nextAction(any())).thenReturn(resignation);
-        when(resignation.accept(any())).thenReturn(true);
-
-        // Act
-        final boolean result = this.player.yourTurn();
-
-        // Assert
-        assertFalse("Turn must be always incomplete for a resignation", result);
     }
 
     @Test

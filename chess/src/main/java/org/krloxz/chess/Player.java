@@ -36,14 +36,14 @@ public class Player {
     /**
      * @return
      */
-    public boolean yourTurn() {
+    public PlayerAction yourTurn() {
         final PlayerActionExecutorVisitor actionExecutor = new PlayerActionExecutorVisitor(
                 this.board, this.strategy, getOpponent());
         PlayerAction action = null;
         do {
             action = this.strategy.nextAction(this.board.copy());
         } while (!action.accept(actionExecutor));
-        return !(action instanceof Resignation);
+        return action;
     }
 
     /**

@@ -20,8 +20,18 @@ package org.krloxz.chess;
  */
 public interface PlayerStrategy {
 
-    PlayerAction getTurnAction();
+    PlayerAction nextAction(Board board);
 
     void actionRejected(PlayerAction action);
+
+    /**
+     * @return
+     */
+    boolean acceptDraw();
+
+    /**
+     * @param gameState
+     */
+    void gameOver(GameState gameState);
 
 }

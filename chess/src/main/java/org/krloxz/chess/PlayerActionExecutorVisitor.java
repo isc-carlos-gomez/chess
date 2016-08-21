@@ -16,8 +16,10 @@
 package org.krloxz.chess;
 
 /**
- * A visitor that executes and realize player actions generated in a single turn. Please note that it's mandatory create
- * new instances to process different turns.
+ * A visitor that executes and realize player actions generated in a single turn. The result of visiting actions is a
+ * boolean highlighting whether the action was processed and accepted (true) or processed and rejected (false).<br>
+ * <br>
+ * Please note that it's mandatory to create new instances to process different turns.
  *
  * @author Carlos Gomez
  */
@@ -30,7 +32,7 @@ public class PlayerActionExecutorVisitor implements PlayerActionVisitor<Boolean>
 
     /**
      * Creates a new instance.
-     * 
+     *
      * @param board
      *        the board where the game is being played.
      * @param strategy

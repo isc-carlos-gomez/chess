@@ -32,4 +32,9 @@ public interface Board {
      */
     boolean movePiece(Position from, Position to);
 
+    /**
+     * @return
+     */
+    Board copy();
+
 }

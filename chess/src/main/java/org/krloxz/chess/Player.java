@@ -18,26 +18,53 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public interface Player {
+public class Player {
+
+    private final PlayerStrategy strategy;
+    private final Board board;
+    private final Player opponent;
+
+    /**
+     * @param strategy
+     */
+    public Player(final PlayerStrategy strategy, final Board board, final Player opponent) {
+        this.strategy = strategy;
+        this.board = board;
+        this.opponent = opponent;
+    }
 
     /**
      * @return
      */
-    PlayerAction yourTurn();
+    public boolean yourTurn() {
+        final PlayerActionExecutorVisitor actionExecutor = new PlayerActionExecutorVisitor(
+                this.board, this.strategy, getOpponent());
+        PlayerAction action = null;
+        do {
+            action = this.strategy.nextAction(this.board.copy());
+        } while (!action.accept(actionExecutor));
+        return !(action instanceof Resignation);
+    }
 
     /**
      * @return
      */
-    boolean acceptDraw();
+    public boolean acceptDraw() {
+        return this.strategy.acceptDraw();
+    }
 
     /**
      * @param state
      */
-    void gameOver(GameState state);
+    public void gameOver(final GameState state) {
+        this.strategy.gameOver(state);
+    }
 
     /**
      * @return
      */
-    Player getOpponent();
+    public Player getOpponent() {
+        return this.opponent;
+    }
 
 }

@@ -24,12 +24,12 @@ package org.krloxz.chess;
 public interface PlayerAction {
 
     /**
-     * Enables the <b>Visitor Pattern</b> by accepting a {@link PlayerActionVisitor}.
+     * Enables the <b>Visitor Pattern</b> by accepting a {@link ActionVisitor}.
      * 
      * @param visitor
-     *        a {@link PlayerActionVisitor} which will visit and process this action.
+     *        a {@link ActionVisitor} which will visit and process this action.
      * @return the result of visiting this action.
      */
-    <R> R accept(PlayerActionVisitor<R> visitor);
+    <R> R accept(ActionVisitor<R> visitor);
 
 }

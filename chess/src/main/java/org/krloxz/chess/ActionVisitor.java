@@ -19,7 +19,7 @@ package org.krloxz.chess;
  * @author Carlos Gomez
  * @param <R>
  */
-public interface PlayerActionVisitor<R> {
+public interface ActionVisitor<R> {
 
     /**
      * @param action

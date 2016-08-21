@@ -25,13 +25,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests {@link PlayerActionExecutorVisitor}.
+ * Unit tests {@link ActionExecutorVisitor}.
  *
  * @author Carlos Gomez
  */
-public class PlayerActionExecutorVisitorTest {
+public class ActionExecutorVisitorTest {
 
-    private PlayerActionExecutorVisitor visitor;
+    private ActionExecutorVisitor visitor;
     private Board board;
     private PlayerStrategy strategy;
     private Player opponent;
@@ -43,7 +43,7 @@ public class PlayerActionExecutorVisitorTest {
         this.board = mock(Board.class);
         this.strategy = mock(PlayerStrategy.class);
         this.opponent = mock(Player.class);
-        this.visitor = new PlayerActionExecutorVisitor(this.board, this.strategy, this.opponent);
+        this.visitor = new ActionExecutorVisitor(this.board, this.strategy, this.opponent);
         this.move = mock(Move.class);
         this.drawOffer = mock(DrawOffer.class);
     }

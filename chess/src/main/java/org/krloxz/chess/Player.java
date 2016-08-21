@@ -37,7 +37,7 @@ public class Player {
      * @return
      */
     public PlayerAction yourTurn() {
-        final PlayerActionExecutorVisitor actionExecutor = new PlayerActionExecutorVisitor(
+        final ActionExecutorVisitor actionExecutor = new ActionExecutorVisitor(
                 this.board, this.strategy, getOpponent());
         PlayerAction action = null;
         do {

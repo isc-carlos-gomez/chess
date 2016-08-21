@@ -29,7 +29,7 @@ public class DrawOffer implements PlayerAction {
      * @see org.krloxz.chess.player.TurnAction#accept(org.krloxz.chess.player.TurnActionVisitor)
      */
     @Override
-    public <R> R accept(final PlayerActionVisitor<R> visitor) {
+    public <R> R accept(final ActionVisitor<R> visitor) {
         return visitor.visit(this);
     }
 

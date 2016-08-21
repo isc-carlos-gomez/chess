@@ -21,8 +21,6 @@ package org.krloxz.chess;
 public class Game {
 
     private final Player lightPlayer;
-    private final Player darkPlayer;
-    private final PlayerActionExecutor actionExecutor;
     private final GameStateResolver stateResolver;
 
     /**
@@ -30,11 +28,8 @@ public class Game {
      * @param lightPlayer
      * @param actionExecutor
      */
-    public Game(final Player lightPlayer, final Player darkPlayer, final PlayerActionExecutor actionExecutor,
-            final GameStateResolver stateResolver) {
+    public Game(final Player lightPlayer, final GameStateResolver stateResolver) {
         this.lightPlayer = lightPlayer;
-        this.darkPlayer = darkPlayer;
-        this.actionExecutor = actionExecutor;
         this.stateResolver = stateResolver;
     }
 
@@ -43,26 +38,14 @@ public class Game {
      */
     public void play() {
         GameState gameState = null;
-        PlayerAction action = null;
-        Player playerInTurn = this.lightPlayer;
+        Player player = this.lightPlayer;
         do {
-            action = this.actionExecutor.execute(playerInTurn.yourTurn());
-            playerInTurn = getOpponent(playerInTurn);
-            gameState = this.stateResolver.resolve(action);
+            player.yourTurn();
+            player = player.getOpponent();
+            gameState = this.stateResolver.resolve();
         } while (gameState == GameState.RUNNING);
         this.lightPlayer.gameOver(gameState);
-        this.darkPlayer.gameOver(gameState);
-    }
-
-    /**
-     * @param playerInTurn
-     * @return
-     */
-    private Player getOpponent(final Player playerInTurn) {
-        if (playerInTurn.equals(this.lightPlayer)) {
-            return this.darkPlayer;
-        }
-        return this.lightPlayer;
+        this.lightPlayer.getOpponent().gameOver(gameState);
     }
 
 }

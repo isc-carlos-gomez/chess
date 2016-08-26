@@ -15,23 +15,20 @@
  */
 package org.krloxz.chess;
 
+import org.junit.Before;
+
 /**
+ * Unit tests {@link Board}.
+ *
  * @author Carlos Gomez
  */
-public class Board {
+public class BoardTest {
 
-    /**
-     * @param move
-     */
-    public boolean update(final Move move) {
-        return false;
-    }
+    private Board board;
 
-    /**
-     * @return
-     */
-    public Board copy() {
-        return null;
+    @Before
+    public void setUp() {
+        this.board = new Board();
     }
 
 }

@@ -15,34 +15,26 @@
  */
 package org.krloxz.chess;
 
-import java.util.List;
-
 /**
  * @author Carlos Gomez
  */
-public class Board {
+public enum PieceType {
 
-    /**
-     * @param move
-     */
-    public boolean update(final Move move) {
-        return false;
+    PAWN("");
+
+    private final String sanAbbreviation;
+
+    private PieceType(final String sanAbbreviation) {
+        this.sanAbbreviation = sanAbbreviation;
     }
 
-    /**
-     * @return
-     */
-    public Board copy() {
-        return null;
-    }
-
-    /**
-     * @param squareSpecification
-     * @return
-     */
-    public List<Square> findSquares(final SquareSpecification specification) {
-        // TODO Auto-generated method stub
-        return null;
+    public static PieceType fromSanAbbreviation(final String abbreviation) {
+        for (final PieceType type : PieceType.values()) {
+            if (abbreviation.equals(type.sanAbbreviation)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Illegal SAN abbreviation: " + abbreviation);
     }
 
 }

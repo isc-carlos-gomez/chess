@@ -23,6 +23,18 @@ package org.krloxz.chess;
  */
 public class Move implements PlayerAction {
 
+    private final Square from;
+    private final Square to;
+
+    /**
+     * @param sourceSquare
+     * @param targetSquare
+     */
+    public Move(final Square from, final Square to) {
+        this.from = from;
+        this.to = to;
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -36,17 +48,15 @@ public class Move implements PlayerAction {
     /**
      * @return
      */
-    public Position getFrom() {
-        // TODO Auto-generated method stub
-        return null;
+    public Square getFrom() {
+        return this.from;
     }
 
     /**
      * @return
      */
-    public Position getTo() {
-        // TODO Auto-generated method stub
-        return null;
+    public Square getTo() {
+        return this.to;
     }
 
 }

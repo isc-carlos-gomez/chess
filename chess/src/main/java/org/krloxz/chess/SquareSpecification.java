@@ -15,11 +15,11 @@
  */
 package org.krloxz.chess;
 
-
 /**
  * @author Carlos Gomez
- *
  */
-public class Position {
+public interface SquareSpecification {
+
+    boolean isSatisfiedBy(Square square);
 
 }

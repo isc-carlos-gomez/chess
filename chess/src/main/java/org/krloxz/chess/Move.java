@@ -15,6 +15,8 @@
  */
 package org.krloxz.chess;
 
+import java.util.NoSuchElementException;
+
 /**
  * Encapsulates a chess move generated in a player turn. Please note that, for a more convenient processing, a move is
  * also a visitable player action.
@@ -25,14 +27,25 @@ public class Move implements PlayerAction {
 
     private final Square from;
     private final Square to;
+    private final PieceType piecePromotedTo;
+
+    /**
+     * @param from
+     * @param to
+     * @param piecePromotedTo
+     */
+    public Move(final Square from, final Square to, final PieceType piecePromotedTo) {
+        this.from = from;
+        this.to = to;
+        this.piecePromotedTo = piecePromotedTo;
+    }
 
     /**
      * @param sourceSquare
      * @param targetSquare
      */
     public Move(final Square from, final Square to) {
-        this.from = from;
-        this.to = to;
+        this(from, to, null);
     }
 
     /*
@@ -57,6 +70,23 @@ public class Move implements PlayerAction {
      */
     public Square getTo() {
         return this.to;
+    }
+
+    /**
+     * @return the piecePromotedTo
+     */
+    public PieceType getPiecePromotedTo() {
+        if (this.piecePromotedTo == null) {
+            throw new NoSuchElementException("Move is not a promotion");
+        }
+        return this.piecePromotedTo;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isPromotion() {
+        return this.piecePromotedTo != null;
     }
 
 }

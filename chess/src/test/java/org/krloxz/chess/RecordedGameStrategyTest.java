@@ -16,6 +16,7 @@
 package org.krloxz.chess;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -179,11 +180,7 @@ public class RecordedGameStrategyTest {
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a promotion", result instanceof Promotion);
-        final Promotion resultMove = (Promotion) result;
-        assertEquals(this.sourceSquare, resultMove.getFrom());
-        assertEquals(this.targetSquare, resultMove.getTo());
-        assertEquals(this.pieceType, resultMove.getPiecePromotedTo());
+        assertMoveAction(result, true);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -253,11 +250,20 @@ public class RecordedGameStrategyTest {
         this.strategy.nextAction(this.board);
     }
 
-    private void assertMoveAction(final PlayerAction result) {
+    private void assertMoveAction(final PlayerAction result, final boolean isPromotion) {
         assertTrue("Next action should be a move", result instanceof Move);
         final Move resultMove = (Move) result;
         assertEquals(this.sourceSquare, resultMove.getFrom());
         assertEquals(this.targetSquare, resultMove.getTo());
+        if (isPromotion) {
+            assertTrue("Move must be a promotion", resultMove.isPromotion());
+        } else {
+            assertFalse("Move must be not a promotion", resultMove.isPromotion());
+        }
+    }
+
+    private void assertMoveAction(final PlayerAction result) {
+        assertMoveAction(result, false);
     }
 
 }

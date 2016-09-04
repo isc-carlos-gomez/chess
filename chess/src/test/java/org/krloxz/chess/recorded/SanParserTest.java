@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.krloxz.chess;
+package org.krloxz.chess.recorded;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,6 +24,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.krloxz.chess.Board;
+import org.krloxz.chess.recorded.RecordedGameStrategy;
 
 /**
  * Unit tests {@link RecordedGameStrategy}.

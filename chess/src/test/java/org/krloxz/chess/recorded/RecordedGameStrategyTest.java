@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.krloxz.chess;
+package org.krloxz.chess.recorded;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,6 +28,16 @@ import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.krloxz.chess.Board;
+import org.krloxz.chess.GameEnding;
+import org.krloxz.chess.Move;
+import org.krloxz.chess.PieceType;
+import org.krloxz.chess.PlayerAction;
+import org.krloxz.chess.Square;
+import org.krloxz.chess.SquareSpecification;
+import org.krloxz.chess.WithPieceTypeThatReachesSquareSpecification;
+import org.krloxz.chess.recorded.RecordedGameStrategy;
+import org.krloxz.chess.recorded.SanParser;
 
 /**
  * Unit tests {@link RecordedGameStrategy}.

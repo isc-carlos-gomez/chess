@@ -13,9 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.krloxz.chess;
+package org.krloxz.chess.recorded;
 
 import java.util.Optional;
+
+import org.krloxz.chess.GameEnding;
+import org.krloxz.chess.PieceType;
+import org.krloxz.chess.Square;
 
 /**
  * A Standard Algebraic Notation parser that provides convenient methods to extract the significant objects described by

@@ -15,27 +15,20 @@
  */
 package org.krloxz.chess;
 
+
 /**
  * @author Carlos Gomez
+ *
  */
-public enum PieceType {
+public class GameEnding implements PlayerAction {
 
-    PAWN(""),
-    KNIGHT("N");
-
-    private final String sanAbbreviation;
-
-    private PieceType(final String sanAbbreviation) {
-        this.sanAbbreviation = sanAbbreviation;
-    }
-
-    public static PieceType fromSanAbbreviation(final String abbreviation) {
-        for (final PieceType type : PieceType.values()) {
-            if (abbreviation.equals(type.sanAbbreviation)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Illegal SAN abbreviation: " + abbreviation);
+    /* (non-Javadoc)
+     * @see org.krloxz.chess.PlayerAction#accept(org.krloxz.chess.ActionVisitor)
+     */
+    @Override
+    public <R> R accept(ActionVisitor<R> visitor) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -21,11 +21,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -36,161 +36,198 @@ import org.junit.Test;
 public class RecordedGameStrategyTest {
 
     private RecordedGameStrategy strategy;
-    private Iterator<String> moveIterator;
+    private Iterator<String> moves;
+    private SanParser moveParser;
     private Board board;
+    private String move;
+    private PieceType pieceType;
+    private Square sourceSquare;
+    private Square targetSquare;
 
     @Before
     @SuppressWarnings("unchecked")
     public void setUp() {
-        final List<String> moves = mock(List.class);
-        this.moveIterator = mock(Iterator.class);
-        when(moves.iterator()).thenReturn(this.moveIterator);
-        this.strategy = new RecordedGameStrategy(moves);
+        this.moves = mock(Iterator.class);
+        this.moveParser = mock(SanParser.class);
+        this.strategy = new RecordedGameStrategy(this.moves, this.moveParser);
         this.board = mock(Board.class);
+        this.move = "xxxxx";
+        this.pieceType = PieceType.KNIGHT;
+        this.sourceSquare = mock(Square.class);
+        this.targetSquare = mock(Square.class);
     }
 
     @Test
     public void nextAction() {
         // Arrange
-        final String recordedMove = "c3";
-        final Square targetSquare = new Square("c3");
-        final SquareSpecification squareSpecification = new WithPieceTypeThatReachesSquareSpecification(PieceType.PAWN,
-                targetSquare);
-        final Square sourceSquare = mock(Square.class);
-        when(this.moveIterator.next()).thenReturn(recordedMove);
-        when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(sourceSquare));
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .pieceType(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .build();
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
+        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a move", result instanceof Move);
-        final Move move = (Move) result;
-        assertEquals(sourceSquare, move.getFrom());
-        assertEquals(targetSquare, move.getTo());
+        assertMoveAction(result);
     }
 
-    @Ignore
     @Test
     public void nextActionOnFileSpecified() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnRankSpecified() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnFileAndRankSpecified() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCapture() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCaptureAndFileSpecified() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCaptureAndRankSpecified() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCaptureAndFileAndRankSpecified() {
-
-    }
-
-    @Test
-    public void nextActionOnPawn() {
         // Arrange
-        final String recordedMove = "e4";
-        final Square targetSquare = new Square(recordedMove);
-        final SquareSpecification squareSpecification = new WithPieceTypeThatReachesSquareSpecification(PieceType.PAWN,
-                targetSquare);
-        final Square sourceSquare = mock(Square.class);
-        when(this.moveIterator.next()).thenReturn(recordedMove);
-        when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(sourceSquare));
+        final String file = "a";
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .pieceType(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .file(file)
+                .build();
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
+        when(this.moveParser.getFile(this.move)).thenReturn(file);
+        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a move", result instanceof Move);
-        final Move move = (Move) result;
-        assertEquals(sourceSquare, move.getFrom());
-        assertEquals(targetSquare, move.getTo());
+        assertMoveAction(result);
     }
 
-    @Ignore
     @Test
-    public void nextActionOnPawnPromotion() {
+    public void nextActionOnRankSpecified() {
+        // Arrange
+        final String rank = "1";
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .pieceType(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .rank(rank)
+                .build();
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
+        when(this.moveParser.getRank(this.move)).thenReturn(rank);
+        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
 
+        // Act
+        final PlayerAction result = this.strategy.nextAction(this.board);
+
+        // Assert
+        assertMoveAction(result);
     }
 
-    @Ignore
     @Test
-    public void nextActionOnKingsideCastling() {
+    public void nextActionOnFileAndRankSpecified() {
+        // Arrange
+        final Optional<Square> optionalSquare = Optional.of(this.sourceSquare);
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(optionalSquare);
+        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
 
+        // Act
+        final PlayerAction result = this.strategy.nextAction(this.board);
+
+        // Assert
+        assertMoveAction(result);
     }
 
-    @Ignore
-    @Test
-    public void nextActionOnQueensideCastling() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCheck() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCheckMate() {
-
-    }
-
-    @Ignore
     @Test
     public void nextActionOnEndOfGame() {
+        // Arrange
+        final Optional<GameEnding> optionalGameEnding = Optional.of(mock(GameEnding.class));
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(optionalGameEnding);
 
+        // Act
+        final PlayerAction result = this.strategy.nextAction(this.board);
+
+        // Assert
+        assertTrue("Next action should be a game ending", result instanceof GameEnding);
     }
 
-    @Ignore
-    @Test
+    @Test(expected = IllegalArgumentException.class)
+    public void nextActionOnIllegalPiece() {
+        // Arrange
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getPieceType(this.move)).thenThrow(new IllegalArgumentException());
+
+        // Act
+        this.strategy.nextAction(this.board);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void nextActionOnIllegalSquare() {
+        // Arrange
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getTargetSquare(this.move)).thenThrow(new IllegalArgumentException());
+
+        // Act
+        this.strategy.nextAction(this.board);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void nextActionOnAmbiguousMove() {
+        // Arrange
+        final String rank = "1";
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .pieceType(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .rank(rank)
+                .build();
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
+        when(this.moveParser.getRank(this.move)).thenReturn(rank);
+        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.board.findSquares(squareSpecification))
+                .thenReturn(Arrays.asList(this.sourceSquare, this.sourceSquare));
 
+        // Act
+        this.strategy.nextAction(this.board);
     }
 
-    @Ignore
-    @Test
-    public void nextActionOnInvalidPiece() {
-
-    }
-
-    @Ignore
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void nextActionOnTargetNotReachable() {
+        // Arrange
+        final String rank = "1";
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .pieceType(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .rank(rank)
+                .build();
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
+        when(this.moveParser.getRank(this.move)).thenReturn(rank);
+        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.board.findSquares(squareSpecification)).thenReturn(Collections.emptyList());
 
+        // Act
+        this.strategy.nextAction(this.board);
     }
 
-    @Ignore
-    @Test
-    public void nextActionOnTargetNonExistent() {
-
+    private void assertMoveAction(final PlayerAction result) {
+        assertTrue("Next action should be a move", result instanceof Move);
+        final Move resultMove = (Move) result;
+        assertEquals(this.sourceSquare, resultMove.getFrom());
+        assertEquals(this.targetSquare, resultMove.getTo());
     }
 
 }

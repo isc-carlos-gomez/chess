@@ -19,7 +19,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * Find the squares that have a pawn which is able to reach the square 1.
+ * A {@link SquareSpecification} that matches the squares that have a piece of the specified type in the specified file
+ * and rank (if any of them both are provided) and than is able to reach the given target square.
  *
  * @author Carlos Gomez
  */
@@ -27,14 +28,18 @@ public class WithPieceTypeThatReachesSquareSpecification implements SquareSpecif
 
     private final PieceType pieceType;
     private final Square targetSquare;
+    private final String file;
+    private final String rank;
 
-    /**
-     * @param pieceType
-     * @param recordedMove
-     */
-    public WithPieceTypeThatReachesSquareSpecification(final PieceType pieceType, final Square targetSquare) {
-        this.pieceType = pieceType;
-        this.targetSquare = targetSquare;
+    private WithPieceTypeThatReachesSquareSpecification(final Builder builder) {
+        this.pieceType = builder.pieceType;
+        this.file = builder.file;
+        this.targetSquare = builder.targetSquare;
+        this.rank = builder.rank;
+    }
+
+    public static Builder getBuilder() {
+        return new Builder();
     }
 
     /*
@@ -60,6 +65,8 @@ public class WithPieceTypeThatReachesSquareSpecification implements SquareSpecif
             return new EqualsBuilder()
                     .append(this.pieceType, other.pieceType)
                     .append(this.targetSquare, other.targetSquare)
+                    .append(this.file, other.file)
+                    .append(this.rank, other.rank)
                     .isEquals();
         }
         return false;
@@ -75,7 +82,52 @@ public class WithPieceTypeThatReachesSquareSpecification implements SquareSpecif
         return new HashCodeBuilder()
                 .append(this.pieceType)
                 .append(this.targetSquare)
+                .append(this.file)
+                .append(this.rank)
                 .toHashCode();
+    }
+
+    /**
+     * A builder (pattern) to create instances of this class.
+     *
+     * @author Carlos Gomez
+     */
+    public static class Builder {
+
+        private PieceType pieceType;
+        private Square targetSquare;
+        private String file;
+        private String rank;
+
+        private Builder() {
+            // Empty
+        }
+
+        public Builder pieceType(final PieceType pieceType) {
+            this.pieceType = pieceType;
+            return this;
+        }
+
+        public Builder targetSquare(final Square targetSquare) {
+            this.targetSquare = targetSquare;
+            return this;
+        }
+
+        public Builder file(final String file) {
+            this.file = file;
+            return this;
+        }
+
+        public Builder rank(final String rank) {
+            this.rank = rank;
+            return this;
+        }
+
+        public WithPieceTypeThatReachesSquareSpecification build() {
+            // TODO: validate required properties
+            return new WithPieceTypeThatReachesSquareSpecification(this);
+        }
+
     }
 
 }

@@ -17,19 +17,23 @@ package org.krloxz.chess;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Carlos Gomez
  */
 public class RecordedGameStrategy implements PlayerStrategy {
 
-    final Iterator<String> moveIterator;
+    final Iterator<String> moves;
+    final SanParser moveParser;
 
     /**
-     * @param recordedMoves
+     * @param moves
+     * @param moveParser
      */
-    public RecordedGameStrategy(final List<String> recordedMoves) {
-        this.moveIterator = recordedMoves.iterator();
+    public RecordedGameStrategy(final Iterator<String> moves, final SanParser moveParser) {
+        this.moves = moves;
+        this.moveParser = moveParser;
     }
 
     /*
@@ -39,14 +43,14 @@ public class RecordedGameStrategy implements PlayerStrategy {
      */
     @Override
     public PlayerAction nextAction(final Board board) {
-        final String san = this.moveIterator.next();
-        final PieceType pieceType = PieceType.fromSanAbbreviation("");
-        final Square to = new Square(san);
-        final SquareSpecification specification = new WithPieceTypeThatReachesSquareSpecification(
-                pieceType, to);
-        final List<Square> squares = board.findSquares(specification);
-        final Square from = squares.get(0);
-        return new Move(from, to);
+        final String move = this.moves.next();
+        final Optional<GameEnding> optionalEnding = this.moveParser.getGameEnding(move);
+        if (optionalEnding.isPresent()) {
+            return optionalEnding.get();
+        }
+        final Square targetSquare = this.moveParser.getTargetSquare(move);
+        final Square sourceSquare = findSourceSquare(board, move, targetSquare);
+        return new Move(sourceSquare, targetSquare);
     }
 
     /*
@@ -80,6 +84,27 @@ public class RecordedGameStrategy implements PlayerStrategy {
     public void gameOver(final GameState gameState) {
         // TODO Auto-generated method stub
 
+    }
+
+    private Square findSourceSquare(final Board board, final String move, final Square to) {
+        final Optional<Square> optionalSquare = this.moveParser.getSourceSquare(move);
+        if (optionalSquare.isPresent()) {
+            return optionalSquare.get();
+        }
+        final PieceType pieceType = this.moveParser.getPieceType(move);
+        final String file = this.moveParser.getFile(move);
+        final String rank = this.moveParser.getRank(move);
+        final SquareSpecification specification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .pieceType(pieceType)
+                .targetSquare(to)
+                .file(file)
+                .rank(rank)
+                .build();
+        final List<Square> squares = board.findSquares(specification);
+        if (squares.size() != 1) {
+            throw new IllegalArgumentException("The move '" + move + "' is illegal or ambiguous");
+        }
+        return squares.get(0);
     }
 
 }

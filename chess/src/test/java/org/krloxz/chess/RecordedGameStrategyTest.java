@@ -70,6 +70,7 @@ public class RecordedGameStrategyTest {
         when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
         when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
+        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
@@ -94,6 +95,7 @@ public class RecordedGameStrategyTest {
         when(this.moveParser.getFile(this.move)).thenReturn(file);
         when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
+        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
@@ -118,6 +120,7 @@ public class RecordedGameStrategyTest {
         when(this.moveParser.getRank(this.move)).thenReturn(rank);
         when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
+        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
@@ -134,6 +137,7 @@ public class RecordedGameStrategyTest {
         when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
         when(this.moveParser.getSourceSquare(this.move)).thenReturn(optionalSquare);
         when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
@@ -154,6 +158,32 @@ public class RecordedGameStrategyTest {
 
         // Assert
         assertTrue("Next action should be a game ending", result instanceof GameEnding);
+    }
+
+    @Test
+    public void nextActionOnPawnPromotion() {
+        // Arrange
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .pieceType(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .build();
+        when(this.moves.next()).thenReturn(this.move);
+        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
+        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
+        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
+        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.of(this.pieceType));
+
+        // Act
+        final PlayerAction result = this.strategy.nextAction(this.board);
+
+        // Assert
+        assertTrue("Next action should be a promotion", result instanceof Promotion);
+        final Promotion resultMove = (Promotion) result;
+        assertEquals(this.sourceSquare, resultMove.getFrom());
+        assertEquals(this.targetSquare, resultMove.getTo());
+        assertEquals(this.pieceType, resultMove.getPiecePromotedTo());
     }
 
     @Test(expected = IllegalArgumentException.class)

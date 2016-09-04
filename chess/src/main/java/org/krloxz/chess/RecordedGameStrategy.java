@@ -50,6 +50,10 @@ public class RecordedGameStrategy implements PlayerStrategy {
         }
         final Square targetSquare = this.moveParser.getTargetSquare(move);
         final Square sourceSquare = findSourceSquare(board, move, targetSquare);
+        final Optional<PieceType> piecePromotedTo = this.moveParser.getPiecePromotedTo(move);
+        if (piecePromotedTo.isPresent()) {
+            return new Promotion(sourceSquare, targetSquare, piecePromotedTo.get());
+        }
         return new Move(sourceSquare, targetSquare);
     }
 

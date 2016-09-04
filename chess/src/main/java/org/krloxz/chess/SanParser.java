@@ -79,4 +79,13 @@ public class SanParser {
         return null;
     }
 
+    /**
+     * @param move
+     * @return
+     */
+    public Optional<PieceType> getPiecePromotedTo(final String move) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

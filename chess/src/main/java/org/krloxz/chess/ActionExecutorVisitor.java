@@ -91,4 +91,14 @@ public class ActionExecutorVisitor implements ActionVisitor<Boolean> {
         return true;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.ActionVisitor#visit(org.krloxz.chess.GameEnding)
+     */
+    @Override
+    public Boolean visit(final GameEnding gameEnding) {
+        return true;
+    }
+
 }

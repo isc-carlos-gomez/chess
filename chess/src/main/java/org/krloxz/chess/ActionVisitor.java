@@ -39,4 +39,10 @@ public interface ActionVisitor<R> {
      */
     R visit(Resignation resignation);
 
+    /**
+     * @param gameEnding
+     * @return
+     */
+    R visit(GameEnding gameEnding);
+
 }

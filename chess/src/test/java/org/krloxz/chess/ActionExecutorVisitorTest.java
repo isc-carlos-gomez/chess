@@ -120,4 +120,16 @@ public class ActionExecutorVisitorTest {
         assertTrue("Resignation must be always accepted", result);
     }
 
+    @Test
+    public void visitGameEnding() {
+        // Arrange
+        final GameEnding gameEnding = mock(GameEnding.class);
+
+        // Act
+        final boolean result = this.visitor.visit(gameEnding);
+
+        // Assert
+        assertTrue("Game ending must be always accepted", result);
+    }
+
 }

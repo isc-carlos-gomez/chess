@@ -15,18 +15,25 @@
  */
 package org.krloxz.chess;
 
-
 /**
  * @author Carlos Gomez
- *
  */
 public class GameEnding implements PlayerAction {
 
-    /* (non-Javadoc)
+    /**
+     * @param type
+     */
+    public GameEnding(final GameEndingType type) {
+        // TODO Auto-generated constructor stub
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.krloxz.chess.PlayerAction#accept(org.krloxz.chess.ActionVisitor)
      */
     @Override
-    public <R> R accept(ActionVisitor<R> visitor) {
+    public <R> R accept(final ActionVisitor<R> visitor) {
         // TODO Auto-generated method stub
         return null;
     }

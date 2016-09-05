@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.krloxz.chess.recorded;
+package org.krloxz.chess;
 
 /**
- * A Standard Algebraic Notation parser that provides convenient methods to extract the significant objects described by
- * a move specified in Standard Algebraic Notation.
- *
  * @author Carlos Gomez
  */
-public class SanParser {
+public enum Rank {
+
+    ONE;
 
     /**
-     * @param move
      * @return
      */
-    public SanMove parse(final String move) {
+    public String getLabel() {
         // TODO Auto-generated method stub
         return null;
     }

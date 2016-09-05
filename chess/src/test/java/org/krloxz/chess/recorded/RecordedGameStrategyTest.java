@@ -15,8 +15,6 @@
  */
 package org.krloxz.chess.recorded;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,20 +22,20 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.krloxz.chess.Board;
+import org.krloxz.chess.File;
 import org.krloxz.chess.GameEnding;
+import org.krloxz.chess.GameEndingType;
 import org.krloxz.chess.Move;
 import org.krloxz.chess.PieceType;
 import org.krloxz.chess.PlayerAction;
+import org.krloxz.chess.Rank;
 import org.krloxz.chess.Square;
 import org.krloxz.chess.SquareSpecification;
 import org.krloxz.chess.WithPieceTypeThatReachesSquareSpecification;
-import org.krloxz.chess.recorded.RecordedGameStrategy;
-import org.krloxz.chess.recorded.SanParser;
 
 /**
  * Unit tests {@link RecordedGameStrategy}.
@@ -66,103 +64,105 @@ public class RecordedGameStrategyTest {
         this.pieceType = PieceType.KNIGHT;
         this.sourceSquare = mock(Square.class);
         this.targetSquare = mock(Square.class);
+
+        // Common behavior
+        when(this.moves.next()).thenReturn(this.move);
     }
 
     @Test
     public void nextAction() {
         // Arrange
+        final SanMove sanMove = SanMove.getBuilder()
+                .piece(this.pieceType)
+                .square(this.targetSquare)
+                .build();
         final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
-                .pieceType(this.pieceType)
+                .piece(this.pieceType)
                 .targetSquare(this.targetSquare)
                 .build();
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
-        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
-        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertMoveAction(result);
+        assertTrue("Next action should be a move", result instanceof Move);
     }
 
     @Test
     public void nextActionOnFileSpecified() {
         // Arrange
-        final String file = "a";
+        final File file = File.A;
+        final SanMove sanMove = SanMove.getBuilder()
+                .piece(this.pieceType)
+                .square(this.targetSquare)
+                .file(file)
+                .build();
         final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
-                .pieceType(this.pieceType)
+                .piece(this.pieceType)
                 .targetSquare(this.targetSquare)
                 .file(file)
                 .build();
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
-        when(this.moveParser.getFile(this.move)).thenReturn(file);
-        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
-        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertMoveAction(result);
+        assertTrue("Next action should be a move", result instanceof Move);
     }
 
     @Test
     public void nextActionOnRankSpecified() {
         // Arrange
-        final String rank = "1";
+        final Rank rank = Rank.ONE;
+        final SanMove sanMove = SanMove.getBuilder()
+                .piece(this.pieceType)
+                .square(this.targetSquare)
+                .rank(rank)
+                .build();
         final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
-                .pieceType(this.pieceType)
+                .piece(this.pieceType)
                 .targetSquare(this.targetSquare)
                 .rank(rank)
                 .build();
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
-        when(this.moveParser.getRank(this.move)).thenReturn(rank);
-        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
-        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertMoveAction(result);
+        assertTrue("Next action should be a move", result instanceof Move);
     }
 
     @Test
     public void nextActionOnFileAndRankSpecified() {
         // Arrange
-        final Optional<Square> optionalSquare = Optional.of(this.sourceSquare);
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(optionalSquare);
-        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
-        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.empty());
+        final SanMove sanMove = SanMove.getBuilder()
+                .piece(this.pieceType)
+                .square(this.targetSquare)
+                .file(File.A)
+                .rank(Rank.ONE)
+                .build();
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertMoveAction(result);
+        assertTrue("Next action should be a move", result instanceof Move);
     }
 
     @Test
     public void nextActionOnEndOfGame() {
         // Arrange
-        final Optional<GameEnding> optionalGameEnding = Optional.of(mock(GameEnding.class));
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(optionalGameEnding);
+        final SanMove sanMove = SanMove.getBuilder()
+                .gameEnding(GameEndingType.DRAW)
+                .build();
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
@@ -174,44 +174,30 @@ public class RecordedGameStrategyTest {
     @Test
     public void nextActionOnPawnPromotion() {
         // Arrange
+        final SanMove sanMove = SanMove.getBuilder()
+                .piece(PieceType.PAWN)
+                .square(this.targetSquare)
+                .piecePromotedTo(PieceType.KNIGHT)
+                .build();
         final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
-                .pieceType(this.pieceType)
+                .piece(PieceType.PAWN)
                 .targetSquare(this.targetSquare)
                 .build();
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
-        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
-        when(this.moveParser.getPiecePromotedTo(this.move)).thenReturn(Optional.of(this.pieceType));
 
         // Act
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertMoveAction(result, true);
+        assertTrue("Next action should be a move", result instanceof Move);
+        assertTrue("Move should be a promotion", ((Move) result).isPromotion());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nextActionOnIllegalPiece() {
+    public void nextActionOnIllegalPieceOrIllegalSquare() {
         // Arrange
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getPieceType(this.move)).thenThrow(new IllegalArgumentException());
-
-        // Act
-        this.strategy.nextAction(this.board);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void nextActionOnIllegalSquare() {
-        // Arrange
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getTargetSquare(this.move)).thenThrow(new IllegalArgumentException());
+        when(this.moveParser.parse(this.move)).thenThrow(new IllegalArgumentException());
 
         // Act
         this.strategy.nextAction(this.board);
@@ -220,18 +206,15 @@ public class RecordedGameStrategyTest {
     @Test(expected = IllegalArgumentException.class)
     public void nextActionOnAmbiguousMove() {
         // Arrange
-        final String rank = "1";
-        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
-                .pieceType(this.pieceType)
-                .targetSquare(this.targetSquare)
-                .rank(rank)
+        final SanMove sanMove = SanMove.getBuilder()
+                .piece(this.pieceType)
+                .square(this.targetSquare)
                 .build();
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
-        when(this.moveParser.getRank(this.move)).thenReturn(rank);
-        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .piece(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .build();
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
         when(this.board.findSquares(squareSpecification))
                 .thenReturn(Arrays.asList(this.sourceSquare, this.sourceSquare));
 
@@ -242,38 +225,19 @@ public class RecordedGameStrategyTest {
     @Test(expected = IllegalArgumentException.class)
     public void nextActionOnTargetNotReachable() {
         // Arrange
-        final String rank = "1";
-        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
-                .pieceType(this.pieceType)
-                .targetSquare(this.targetSquare)
-                .rank(rank)
+        final SanMove sanMove = SanMove.getBuilder()
+                .piece(this.pieceType)
+                .square(this.targetSquare)
                 .build();
-        when(this.moves.next()).thenReturn(this.move);
-        when(this.moveParser.getGameEnding(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getSourceSquare(this.move)).thenReturn(Optional.empty());
-        when(this.moveParser.getPieceType(this.move)).thenReturn(this.pieceType);
-        when(this.moveParser.getRank(this.move)).thenReturn(rank);
-        when(this.moveParser.getTargetSquare(this.move)).thenReturn(this.targetSquare);
+        final SquareSpecification squareSpecification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .piece(this.pieceType)
+                .targetSquare(this.targetSquare)
+                .build();
+        when(this.moveParser.parse(this.move)).thenReturn(sanMove);
         when(this.board.findSquares(squareSpecification)).thenReturn(Collections.emptyList());
 
         // Act
         this.strategy.nextAction(this.board);
-    }
-
-    private void assertMoveAction(final PlayerAction result, final boolean isPromotion) {
-        assertTrue("Next action should be a move", result instanceof Move);
-        final Move resultMove = (Move) result;
-        assertEquals(this.sourceSquare, resultMove.getFrom());
-        assertEquals(this.targetSquare, resultMove.getTo());
-        if (isPromotion) {
-            assertTrue("Move must be a promotion", resultMove.isPromotion());
-        } else {
-            assertFalse("Move must be not a promotion", resultMove.isPromotion());
-        }
-    }
-
-    private void assertMoveAction(final PlayerAction result) {
-        assertMoveAction(result, false);
     }
 
 }

@@ -28,8 +28,8 @@ public class WithPieceTypeThatReachesSquareSpecification implements SquareSpecif
 
     private final PieceType pieceType;
     private final Square targetSquare;
-    private final String file;
-    private final String rank;
+    private final File file;
+    private final Rank rank;
 
     private WithPieceTypeThatReachesSquareSpecification(final Builder builder) {
         this.pieceType = builder.pieceType;
@@ -96,14 +96,14 @@ public class WithPieceTypeThatReachesSquareSpecification implements SquareSpecif
 
         private PieceType pieceType;
         private Square targetSquare;
-        private String file;
-        private String rank;
+        private File file;
+        private Rank rank;
 
         private Builder() {
             // Empty
         }
 
-        public Builder pieceType(final PieceType pieceType) {
+        public Builder piece(final PieceType pieceType) {
             this.pieceType = pieceType;
             return this;
         }
@@ -113,12 +113,12 @@ public class WithPieceTypeThatReachesSquareSpecification implements SquareSpecif
             return this;
         }
 
-        public Builder file(final String file) {
+        public Builder file(final File file) {
             this.file = file;
             return this;
         }
 
-        public Builder rank(final String rank) {
+        public Builder rank(final Rank rank) {
             this.rank = rank;
             return this;
         }

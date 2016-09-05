@@ -17,13 +17,11 @@ package org.krloxz.chess.recorded;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.krloxz.chess.Board;
 import org.krloxz.chess.GameEnding;
 import org.krloxz.chess.GameState;
 import org.krloxz.chess.Move;
-import org.krloxz.chess.PieceType;
 import org.krloxz.chess.PlayerAction;
 import org.krloxz.chess.PlayerStrategy;
 import org.krloxz.chess.Square;
@@ -55,17 +53,29 @@ public class RecordedGameStrategy implements PlayerStrategy {
     @Override
     public PlayerAction nextAction(final Board board) {
         final String move = this.moves.next();
-        final Optional<GameEnding> optionalEnding = this.moveParser.getGameEnding(move);
-        if (optionalEnding.isPresent()) {
-            return optionalEnding.get();
+        final SanMove sanMove = this.moveParser.parse(move);
+        if (sanMove.isGameEnding()) {
+            return new GameEnding(sanMove.getGameEnding());
         }
-        final Square targetSquare = this.moveParser.getTargetSquare(move);
-        final Square sourceSquare = findSourceSquare(board, move, targetSquare);
-        final Optional<PieceType> piecePromotedTo = this.moveParser.getPiecePromotedTo(move);
-        if (piecePromotedTo.isPresent()) {
-            return new Move(sourceSquare, targetSquare, piecePromotedTo.get());
+        final Square sourceSquare = findSourceSquare(board, sanMove);
+        return new Move(sourceSquare, sanMove.getSquare(), sanMove.getPiecePromotedToOrNull());
+    }
+
+    private Square findSourceSquare(final Board board, final SanMove sanMove) {
+        if (sanMove.isFullySpecified()) {
+            return new Square(sanMove.getFile(), sanMove.getRank());
         }
-        return new Move(sourceSquare, targetSquare);
+        final SquareSpecification specification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
+                .piece(sanMove.getPiece())
+                .targetSquare(sanMove.getSquare())
+                .file(sanMove.getFile())
+                .rank(sanMove.getRank())
+                .build();
+        final List<Square> squares = board.findSquares(specification);
+        if (squares.size() != 1) {
+            throw new IllegalArgumentException("The move '" + sanMove + "' is either illegal or ambiguous");
+        }
+        return squares.get(0);
     }
 
     /*
@@ -99,27 +109,6 @@ public class RecordedGameStrategy implements PlayerStrategy {
     public void gameOver(final GameState gameState) {
         // TODO Auto-generated method stub
 
-    }
-
-    private Square findSourceSquare(final Board board, final String move, final Square to) {
-        final Optional<Square> optionalSquare = this.moveParser.getSourceSquare(move);
-        if (optionalSquare.isPresent()) {
-            return optionalSquare.get();
-        }
-        final PieceType pieceType = this.moveParser.getPieceType(move);
-        final String file = this.moveParser.getFile(move);
-        final String rank = this.moveParser.getRank(move);
-        final SquareSpecification specification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
-                .pieceType(pieceType)
-                .targetSquare(to)
-                .file(file)
-                .rank(rank)
-                .build();
-        final List<Square> squares = board.findSquares(specification);
-        if (squares.size() != 1) {
-            throw new IllegalArgumentException("The move '" + move + "' is illegal or ambiguous");
-        }
-        return squares.get(0);
     }
 
 }

@@ -46,6 +46,18 @@ public class SanMove {
     }
 
     /**
+     * @param string
+     */
+    public SanMove(final String string) {
+        this.piece = null;
+        this.square = null;
+        this.file = null;
+        this.rank = null;
+        this.gameEnding = null;
+        this.piecePromotedTo = null;
+    }
+
+    /**
      * @return the piece
      */
     public PieceType getPiece() {

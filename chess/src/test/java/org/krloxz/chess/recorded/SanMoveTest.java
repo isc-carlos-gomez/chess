@@ -15,44 +15,108 @@
  */
 package org.krloxz.chess.recorded;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Iterator;
-import java.util.List;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.krloxz.chess.Board;
-import org.krloxz.chess.recorded.RecordedGameStrategy;
 
 /**
  * Unit tests {@link RecordedGameStrategy}.
  *
  * @author Carlos Gomez
  */
-public class SanParserTest {
+public class SanMoveTest {
 
-    private RecordedGameStrategy strategy;
-    private Iterator<String> moveIterator;
-    private Board board;
+    private SanMove move;
 
     @Before
-    @SuppressWarnings("unchecked")
     public void setUp() {
-        final List<String> moves = mock(List.class);
-        this.moveIterator = mock(Iterator.class);
-        when(moves.iterator()).thenReturn(this.moveIterator);
-        // this.strategy = new RecordedGameStrategy(moves);
-        this.board = mock(Board.class);
     }
-
-    @Ignore
+    
     @Test
-    public void nextAction() {
-    }
+    public void creationOnBasicMove() {
+        // Arrange
 
+        // Act
+        final SanMove move = new SanMove("Na1");
+
+        // Assert
+        assertNotNull(move.getPiece());
+        assertNotNull(move.getSquare());
+        assertNull(move.getFile());
+        assertNull(move.getRank());
+        try {
+            move.getGameEnding();
+            fail("IllegalStateException was expected");
+        } catch (final IllegalStateException e) {
+            assertNotNull(e.getMessage());
+        }
+        assertNull(move.getPiecePromotedToOrNull());
+        assertFalse(move.isFullySpecified());
+        assertFalse(move.isGameEnding());
+    }
+    
+    /*
+    creationOnNoPiece
+    creationOnFile
+    creationOnRank
+    
+    
+    getPiece
+        OnNoPiece
+        OnCapture
+    getPieceOnPromotion
+    getPieceOnKingsideCastling
+    getPieceOnQueensideCastling
+    getPieceOnCheck
+    getPieceOnCheckmate
+    getPieceOnGameEnding
+    
+    getSquare
+        OnCapture
+        OnPromotion
+        OnKingsideCastling
+        OnQueensideCastling
+        OnCheck
+        OnCheckmate
+        OnGameEnding
+    
+    getFile
+        OnNoFile
+        OnCapture
+        OnPromotion
+        OnKingsideCastling
+        OnQueensideCastling
+        OnCheck
+        OnCheckmate
+        OnGameEnding
+        
+    getRank
+        OnNoRank
+        OnCapture
+        OnPromotion
+        OnKingsideCastling
+        OnQueensideCastling
+        OnCheck
+        OnCheckmate
+        OnGameEnding
+        
+    getGameEnding
+        OnNoEnding
+        
+    getPiecePromotedToOrNull
+    getPiecePromotedToOrNullOnNoPromotion
+    isFullySpecified
+    isFullySpecifiedOnNoFile
+    isFullySpecifiedOnNoRank
+    isGameEnding
+    isGameEndingOnNoEnding
+    */
+    
     @Ignore
     @Test
     public void nextActionOnFileSpecified() {

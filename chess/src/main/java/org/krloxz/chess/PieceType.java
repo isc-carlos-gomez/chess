@@ -20,18 +20,18 @@ package org.krloxz.chess;
  */
 public enum PieceType {
 
-    PAWN(""),
-    KNIGHT("N");
+    PAWN(null),
+    KNIGHT('N');
 
-    private final String sanAbbreviation;
+    private final Character sanAbbreviation;
 
-    private PieceType(final String sanAbbreviation) {
+    private PieceType(final Character sanAbbreviation) {
         this.sanAbbreviation = sanAbbreviation;
     }
 
-    public static PieceType fromSanAbbreviation(final String abbreviation) {
+    public static PieceType fromSanAbbreviation(final Character abbreviation) {
         for (final PieceType type : PieceType.values()) {
-            if (abbreviation.equals(type.sanAbbreviation)) {
+            if (abbreviation == type.sanAbbreviation) {
                 return type;
             }
         }

@@ -15,11 +15,30 @@
  */
 package org.krloxz.chess;
 
+import org.junit.Test;
+
 /**
+ * Unit tests {@link File}.
+ *
  * @author Carlos Gomez
  */
-public enum File {
+public class FileTest {
 
-    a, b, c, d, e, f, g, h;
+    @Test
+    public void toLabel() {
+        for (final File file : File.values()) {
+            // assertNotNull("The file should have a label", file.toLabel());
+        }
+    }
+
+    @Test
+    public void fromLabel() {
+
+    }
+
+    @Test
+    public void fromLabelOnIllegalLabel() {
+
+    }
 
 }

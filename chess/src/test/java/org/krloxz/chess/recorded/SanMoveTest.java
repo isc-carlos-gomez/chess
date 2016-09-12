@@ -15,14 +15,12 @@
  */
 package org.krloxz.chess.recorded;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.krloxz.chess.File;
+import org.krloxz.chess.PieceType;
+import org.krloxz.chess.Square;
 
 /**
  * Unit tests {@link RecordedGameStrategy}.
@@ -31,197 +29,64 @@ import org.junit.Test;
  */
 public class SanMoveTest {
 
-    private SanMove move;
-
-    @Before
-    public void setUp() {
-    }
-    
     @Test
-    public void creationOnBasicMove() {
+    public void getSquare() {
         // Arrange
-
-        // Act
         final SanMove move = new SanMove("Na1");
 
+        // Act
+        final Square result = move.getSquare();
+
         // Assert
-        assertNotNull(move.getPiece());
-        assertNotNull(move.getSquare());
-        assertNull(move.getFile());
-        assertNull(move.getRank());
-        try {
-            move.getGameEnding();
-            fail("IllegalStateException was expected");
-        } catch (final IllegalStateException e) {
-            assertNotNull(e.getMessage());
-        }
-        assertNull(move.getPiecePromotedToOrNull());
-        assertFalse(move.isFullySpecified());
-        assertFalse(move.isGameEnding());
-    }
-    
-    /*
-    creationOnNoPiece
-    creationOnFile
-    creationOnRank
-    
-    
-    getPiece
-        OnNoPiece
-        OnCapture
-    getPieceOnPromotion
-    getPieceOnKingsideCastling
-    getPieceOnQueensideCastling
-    getPieceOnCheck
-    getPieceOnCheckmate
-    getPieceOnGameEnding
-    
-    getSquare
-        OnCapture
-        OnPromotion
-        OnKingsideCastling
-        OnQueensideCastling
-        OnCheck
-        OnCheckmate
-        OnGameEnding
-    
-    getFile
-        OnNoFile
-        OnCapture
-        OnPromotion
-        OnKingsideCastling
-        OnQueensideCastling
-        OnCheck
-        OnCheckmate
-        OnGameEnding
-        
-    getRank
-        OnNoRank
-        OnCapture
-        OnPromotion
-        OnKingsideCastling
-        OnQueensideCastling
-        OnCheck
-        OnCheckmate
-        OnGameEnding
-        
-    getGameEnding
-        OnNoEnding
-        
-    getPiecePromotedToOrNull
-    getPiecePromotedToOrNullOnNoPromotion
-    isFullySpecified
-    isFullySpecifiedOnNoFile
-    isFullySpecifiedOnNoRank
-    isGameEnding
-    isGameEndingOnNoEnding
-    */
-    
-    @Ignore
-    @Test
-    public void nextActionOnFileSpecified() {
-
+        assertNotNull("Square shouldn't be null", result);
     }
 
-    @Ignore
     @Test
-    public void nextActionOnRankSpecified() {
+    public void getSquareOnNoPiece() {
+        // Arrange
+        final SanMove move = new SanMove("a1");
 
+        // Act
+        final Square result = move.getSquare();
+
+        // Assert
+        assertNotNull("Square shouldn't be null", result);
     }
 
-    @Ignore
     @Test
-    public void nextActionOnFileAndRankSpecified() {
+    public void getPiece() {
+        // Arrange
+        final SanMove move = new SanMove("Na1");
 
+        // Act
+        final PieceType result = move.getPiece();
+
+        // Assert
+        assertNotNull("Piece shouldn't be null", result);
     }
 
-    @Ignore
     @Test
-    public void nextActionOnCapture() {
+    public void getPieceOnNoPiece() {
+        // Arrange
+        final SanMove move = new SanMove("a1");
 
+        // Act
+        final PieceType result = move.getPiece();
+
+        // Assert
+        assertNotNull("Piece shouldn't be null", result);
     }
 
-    @Ignore
     @Test
-    public void nextActionOnCaptureAndFileSpecified() {
+    public void getFileOrNull() {
+        // Arrange
+        final SanMove move = new SanMove("Nba1");
 
-    }
+        // Act
+        final File result = move.getFileOrNull();
 
-    @Ignore
-    @Test
-    public void nextActionOnCaptureAndRankSpecified() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCaptureAndFileAndRankSpecified() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnPawn() {
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnPawnPromotion() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnKingsideCastling() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnQueensideCastling() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCheck() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnCheckMate() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnEndOfGame() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnAmbiguousMove() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnInvalidPiece() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnTargetNotReachable() {
-
-    }
-
-    @Ignore
-    @Test
-    public void nextActionOnTargetNonExistent() {
-
+        // Assert
+        assertNotNull("File shouldn't be null", result);
     }
 
 }

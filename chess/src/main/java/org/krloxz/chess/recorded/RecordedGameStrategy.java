@@ -63,12 +63,12 @@ public class RecordedGameStrategy implements PlayerStrategy {
 
     private Square findSourceSquare(final Board board, final SanMove sanMove) {
         if (sanMove.isFullySpecified()) {
-            return new Square(sanMove.getFile(), sanMove.getRank());
+            return new Square(sanMove.getFileOrNull(), sanMove.getRank());
         }
         final SquareSpecification specification = WithPieceTypeThatReachesSquareSpecification.getBuilder()
                 .piece(sanMove.getPiece())
                 .targetSquare(sanMove.getSquare())
-                .file(sanMove.getFile())
+                .file(sanMove.getFileOrNull())
                 .rank(sanMove.getRank())
                 .build();
         final List<Square> squares = board.findSquares(specification);

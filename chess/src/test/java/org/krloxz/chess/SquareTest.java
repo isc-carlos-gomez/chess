@@ -15,11 +15,11 @@
  */
 package org.krloxz.chess;
 
+
 /**
  * @author Carlos Gomez
+ *
  */
-public enum File {
-
-    a, b, c, d, e, f, g, h;
+public class SquareTest {
 
 }

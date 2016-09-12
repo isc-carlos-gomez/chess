@@ -29,8 +29,8 @@ import org.krloxz.chess.Square;
  */
 public class SanMove {
 
-    private final PieceType piece;
     private final Square square;
+    private final PieceType piece;
     private final File file;
     private final Rank rank;
     private final GameEndingType gameEnding;
@@ -48,20 +48,17 @@ public class SanMove {
     /**
      * @param string
      */
-    public SanMove(final String string) {
-        this.piece = null;
-        this.square = null;
+    public SanMove(final String san) {
+        this.square = new Square(san.substring(1));
+        Character pieceType = null;
+        if (Character.isUpperCase(san.charAt(0))) {
+            pieceType = san.charAt(0);
+        }
+        this.piece = PieceType.fromSanAbbreviation(pieceType);
         this.file = null;
         this.rank = null;
         this.gameEnding = null;
         this.piecePromotedTo = null;
-    }
-
-    /**
-     * @return the piece
-     */
-    public PieceType getPiece() {
-        return this.piece;
     }
 
     /**
@@ -72,9 +69,16 @@ public class SanMove {
     }
 
     /**
+     * @return the piece
+     */
+    public PieceType getPiece() {
+        return this.piece;
+    }
+
+    /**
      * @return the file
      */
-    public File getFile() {
+    public File getFileOrNull() {
         return this.file;
     }
 

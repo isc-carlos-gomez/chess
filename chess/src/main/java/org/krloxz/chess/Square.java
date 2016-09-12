@@ -15,16 +15,54 @@
  */
 package org.krloxz.chess;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * @author Carlos Gomez
  */
 public class Square {
+
+    private final String san;
 
     /**
      * @param file
      * @param rank
      */
     public Square(final File file, final Rank rank) {
+        this.san = file + rank.getLabel();
+    }
+
+    /**
+     * @param string
+     */
+    public Square(final String san) {
+        this.san = san;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object object) {
+        if (object instanceof Square) {
+            final Square other = (Square) object;
+            return this.san.equals(other.san);
+        }
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.san)
+                .toHashCode();
     }
 
 }

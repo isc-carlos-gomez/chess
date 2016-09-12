@@ -93,7 +93,7 @@ public class RecordedGameStrategyTest {
     @Test
     public void nextActionOnFileSpecified() {
         // Arrange
-        final File file = File.A;
+        final File file = File.a;
         final SanMove sanMove = SanMove.getBuilder()
                 .piece(this.pieceType)
                 .square(this.targetSquare)
@@ -144,7 +144,7 @@ public class RecordedGameStrategyTest {
         final SanMove sanMove = SanMove.getBuilder()
                 .piece(this.pieceType)
                 .square(this.targetSquare)
-                .file(File.A)
+                .file(File.a)
                 .rank(Rank.ONE)
                 .build();
         when(this.moveParser.parse(this.move)).thenReturn(sanMove);

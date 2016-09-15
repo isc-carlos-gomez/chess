@@ -15,7 +15,19 @@
  */
 package org.krloxz.chess;
 
+import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit tests {@link Board}.
@@ -25,10 +37,32 @@ import org.junit.Before;
 public class BoardTest {
 
     private Board board;
+    private SquareRepository repository;
 
     @Before
     public void setUp() {
-        this.board = new Board();
+        this.repository = mock(SquareRepository.class);
+        this.board = new Board(this.repository);
+    }
+
+    @Test
+    public void update() {
+        // Arrange
+        final Square source = mock(Square.class);
+        final Square target = mock(Square.class);
+        final Move move = mock(Move.class);
+        final Piece piece = mock(Piece.class);
+        final SquareIsEqualTo specification = new SquareIsEqualTo(source);
+        when(this.repository.findSquares(specification)).thenReturn(Arrays.asList(source));
+        when(source.getPiece()).thenReturn(Optional.of(piece));
+        when(piece.move(target)).thenReturn(true);
+
+        // Act
+        final boolean result = this.board.update(move);
+
+        // Assert
+        assertTrue("Board should be updated on valid moves", result);
+        verify(this.repository).refreshSquares((List<Piece>) argThat(contains(piece)));
     }
 
 }

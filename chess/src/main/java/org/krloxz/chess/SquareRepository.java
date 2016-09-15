@@ -20,42 +20,23 @@ import java.util.List;
 /**
  * @author Carlos Gomez
  */
-public class Board {
-
-    private final SquareRepository squareRepository;
+public class SquareRepository {
 
     /**
-     * @param squareRepository
-     */
-    public Board(final SquareRepository squareRepository) {
-        this.squareRepository = squareRepository;
-    }
-
-    /**
-     * @param move
-     */
-    public boolean update(final Move move) {
-        final List<Square> squares = this.squareRepository.findSquares(new SquareIsEqualTo(move.getSource()));
-        final Square sourceSquare = squares.get(0);
-        sourceSquare.getPiece().get().move(move.getTarget());
-        this.squareRepository.refreshSquares(null);
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    public Board copy() {
-        return null;
-    }
-
-    /**
-     * @param squareSpecification
+     * @param specification
      * @return
      */
     public List<Square> findSquares(final SquareSpecification specification) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    /**
+     * @param piece
+     * @return
+     */
+    public void refreshSquares(final List<Piece> pieces) {
+        // TODO Auto-generated method stub
     }
 
 }

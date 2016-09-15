@@ -61,14 +61,14 @@ public class Move implements PlayerAction {
     /**
      * @return
      */
-    public Square getFrom() {
+    public Square getSource() {
         return this.from;
     }
 
     /**
      * @return
      */
-    public Square getTo() {
+    public Square getTarget() {
         return this.to;
     }
 

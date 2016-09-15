@@ -15,26 +15,27 @@
  */
 package org.krloxz.chess;
 
-import java.util.Optional;
-
 /**
  * @author Carlos Gomez
  */
-public class Square {
+public class SquareIsEqualTo implements SquareSpecification {
 
     /**
-     * @param file
-     * @param rank
+     * @param source
      */
-    public Square(final File file, final Rank rank) {
+    public SquareIsEqualTo(final Square source) {
+        // TODO Auto-generated constructor stub
     }
 
-    /**
-     * @return
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.krloxz.chess.SquareSpecification#isSatisfiedBy(org.krloxz.chess.Square)
      */
-    public Optional<Piece> getPiece() {
+    @Override
+    public boolean isSatisfiedBy(final Square square) {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
 }

@@ -15,26 +15,18 @@
  */
 package org.krloxz.chess;
 
-import java.util.Optional;
-
 /**
  * @author Carlos Gomez
  */
-public class Square {
+public class Piece {
 
     /**
-     * @param file
-     * @param rank
-     */
-    public Square(final File file, final Rank rank) {
-    }
-
-    /**
+     * @param target
      * @return
      */
-    public Optional<Piece> getPiece() {
+    public boolean move(final Square target) {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
 }

@@ -16,15 +16,53 @@
 package org.krloxz.chess;
 
 /**
+ * Encapsulates a board square. The square is internally represented as a coordinate pair (x, y).
+ * 
  * @author Carlos Gomez
  */
 public class Square {
+
+    private static final String FILES = "abcdefgh";
+    private static final String RANKS = "12345678";
+
+    private final int x;
+    private final int y;
 
     /**
      * @param file
      * @param rank
      */
     public Square(final File file, final Rank rank) {
+        this.x = 0;
+        this.y = 0;
+    }
+
+    /**
+     * @param sanLabel
+     */
+    public Square(final String sanLabel) {
+        if (sanLabel.length() != 2) {
+            throw new IllegalArgumentException("Illegal SAN label: " + sanLabel);
+        }
+        this.x = FILES.indexOf(sanLabel.charAt(0));
+        this.y = RANKS.indexOf(sanLabel.charAt(1));
+        if (this.x < 0 || this.y < 0) {
+            throw new IllegalArgumentException("Illegal SAN label: " + sanLabel);
+        }
+    }
+
+    /**
+     * @return
+     */
+    public int getX() {
+        return this.x;
+    }
+
+    /**
+     * @return
+     */
+    public int getY() {
+        return this.y;
     }
 
 }

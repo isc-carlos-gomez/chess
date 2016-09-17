@@ -37,12 +37,12 @@ public class Player {
      * @return
      */
     public PlayerAction yourTurn() {
-        final ActionExecutorVisitor actionExecutor = new ActionExecutorVisitor(
+        final TurnProcessingActionVisitor visitor = new TurnProcessingActionVisitor(
                 this.board, this.strategy, getOpponent());
         PlayerAction action = null;
         do {
             action = this.strategy.nextAction(this.board.copy());
-        } while (!action.accept(actionExecutor));
+        } while (!action.accept(visitor));
         return action;
     }
 

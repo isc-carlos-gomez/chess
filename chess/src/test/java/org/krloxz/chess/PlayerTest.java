@@ -71,14 +71,14 @@ public class PlayerTest {
         final PlayerAction action = mock(PlayerAction.class);
 
         when(this.strategy.nextAction(any())).thenReturn(action);
-        when(action.accept(notNull(ActionExecutorVisitor.class))).thenReturn(false, true);
+        when(action.accept(notNull(TurnProcessingActionVisitor.class))).thenReturn(false, true);
 
         // Act
         this.player.yourTurn();
 
         // Assert
-        final ArgumentCaptor<ActionExecutorVisitor> visitorCaptor = ArgumentCaptor
-                .forClass(ActionExecutorVisitor.class);
+        final ArgumentCaptor<TurnProcessingActionVisitor> visitorCaptor = ArgumentCaptor
+                .forClass(TurnProcessingActionVisitor.class);
         verify(action, times(2)).accept(visitorCaptor.capture());
         assertSame("The same visitor instance must be used along a turn", visitorCaptor.getAllValues().get(0),
                 visitorCaptor.getAllValues().get(1));

@@ -23,7 +23,7 @@ package org.krloxz.chess;
  *
  * @author Carlos Gomez
  */
-public class ActionExecutorVisitor implements ActionVisitor<Boolean> {
+public class TurnProcessingActionVisitor implements ActionVisitor<Boolean> {
 
     private boolean drawAlreadyOffered;
     private final Board board;
@@ -40,7 +40,7 @@ public class ActionExecutorVisitor implements ActionVisitor<Boolean> {
      * @param opponent
      *        the opponent of the player in turn, which should be using this visitor.
      */
-    public ActionExecutorVisitor(final Board board, final PlayerStrategy strategy, final Player opponent) {
+    public TurnProcessingActionVisitor(final Board board, final PlayerStrategy strategy, final Player opponent) {
         this.board = board;
         this.drawAlreadyOffered = false;
         this.strategy = strategy;

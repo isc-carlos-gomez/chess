@@ -25,7 +25,6 @@ public class Bishop extends Piece {
      */
     public Bishop(final Color color) {
         super(color);
-        // TODO Auto-generated constructor stub
     }
 
     /*

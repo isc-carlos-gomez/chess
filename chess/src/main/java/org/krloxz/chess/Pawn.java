@@ -34,18 +34,46 @@ public class Pawn extends Piece {
      */
     @Override
     protected boolean confirmLegalMove(final Move move, final Board board) {
-        final boolean isOneSquareMove = move.getTarget().getY() - move.getSource().getY() == 1;
-        final boolean isInitialMove = move.getSource().getY() == 1;
-        final boolean isTwoSquareMove = move.getTarget().getY() - move.getSource().getY() == 2;
-        final boolean isLegalTwoSquareMove = isInitialMove && isTwoSquareMove;
-        final boolean isCapture = Math.abs(move.getSource().getX() - move.getSource().getX()) == 1;
-        final Square targetSquare = board.getSquare(move.getTarget());
-        final boolean isLegalCapture = isCapture && targetSquare.isOccupied();
-        final boolean isLegalMove = isOneSquareMove || isLegalTwoSquareMove || isLegalCapture;
         if (move instanceof Promotion) {
-            return isLegalMove && move.getTarget().getY() == 7;
+            return isPawnMove(move, board) && move.getTarget().getY() == getPromotionRank();
         }
-        return isLegalMove;
+        return isPawnMove(move, board);
+    }
+
+    private boolean isPawnMove(final Move move, final Board board) {
+        if (move.getSource().getX() == move.getTarget().getX()) {
+            return isOneSquareMove(move) || isTwoSquareMove(move);
+        }
+        return isCapture(move, board);
+    }
+
+    private boolean isOneSquareMove(final Move move) {
+        return move.getTarget().getY() - move.getSource().getY() == getOrientation();
+    }
+
+    private boolean isTwoSquareMove(final Move move) {
+        final boolean isInitialMove = move.getSource().getY() == getInitialRank();
+        final boolean isTwoSquareMove = move.getTarget().getY() - move.getSource().getY() == getOrientation() * 2;
+        return isInitialMove && isTwoSquareMove;
+    }
+
+    private boolean isCapture(final Move move, final Board board) {
+        final boolean isForwardMove = move.getTarget().getY() - move.getSource().getY() == getOrientation();
+        final boolean isCapture = Math.abs(move.getSource().getX() - move.getTarget().getX()) == 1;
+        final Square targetSquare = board.getSquare(move.getTarget());
+        return isForwardMove && isCapture && targetSquare.isOccupied();
+    }
+
+    private int getOrientation() {
+        return getColor() == Color.LIGHT ? 1 : -1;
+    }
+
+    private int getInitialRank() {
+        return getColor() == Color.LIGHT ? 1 : 6;
+    }
+
+    private int getPromotionRank() {
+        return getColor() == Color.LIGHT ? 7 : 0;
     }
 
 }

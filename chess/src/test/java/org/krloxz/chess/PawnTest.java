@@ -48,13 +48,38 @@ public class PawnTest {
     }
 
     @Test
+    public void confirmLegalMoveOnDarkPawn() {
+        assertTrue("Move should be legal", this.darkPawn.confirmLegalMove(new Move("a7", "a6"), this.board));
+    }
+
+    @Test
+    public void confirmLegalMoveOnSideMove() {
+        assertFalse("Move should be ilegal", this.lightPawn.confirmLegalMove(new Move("a2", "b2"), this.board));
+    }
+
+    @Test
+    public void confirmLegalMoveOnSideMoveAndDarkPawn() {
+        assertFalse("Move should be ilegal", this.darkPawn.confirmLegalMove(new Move("a2", "b2"), this.board));
+    }
+
+    @Test
     public void confirmLegalMoveOnInitialTwoSquare() {
         assertTrue("Move should be legal", this.lightPawn.confirmLegalMove(new Move("a2", "a4"), this.board));
     }
 
     @Test
+    public void confirmLegalMoveOnInitialTwoSquareAndDarkPawn() {
+        assertTrue("Move should be legal", this.darkPawn.confirmLegalMove(new Move("a7", "a5"), this.board));
+    }
+
+    @Test
     public void confirmLegalMoveOnNoInitialTwoSquare() {
         assertFalse("Move should be ilegal", this.lightPawn.confirmLegalMove(new Move("a3", "a5"), this.board));
+    }
+
+    @Test
+    public void confirmLegalMoveOnNoInitialTwoSquareAndDarkPawn() {
+        assertFalse("Move should be ilegal", this.darkPawn.confirmLegalMove(new Move("a6", "a4"), this.board));
     }
 
     @Test
@@ -72,15 +97,69 @@ public class PawnTest {
     }
 
     @Test
+    public void confirmLegalMoveOnCaptureAndDarkPawn() {
+        // Arrange
+        final Square foundSquare = mock(Square.class);
+        when(this.board.getSquare(any())).thenReturn(foundSquare);
+        when(foundSquare.isOccupied()).thenReturn(true);
+
+        // Act
+        final boolean isLegalMove = this.darkPawn.confirmLegalMove(new Move("a7", "b6"), this.board);
+
+        // Assert
+        assertTrue("Move should be legal", isLegalMove);
+    }
+
+    @Test
+    public void confirmLegalMoveOnCaptureAtVacantSquare() {
+        // Arrange
+        final Square foundSquare = mock(Square.class);
+        when(this.board.getSquare(any())).thenReturn(foundSquare);
+        when(foundSquare.isOccupied()).thenReturn(true);
+
+        // Act
+        final boolean isLegalMove = this.lightPawn.confirmLegalMove(new Move("a3", "b2"), this.board);
+
+        // Assert
+        assertFalse("Move should be ilegal", isLegalMove);
+    }
+
+    @Test
+    public void confirmLegalMoveOnCaptureAtVacantSquareAndDarkPawn() {
+        // Arrange
+        final Square foundSquare = mock(Square.class);
+        when(this.board.getSquare(any())).thenReturn(foundSquare);
+        when(foundSquare.isOccupied()).thenReturn(true);
+
+        // Act
+        final boolean isLegalMove = this.darkPawn.confirmLegalMove(new Move("a6", "b7"), this.board);
+
+        // Assert
+        assertFalse("Move should be ilegal", isLegalMove);
+    }
+
+    @Test
     public void confirmLegalMoveOnPromotion() {
         assertTrue("Move should be legal",
                 this.lightPawn.confirmLegalMove(new Promotion("a7", "a8", PieceType.QUEEN), this.board));
     }
 
     @Test
+    public void confirmLegalMoveOnPromotionAndDarkPawn() {
+        assertTrue("Move should be legal",
+                this.darkPawn.confirmLegalMove(new Promotion("a2", "a1", PieceType.QUEEN), this.board));
+    }
+
+    @Test
     public void confirmLegalMoveOnPromotionWithIllegalTarget() {
         assertFalse("Move should be ilegal",
                 this.lightPawn.confirmLegalMove(new Promotion("a6", "a7", PieceType.QUEEN), this.board));
+    }
+
+    @Test
+    public void confirmLegalMoveOnPromotionWithIllegalTargetAndDarkPawn() {
+        assertFalse("Move should be ilegal",
+                this.darkPawn.confirmLegalMove(new Promotion("a3", "a2", PieceType.QUEEN), this.board));
     }
 
 }

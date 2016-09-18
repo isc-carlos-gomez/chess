@@ -36,7 +36,8 @@ public class SanMoveTest {
     @Before
     public void setUp() {
     }
-    
+
+    @Ignore
     @Test
     public void creationOnBasicMove() {
         // Arrange
@@ -59,64 +60,26 @@ public class SanMoveTest {
         assertFalse(move.isFullySpecified());
         assertFalse(move.isGameEnding());
     }
-    
+
     /*
-    creationOnNoPiece
-    creationOnFile
-    creationOnRank
-    
-    
-    getPiece
-        OnNoPiece
-        OnCapture
-    getPieceOnPromotion
-    getPieceOnKingsideCastling
-    getPieceOnQueensideCastling
-    getPieceOnCheck
-    getPieceOnCheckmate
-    getPieceOnGameEnding
-    
-    getSquare
-        OnCapture
-        OnPromotion
-        OnKingsideCastling
-        OnQueensideCastling
-        OnCheck
-        OnCheckmate
-        OnGameEnding
-    
-    getFile
-        OnNoFile
-        OnCapture
-        OnPromotion
-        OnKingsideCastling
-        OnQueensideCastling
-        OnCheck
-        OnCheckmate
-        OnGameEnding
-        
-    getRank
-        OnNoRank
-        OnCapture
-        OnPromotion
-        OnKingsideCastling
-        OnQueensideCastling
-        OnCheck
-        OnCheckmate
-        OnGameEnding
-        
-    getGameEnding
-        OnNoEnding
-        
-    getPiecePromotedToOrNull
-    getPiecePromotedToOrNullOnNoPromotion
-    isFullySpecified
-    isFullySpecifiedOnNoFile
-    isFullySpecifiedOnNoRank
-    isGameEnding
-    isGameEndingOnNoEnding
-    */
-    
+     * creationOnNoPiece creationOnFile creationOnRank
+     * 
+     * 
+     * getPiece OnNoPiece OnCapture getPieceOnPromotion getPieceOnKingsideCastling getPieceOnQueensideCastling
+     * getPieceOnCheck getPieceOnCheckmate getPieceOnGameEnding
+     * 
+     * getSquare OnCapture OnPromotion OnKingsideCastling OnQueensideCastling OnCheck OnCheckmate OnGameEnding
+     * 
+     * getFile OnNoFile OnCapture OnPromotion OnKingsideCastling OnQueensideCastling OnCheck OnCheckmate OnGameEnding
+     * 
+     * getRank OnNoRank OnCapture OnPromotion OnKingsideCastling OnQueensideCastling OnCheck OnCheckmate OnGameEnding
+     * 
+     * getGameEnding OnNoEnding
+     * 
+     * getPiecePromotedToOrNull getPiecePromotedToOrNullOnNoPromotion isFullySpecified isFullySpecifiedOnNoFile
+     * isFullySpecifiedOnNoRank isGameEnding isGameEndingOnNoEnding
+     */
+
     @Ignore
     @Test
     public void nextActionOnFileSpecified() {

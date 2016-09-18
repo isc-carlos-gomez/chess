@@ -43,98 +43,44 @@ public class PawnTest {
     }
 
     @Test
-    public void isLegalMove() {
-        // Arrange
-        when(this.board.getSquare(any())).thenReturn(mock(Square.class));
-
-        // Act
-        final boolean isLegalMove = this.lightPawn.isLegalMove(new Move("a2", "a3"), this.board);
-
-        // Assert
-        assertTrue("Move should be legal", isLegalMove);
+    public void confirmLegalMove() {
+        assertTrue("Move should be legal", this.lightPawn.confirmLegalMove(new Move("a2", "a3"), this.board));
     }
 
     @Test
-    public void isLegalMoveOnInitialTwoSquare() {
-        // Arrange
-        when(this.board.getSquare(any())).thenReturn(mock(Square.class));
-
-        // Act
-        final boolean isLegalMove = this.lightPawn.isLegalMove(new Move("a2", "a4"), this.board);
-
-        // Assert
-        assertTrue("Move should be legal", isLegalMove);
+    public void confirmLegalMoveOnInitialTwoSquare() {
+        assertTrue("Move should be legal", this.lightPawn.confirmLegalMove(new Move("a2", "a4"), this.board));
     }
 
     @Test
-    public void isLegalMoveOnNoInitialTwoSquare() {
-        // Arrange
-        when(this.board.getSquare(any())).thenReturn(mock(Square.class));
-
-        // Act
-        final boolean isLegalMove = this.lightPawn.isLegalMove(new Move("a3", "a5"), this.board);
-
-        // Assert
-        assertFalse("Move should be ilegal", isLegalMove);
+    public void confirmLegalMoveOnNoInitialTwoSquare() {
+        assertFalse("Move should be ilegal", this.lightPawn.confirmLegalMove(new Move("a3", "a5"), this.board));
     }
 
     @Test
-    public void isLegalMoveOnCapture() {
+    public void confirmLegalMoveOnCapture() {
         // Arrange
         final Square foundSquare = mock(Square.class);
-        final Piece piece = mock(Piece.class);
         when(this.board.getSquare(any())).thenReturn(foundSquare);
         when(foundSquare.isOccupied()).thenReturn(true);
-        when(foundSquare.getPiece()).thenReturn(piece);
-        when(piece.getColor()).thenReturn(Color.DARK);
 
         // Act
-        final boolean isLegalMove = this.lightPawn.isLegalMove(new Move("a2", "b3"), this.board);
-
-        // Assert
-        assertTrue("Move should be legal", isLegalMove);
-    }
-
-    // TODO: Move to Piece
-    @Test
-    public void isLegalMoveOnTargetOccupied() {
-        // Arrange
-        final Square foundSquare = mock(Square.class);
-        final Piece piece = mock(Piece.class);
-        when(this.board.getSquare(any())).thenReturn(foundSquare);
-        when(foundSquare.isOccupied()).thenReturn(true);
-        when(foundSquare.getPiece()).thenReturn(piece);
-        when(piece.getColor()).thenReturn(Color.LIGHT);
-
-        // Act
-        final boolean isLegalMove = this.lightPawn.isLegalMove(new Move("a2", "a3"), this.board);
-
-        // Assert
-        assertFalse("Move should be ilegal", isLegalMove);
-    }
-
-    @Test
-    public void isLegalMoveOnPromotion() {
-        // Arrange
-        when(this.board.getSquare(any())).thenReturn(mock(Square.class));
-
-        // Act
-        final boolean isLegalMove = this.lightPawn.isLegalMove(new Promotion("a7", "a8", PieceType.QUEEN), this.board);
+        final boolean isLegalMove = this.lightPawn.confirmLegalMove(new Move("a2", "b3"), this.board);
 
         // Assert
         assertTrue("Move should be legal", isLegalMove);
     }
 
     @Test
-    public void isLegalMoveOnPromotionWithIllegalTarget() {
-        // Arrange
-        when(this.board.getSquare(any())).thenReturn(mock(Square.class));
+    public void confirmLegalMoveOnPromotion() {
+        assertTrue("Move should be legal",
+                this.lightPawn.confirmLegalMove(new Promotion("a7", "a8", PieceType.QUEEN), this.board));
+    }
 
-        // Act
-        final boolean isLegalMove = this.lightPawn.isLegalMove(new Promotion("a6", "a7", PieceType.QUEEN), this.board);
-
-        // Assert
-        assertFalse("Move should be ilegal", isLegalMove);
+    @Test
+    public void confirmLegalMoveOnPromotionWithIllegalTarget() {
+        assertFalse("Move should be ilegal",
+                this.lightPawn.confirmLegalMove(new Promotion("a6", "a7", PieceType.QUEEN), this.board));
     }
 
 }

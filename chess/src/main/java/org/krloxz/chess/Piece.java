@@ -15,6 +15,8 @@
  */
 package org.krloxz.chess;
 
+import java.util.List;
+
 /**
  * @author Carlos Gomez
  */
@@ -35,5 +37,30 @@ public abstract class Piece {
     public Color getColor() {
         return this.color;
     }
+
+    /**
+     * @param move
+     * @param board
+     * @return
+     */
+    public boolean isLegalMove(final Move move, final Board board) {
+        final Square targetSquare = board.getSquare(move.getTarget());
+        if (targetSquare.isOccupied()
+                && targetSquare.getPiece().getColor() == getColor()) {
+            return false;
+        }
+        final List<Square> occupiedSquares = board.findSquares(new OccupiedAndBetweenSquaresSpecification());
+        if (!occupiedSquares.isEmpty()) {
+            return false;
+        }
+        return confirmLegalMove(move, board);
+    }
+
+    /**
+     * @param move
+     * @param board
+     * @return
+     */
+    protected abstract boolean confirmLegalMove(Move move, Board board);
 
 }

@@ -27,21 +27,19 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    /**
-     * @param move
-     * @return
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.krloxz.chess.Piece#confirmLegalMove(org.krloxz.chess.Move, org.krloxz.chess.Board)
      */
-    public boolean isLegalMove(final Move move, final Board board) {
-        final Square targetSquare = board.getSquare(move.getTarget());
-        if (targetSquare.isOccupied()
-                && targetSquare.getPiece().getColor() == getColor()) {
-            return false;
-        }
+    @Override
+    protected boolean confirmLegalMove(final Move move, final Board board) {
         final boolean isOneSquareMove = move.getTarget().getY() - move.getSource().getY() == 1;
         final boolean isInitialMove = move.getSource().getY() == 1;
         final boolean isTwoSquareMove = move.getTarget().getY() - move.getSource().getY() == 2;
         final boolean isLegalTwoSquareMove = isInitialMove && isTwoSquareMove;
         final boolean isCapture = Math.abs(move.getSource().getX() - move.getSource().getX()) == 1;
+        final Square targetSquare = board.getSquare(move.getTarget());
         final boolean isLegalCapture = isCapture && targetSquare.isOccupied();
         final boolean isLegalMove = isOneSquareMove || isLegalTwoSquareMove || isLegalCapture;
         if (move instanceof Promotion) {

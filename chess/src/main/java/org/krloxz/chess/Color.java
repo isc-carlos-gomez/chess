@@ -18,25 +18,8 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public enum PieceType {
+public enum Color {
 
-    PAWN(""),
-    KNIGHT("N"),
-    QUEEN("Q");
-
-    private final String sanAbbreviation;
-
-    private PieceType(final String sanAbbreviation) {
-        this.sanAbbreviation = sanAbbreviation;
-    }
-
-    public static PieceType fromSanAbbreviation(final String abbreviation) {
-        for (final PieceType type : PieceType.values()) {
-            if (abbreviation.equals(type.sanAbbreviation)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Illegal SAN abbreviation: " + abbreviation);
-    }
+    LIGHT, DARK;
 
 }

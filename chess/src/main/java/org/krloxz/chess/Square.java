@@ -17,7 +17,7 @@ package org.krloxz.chess;
 
 /**
  * Encapsulates a board square. The square is internally represented as a coordinate pair (x, y).
- * 
+ *
  * @author Carlos Gomez
  */
 public class Square {
@@ -63,6 +63,22 @@ public class Square {
      */
     public int getY() {
         return this.y;
+    }
+
+    /**
+     * @return
+     */
+    public Piece getPiece() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isOccupied() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

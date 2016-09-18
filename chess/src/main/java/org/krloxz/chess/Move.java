@@ -25,18 +25,18 @@ import java.util.NoSuchElementException;
  */
 public class Move implements PlayerAction {
 
-    private final Square from;
-    private final Square to;
+    private final Square source;
+    private final Square target;
     private final PieceType piecePromotedTo;
 
     /**
-     * @param from
-     * @param to
+     * @param source
+     * @param target
      * @param piecePromotedTo
      */
-    public Move(final Square from, final Square to, final PieceType piecePromotedTo) {
-        this.from = from;
-        this.to = to;
+    public Move(final Square source, final Square target, final PieceType piecePromotedTo) {
+        this.source = source;
+        this.target = target;
         this.piecePromotedTo = piecePromotedTo;
     }
 
@@ -46,6 +46,14 @@ public class Move implements PlayerAction {
      */
     public Move(final Square from, final Square to) {
         this(from, to, null);
+    }
+
+    /**
+     * @param sourceSan
+     * @param targetSan
+     */
+    public Move(final String sourceSan, final String targetSan) {
+        this(new Square(sourceSan), new Square(targetSan));
     }
 
     /*
@@ -61,15 +69,15 @@ public class Move implements PlayerAction {
     /**
      * @return
      */
-    public Square getFrom() {
-        return this.from;
+    public Square getSource() {
+        return this.source;
     }
 
     /**
      * @return
      */
-    public Square getTo() {
-        return this.to;
+    public Square getTarget() {
+        return this.target;
     }
 
     /**

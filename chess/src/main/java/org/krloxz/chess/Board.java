@@ -45,4 +45,13 @@ public class Board {
         return null;
     }
 
+    /**
+     * @param target
+     * @return
+     */
+    public Square getSquare(final Square target) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

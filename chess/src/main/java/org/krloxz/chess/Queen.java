@@ -18,12 +18,12 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class Rook extends Piece {
+public class Queen extends Piece {
 
     /**
      * @param color
      */
-    public Rook(final Color color) {
+    public Queen(final Color color) {
         super(color);
     }
 
@@ -34,16 +34,8 @@ public class Rook extends Piece {
      */
     @Override
     protected boolean confirmLegalMove(final Move move, final Board board) {
-        return isLegalMove(move);
-    }
-
-    /**
-     * @param move
-     * @return
-     */
-    protected static boolean isLegalMove(final Move move) {
-        return move.getSource().getX() == move.getTarget().getX()
-                || move.getSource().getY() == move.getTarget().getY();
+        return Bishop.isLegalMove(move)
+                || Rook.isLegalMove(move);
     }
 
 }

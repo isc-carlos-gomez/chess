@@ -34,6 +34,14 @@ public class Bishop extends Piece {
      */
     @Override
     protected boolean confirmLegalMove(final Move move, final Board board) {
+        return isLegalMove(move);
+    }
+
+    /**
+     * @param move
+     * @return
+     */
+    protected static boolean isLegalMove(final Move move) {
         final int deltaX = Math.abs(move.getTarget().getX() - move.getSource().getX());
         final int deltaY = Math.abs(move.getTarget().getY() - move.getSource().getY());
         return deltaX == deltaY;

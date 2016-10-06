@@ -1,2 +1,2 @@
 # chess
-A simple chess game to exercise coding best practices.
+A simple chess game to exercise Java coding best practices.

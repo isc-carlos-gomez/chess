@@ -15,6 +15,11 @@
  */
 package org.krloxz.chess;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Encapsulates a board square. The square is internally represented as a coordinate pair (x, y).
  *
@@ -27,6 +32,7 @@ public class Square {
 
     private final int x;
     private final int y;
+    private String sanLabel;
 
     /**
      * @param file
@@ -49,6 +55,7 @@ public class Square {
         if (this.x < 0 || this.y < 0) {
             throw new IllegalArgumentException("Illegal SAN label: " + sanLabel);
         }
+        this.sanLabel = sanLabel;
     }
 
     /**
@@ -79,6 +86,48 @@ public class Square {
     public boolean isOccupied() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object object) {
+        if (object instanceof Square) {
+            final Square other = (Square) object;
+            return new EqualsBuilder()
+                    .append(this.x, other.x)
+                    .append(this.y, other.y)
+                    .isEquals();
+        }
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.x)
+                .append(this.y)
+                .toHashCode();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append(this.sanLabel)
+                .toString();
     }
 
 }

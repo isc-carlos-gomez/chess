@@ -46,4 +46,12 @@ public class Rook extends Piece {
                 || move.getSource().getY() == move.getTarget().getY();
     }
 
+    /**
+     * @return
+     */
+    public boolean castle() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

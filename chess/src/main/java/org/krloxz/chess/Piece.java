@@ -49,6 +49,7 @@ public abstract class Piece {
                 && targetSquare.getPiece().getColor() == getColor()) {
             return false;
         }
+        // TODO: Prevent on knight
         final List<Square> occupiedSquares = board.findSquares(new OccupiedAndBetweenSquaresSpecification());
         if (!occupiedSquares.isEmpty()) {
             return false;
@@ -62,5 +63,13 @@ public abstract class Piece {
      * @return
      */
     protected abstract boolean confirmLegalMove(Move move, Board board);
+
+    /**
+     *
+     */
+    protected void captured() {
+        // TODO Auto-generated method stub
+
+    }
 
 }

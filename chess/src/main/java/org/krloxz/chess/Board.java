@@ -16,6 +16,7 @@
 package org.krloxz.chess;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Carlos Gomez
@@ -50,6 +51,24 @@ public class Board {
      * @return
      */
     public Square getSquare(final Square target) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @param notNull
+     * @return
+     */
+    public List<Piece> findPieces(final PieceSpecification specification) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @param specification
+     * @return
+     */
+    public <T extends Piece> Optional<T> findPiece(final PieceSpecification specification) {
         // TODO Auto-generated method stub
         return null;
     }

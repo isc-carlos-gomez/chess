@@ -44,7 +44,7 @@ public class RookTest {
     }
 
     @Test
-    public void confirmLegalMoveOnStraightMove() {
+    public void confirmLegalMoveOnNotStraightMove() {
         assertFalse("Move should be ilegal", this.rook.confirmLegalMove(new Move("a1", "h8"), this.board));
     }
 

@@ -15,26 +15,11 @@
  */
 package org.krloxz.chess;
 
+
 /**
  * @author Carlos Gomez
+ *
  */
-public abstract class Piece {
-
-    /**
-     * @param target
-     * @return
-     */
-    public boolean move(final Square target) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /**
-     *
-     */
-    public void captured() {
-        // TODO Auto-generated method stub
-
-    }
+public interface PieceSpecification {
 
 }

@@ -16,6 +16,7 @@
 package org.krloxz.chess;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Carlos Gomez
@@ -35,11 +36,8 @@ public class Board {
      * @param move
      */
     public boolean update(final Move move) {
-        final List<Square> squares = this.squareRepository.findSquares(new SquareIsEqualTo(move.getSource()));
-        final Square sourceSquare = squares.get(0);
-        sourceSquare.getPiece().get().move(move.getTarget());
-        this.squareRepository.refreshSquares(null);
-        return true;
+        // TODO: Redesign and implement
+        return false;
     }
 
     /**
@@ -54,6 +52,15 @@ public class Board {
      * @return
      */
     public List<Square> findSquares(final SquareSpecification specification) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @param specification
+     * @return
+     */
+    public <T extends Piece> Optional<T> findPiece(final PieceSpecification specification) {
         // TODO Auto-generated method stub
         return null;
     }

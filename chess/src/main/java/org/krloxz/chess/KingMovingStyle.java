@@ -18,23 +18,17 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public abstract class Piece {
+public class KingMovingStyle {
 
     /**
+     * @param position
      * @param target
+     * @param board
      * @return
      */
-    public boolean move(final Square target) {
+    public boolean isLegalMove(final Square position, final Square target, final Board board) {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    /**
-     *
-     */
-    public void captured() {
-        // TODO Auto-generated method stub
-
     }
 
 }

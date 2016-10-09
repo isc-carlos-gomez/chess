@@ -22,18 +22,24 @@ import java.util.Optional;
  */
 public class King {
 
-    protected static final Square INITIAL_POSITION = new Square("e1");
+    protected static final Square INITIAL_POSITION_ON_LIGHT = new Square("e1");
+    protected static final Square INITIAL_POSITION_ON_DARK = new Square("e8");
 
     private final KingMovingStyle movingStyle;
     private Square position;
 
     /**
+     * @param color
      * @param light
      * @param kingMovingStyle
      */
-    public King(final KingMovingStyle kingMovingStyle) {
+    public King(final Color color, final KingMovingStyle kingMovingStyle) {
         this.movingStyle = kingMovingStyle;
-        this.position = INITIAL_POSITION;
+        if (color == Color.LIGHT) {
+            this.position = INITIAL_POSITION_ON_LIGHT;
+        } else {
+            this.position = INITIAL_POSITION_ON_DARK;
+        }
     }
 
     /**

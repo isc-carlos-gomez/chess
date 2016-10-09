@@ -36,15 +36,27 @@ import org.junit.Test;
  */
 public class KingTest {
 
-    private King king;
+    private King lightKing;
+    private King darkKing;
     private KingMovingStyle movingStyle;
     private Board board;
 
     @Before
     public void setUp() {
         this.movingStyle = mock(KingMovingStyle.class);
-        this.king = new King(this.movingStyle);
+        this.lightKing = new King(Color.LIGHT, this.movingStyle);
+        this.darkKing = new King(Color.DARK, this.movingStyle);
         this.board = mock(Board.class);
+    }
+
+    @Test
+    public void getPositionOnNewLightKing() {
+        assertEquals(King.INITIAL_POSITION_ON_LIGHT, this.lightKing.getPosition());
+    }
+
+    @Test
+    public void getPositionOnNewDarkKing() {
+        assertEquals(King.INITIAL_POSITION_ON_DARK, this.darkKing.getPosition());
     }
 
     @Test
@@ -56,11 +68,11 @@ public class KingTest {
         when(this.board.findPiece(notNull(InSquareSpecification.class))).thenReturn(Optional.empty());
 
         // Act
-        final boolean moved = this.king.move(target, this.board);
+        final boolean moved = this.lightKing.move(target, this.board);
 
         // Assert
         assertTrue("King should have moved", moved);
-        assertEquals(target, this.king.getPosition());
+        assertEquals(target, this.lightKing.getPosition());
     }
 
     @Test
@@ -71,11 +83,11 @@ public class KingTest {
                 .thenReturn(false);
 
         // Act
-        final boolean moved = this.king.move(target, this.board);
+        final boolean moved = this.lightKing.move(target, this.board);
 
         // Assert
         assertFalse("King shouldn't have moved", moved);
-        assertEquals(King.INITIAL_POSITION, this.king.getPosition());
+        assertEquals(King.INITIAL_POSITION_ON_LIGHT, this.lightKing.getPosition());
     }
 
     @Test
@@ -88,7 +100,7 @@ public class KingTest {
         when(this.board.findPiece(notNull(InSquareSpecification.class))).thenReturn(Optional.of(piece));
 
         // Act
-        this.king.move(target, this.board);
+        this.lightKing.move(target, this.board);
 
         // Assert
         verify(piece).captured();

@@ -1,0 +1,12 @@
+@startuml
+
+[-> PieceAnalyzer: canMove(position, target, boardAnalyzer)
+PieceAnalyzer -> PieceBehavior: supportMove(position, target)
+PieceAnalyzer -> PieceBehavior: canJump()
+
+alt !canJump
+	PieceAnalyzer -> BoardAnalyzer: isPathClear(position, target)
+end
+
+hide footbox
+@enduml

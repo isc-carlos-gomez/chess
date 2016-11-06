@@ -18,38 +18,16 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class Piece {
-
-    private final PieceBehavior behavior;
-    private final Square position;
-
-    /**
-     * @param behavior
-     * @param initialPosition
-     */
-    public Piece(final PieceBehavior behavior, final Square initialPosition) {
-        this.behavior = behavior;
-        this.position = initialPosition;
-    }
+public class SquareAnalizer {
 
     /**
      * @param target
      * @param board
      * @return
      */
-    public boolean move(final Square target, final Board board) {
-        if (this.behavior.isLegalMove(this.position, target, board)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *
-     */
-    public void captured() {
+    public Object isSquareOccupied(final Square target, final Board board) {
         // TODO Auto-generated method stub
-
+        return null;
     }
 
 }

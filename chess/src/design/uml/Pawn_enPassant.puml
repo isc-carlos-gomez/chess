@@ -1,0 +1,25 @@
+@startuml
+
+[-> Pawn: enPassant(target, board)
+
+Pawn -> Board: getAnalyzer()
+Pawn -> PieceAnalyzer: canMove(position, target, boardAnalyzer)
+alt can't move
+	Pawn -->[: false
+end
+
+Pawn -> PieceWithPositionSpecification: <<create>>
+Pawn -> Board: findPiece(specification)
+alt pawn not present
+	Pawn -->[: false
+end
+
+Pawn -> Pawn2: movedBefore()
+alt moved before
+	Pawn -->[: false
+end
+
+Pawn -> PieceCaptor: captureIfNeeded(target, board)
+
+hide footbox
+@enduml

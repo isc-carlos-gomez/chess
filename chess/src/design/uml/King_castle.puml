@@ -1,0 +1,40 @@
+@startuml
+
+[-> King: castle(castleType, board)
+
+King -> King: movedBefore()
+alt moved beofre
+	King -->[: false
+end
+
+King -> PieceWithPositionSpecification: <<create>>
+King -> Board: findPiece(specification)
+alt rook not present
+	King -->[: false
+end
+
+King -> Rook: movedBefore()
+alt rook moved before
+	King -->[: false
+end
+
+King -> Board: getAnalyzer()
+King -> BoardAnalyzer: isPathClear(position, target)
+alt path not clear
+	King -->[: false
+end
+
+King -> King: calcualtePosition(castleType)
+King -> King: updatePosition(newPosition)
+King -> BoardAnalyzer: isKingInCheck(color)
+alt king in check
+	King -> King: updatePosition(initialPosition)
+	King -->[: false
+end
+
+King -> King: calculateRookPosition()
+King -> Rook: updatePosition(rookPosition)
+King -->[: true
+
+hide footbox
+@enduml

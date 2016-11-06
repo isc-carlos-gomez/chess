@@ -1,0 +1,7 @@
+@startuml
+
+[-> Piece: castle(castleType)
+Piece -> PieceBehavior: castle(castleType)
+
+hide footbox
+@enduml

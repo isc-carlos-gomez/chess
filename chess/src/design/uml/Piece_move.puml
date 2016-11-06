@@ -1,0 +1,28 @@
+@startuml
+
+[-> Piece: move(target, board)
+
+Piece -> Board: getAnalyzer()
+Piece -> PieceAnalyzer: canMove(position, target, boardAnalyzer)
+alt can't move
+	Piece -->[: false
+end
+
+Piece -> BoardAnalyzer: isTargetOccupied(target)
+alt occupied
+	Piece -->[: false
+end
+
+Piece -> PieceCaptor: captureIfNeeded(target, board)
+Piece -> Piece: updatePosition(target)
+Piece -> BoardAnalyzer: isKingInCheck(color)
+alt kingInCheck
+	Piece -> PieceCaptor: freeIfNeeded()
+	Piece -> Piece: updatePostion(initialPosition)
+	Piece -->[: false
+end
+
+Piece -->[: true
+
+hide footbox
+@enduml

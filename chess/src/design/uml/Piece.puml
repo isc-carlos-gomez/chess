@@ -1,0 +1,17 @@
+@startuml
+
+class Piece {
+	+move(target, board)
+	+getPosition(): Square
+}
+
+interface PieceBehavior {
+}
+
+Piece o-r-> PieceBehavior
+Piece ..> PieceAnalyzer
+Piece ..> BoardAnalyzer
+
+hide empty attributes
+hide empty methods
+@enduml

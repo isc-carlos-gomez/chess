@@ -1,0 +1,50 @@
+@startuml
+
+[-> CastlingProcessor: process(castling, board)
+
+CastlingProcessor -> Board: getPieceAt(castling.king)
+alt piece not found or piece is not a king
+	CastlingProcessor -->[: false
+end
+
+CastlingProcessor -> King: movedBefore()
+alt moved before
+	CastlingProcessor -->[: false
+end
+
+CastlingProcessor -> Board: getPieceAt(castling.rook)
+alt piece not found or piece is not a rook
+	CastlingProcessor -->[: false
+end
+
+CastlingProcessor -> Rook: movedBefore()
+alt moved before
+	CastlingProcessor -->[: false
+end
+
+CastlingProcessor -> BoardAnalyzer: isPathClear(castling.king, castling.rook)
+alt path not clear
+	CastlingProcessor -->[: false
+end
+
+CastlingProcessor -> BoardAnalyzer: isKingInCheck()
+alt king in check
+	CastlingProcessor -->[: false
+end
+
+CastlingProcessor -> King: createMemento()
+CastlingProcessor -> King: move(castling.kingTarget)
+CastlingProcessor -> Rook: createMemento()
+CastlingProcessor -> Rook: move(castling.rookTarget)
+
+CastlingProcessor -> BoardAnalyzer: isKingInCheck()
+alt king in check
+	CastlingProcessor -> King: restoreTo(kingMemento)
+	CastlingProcessor -> Rook: restoreTo(rookMemento)
+	CastlingProcessor -->[: false
+end
+
+CastlingProcessor -->[: true
+
+hide footbox
+@enduml

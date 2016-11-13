@@ -1,0 +1,43 @@
+@startuml
+
+[-> MoveProcessor: process(move, board)
+
+MoveProcessor -> Board: getPieceAt(move.source)
+alt piece not found
+	MoveProcessor -->[: false
+end
+
+MoveProcessor -> PieceRules: isLegalMove(piece.type, move.source, move.target)
+alt not legal move
+	MoveProcessor -->[: false
+end
+
+MoveProcessor -> BoardAnalyzer: isPathClear(move.source, move.target)
+alt path not clear
+	MoveProcessor -->[: false
+end
+
+MoveProcessor -> Board: getPieceAt(move.target)
+alt piece found
+	alt pieces of same color
+		MoveProcessor -->[: false
+	else different color
+		MoveProcessor -> TargetPiece: createMemento()
+		MoveProcessor -> TargetPiece: captured()
+	end
+end
+
+MoveProcessor -> SourcePiece: createMemento()
+MoveProcessor -> SourcePiece: move(move.target)
+
+MoveProcessor -> BoardAnalyzer: isKingInCheck()
+alt king in check
+	MoveProcessor -> SourcePiece: restoreTo(sourceMemento)
+	MoveProcessor -> TargetPiece: restoreTo(targetMemento)
+	MoveProcessor -->[: false
+end
+
+MoveProcessor -->[: true
+
+hide footbox
+@enduml

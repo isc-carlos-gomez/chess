@@ -1,0 +1,15 @@
+@startuml
+
+[-> Player: play()
+Player -> Strategy: nextAction
+Strategy -> Action: <<create>>
+Player -> Action: accept(processingVisitor)
+Action -> ProcessingVisitor: visit(this)
+alt move action
+	ProcessingVisitor -> MoveProcessor: process(move)
+	
+end
+ProcessingVisitor -> Opponent: notify(event)
+
+hide footbox
+@enduml

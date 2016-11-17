@@ -73,4 +73,31 @@ public class Board {
         return null;
     }
 
+    /**
+     * @param source
+     * @return
+     */
+    public Optional<Piece> getPieceAt(final Square source) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @param source
+     * @param target
+     * @return
+     */
+    public boolean isPathClear(final Square source, final Square target) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isKingInCheck() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

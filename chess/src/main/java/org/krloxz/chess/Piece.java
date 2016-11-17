@@ -67,7 +67,40 @@ public abstract class Piece {
     /**
      *
      */
-    protected void captured() {
+    protected PieceMemento captured() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public PieceType getType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @param piece
+     * @return
+     */
+    public boolean isFellow(final Piece piece) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * @param target
+     */
+    public PieceMemento move(final Square target) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @param memento
+     */
+    public void restoreTo(final PieceMemento memento) {
         // TODO Auto-generated method stub
 
     }

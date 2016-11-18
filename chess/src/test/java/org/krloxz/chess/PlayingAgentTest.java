@@ -27,13 +27,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests {@link MoveProcessor}.
+ * Unit tests {@link PlayingAgent}.
  *
  * @author Carlos Gomez
  */
-public class MoveProcessorTest {
+public class PlayingAgentTest {
 
-    private MoveProcessor processor;
+    private PlayingAgent agent;
     private RulesBook book;
     private Move move;
     private Board board;
@@ -43,7 +43,7 @@ public class MoveProcessorTest {
     @Before
     public void setUp() {
         this.book = mock(RulesBook.class);
-        this.processor = new MoveProcessor(this.book);
+        this.agent = new PlayingAgent(this.book);
         this.move = new Move(mock(Square.class), mock(Square.class));
         this.board = mock(Board.class);
         this.pieceAtSource = mock(Piece.class);
@@ -51,7 +51,7 @@ public class MoveProcessorTest {
     }
 
     @Test
-    public void process() {
+    public void playMove() {
         // Arrange
         when(this.board.getPieceAt(this.move.getSource()))
                 .thenReturn(Optional.of(this.pieceAtSource));
@@ -63,14 +63,14 @@ public class MoveProcessorTest {
                 .thenReturn(Optional.empty());
 
         // Act
-        final boolean processed = this.processor.process(this.move, this.board);
+        final boolean processed = this.agent.playMove(this.move, this.board);
 
         // Assert
         assertTrue("Move must be accepted and processed ", processed);
     }
 
     @Test
-    public void processMovesPieceAtSource() {
+    public void playMoveMovesPieceAtSource() {
         // Arrange
         when(this.board.getPieceAt(this.move.getSource()))
                 .thenReturn(Optional.of(this.pieceAtSource));
@@ -82,14 +82,14 @@ public class MoveProcessorTest {
                 .thenReturn(Optional.empty());
 
         // Act
-        this.processor.process(this.move, this.board);
+        this.agent.playMove(this.move, this.board);
 
         // Assert
         verify(this.pieceAtSource).move(this.move.getTarget());
     }
 
     @Test
-    public void processCapturesPieceAtTarget() {
+    public void playMoveCapturesPieceAtTarget() {
         // Arrange
         when(this.board.getPieceAt(this.move.getSource()))
                 .thenReturn(Optional.of(this.pieceAtSource));
@@ -103,27 +103,27 @@ public class MoveProcessorTest {
                 .thenReturn(false);
 
         // Act
-        this.processor.process(this.move, this.board);
+        this.agent.playMove(this.move, this.board);
 
         // Assert
         verify(this.pieceAtTarget).captured();
     }
 
     @Test
-    public void processOnPieceNotFoundAtSource() {
+    public void playMoveOnPieceNotFoundAtSource() {
         // Arrange
         when(this.board.getPieceAt(this.move.getSource()))
                 .thenReturn(Optional.empty());
 
         // Act
-        final boolean processed = this.processor.process(this.move, this.board);
+        final boolean processed = this.agent.playMove(this.move, this.board);
 
         // Assert
         assertFalse("Move must not be processed", processed);
     }
 
     @Test
-    public void processOnIllegalMove() {
+    public void playMoveOnIllegalMove() {
         // Arrange
         when(this.board.getPieceAt(this.move.getSource()))
                 .thenReturn(Optional.of(this.pieceAtSource));
@@ -131,14 +131,14 @@ public class MoveProcessorTest {
                 .thenReturn(false);
 
         // Act
-        final boolean processed = this.processor.process(this.move, this.board);
+        final boolean processed = this.agent.playMove(this.move, this.board);
 
         // Assert
         assertFalse("Move must not be processed", processed);
     }
 
     @Test
-    public void processOnPathNotClear() {
+    public void playMoveOnPathNotClear() {
         // Arrange
         when(this.board.getPieceAt(this.move.getSource()))
                 .thenReturn(Optional.of(this.pieceAtSource));
@@ -148,14 +148,14 @@ public class MoveProcessorTest {
                 .thenReturn(false);
 
         // Act
-        final boolean processed = this.processor.process(this.move, this.board);
+        final boolean processed = this.agent.playMove(this.move, this.board);
 
         // Assert
         assertFalse("Move must not be processed", processed);
     }
 
     @Test
-    public void processOnTargetOccupiedByFellow() {
+    public void playMoveOnTargetOccupiedByFellow() {
         // Arrange
         when(this.board.getPieceAt(this.move.getSource()))
                 .thenReturn(Optional.of(this.pieceAtSource));
@@ -169,14 +169,14 @@ public class MoveProcessorTest {
                 .thenReturn(true);
 
         // Act
-        final boolean processed = this.processor.process(this.move, this.board);
+        final boolean processed = this.agent.playMove(this.move, this.board);
 
         // Assert
         assertFalse("Move must not be processed", processed);
     }
 
     @Test
-    public void processOnKingInCheck() {
+    public void playMoveOnKingInCheck() {
         // Arrange
         final PieceMemento sourceMemento = mock(PieceMemento.class);
         when(this.board.getPieceAt(this.move.getSource()))
@@ -193,14 +193,14 @@ public class MoveProcessorTest {
                 .thenReturn(sourceMemento);
 
         // Act
-        final boolean processed = this.processor.process(this.move, this.board);
+        final boolean processed = this.agent.playMove(this.move, this.board);
 
         // Assert
         assertFalse("Move must not be processed", processed);
     }
 
     @Test
-    public void processOnKingInCheckRestoresPieceAtSource() {
+    public void playMoveOnKingInCheckRestoresPieceAtSource() {
         // Arrange
         final PieceMemento sourceMemento = mock(PieceMemento.class);
         when(this.board.getPieceAt(this.move.getSource()))
@@ -217,14 +217,14 @@ public class MoveProcessorTest {
                 .thenReturn(true);
 
         // Act
-        this.processor.process(this.move, this.board);
+        this.agent.playMove(this.move, this.board);
 
         // Assert
         verify(this.pieceAtSource).restoreTo(sourceMemento);
     }
 
     @Test
-    public void processOnKingInCheckRestoresPieceAtTarget() {
+    public void playMoveOnKingInCheckRestoresPieceAtTarget() {
         // Arrange
         final PieceMemento targetMemento = mock(PieceMemento.class);
         when(this.board.getPieceAt(this.move.getSource()))
@@ -243,7 +243,7 @@ public class MoveProcessorTest {
                 .thenReturn(true);
 
         // Act
-        this.processor.process(this.move, this.board);
+        this.agent.playMove(this.move, this.board);
 
         // Assert
         verify(this.pieceAtTarget).restoreTo(targetMemento);

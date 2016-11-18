@@ -20,14 +20,14 @@ import java.util.Optional;
 /**
  * @author Carlos Gomez
  */
-public class MoveProcessor {
+public class PlayingAgent {
 
     private final RulesBook book;
 
     /**
      * @param book
      */
-    public MoveProcessor(final RulesBook book) {
+    public PlayingAgent(final RulesBook book) {
         this.book = book;
     }
 
@@ -36,7 +36,7 @@ public class MoveProcessor {
      * @param board
      * @return
      */
-    public boolean process(final Move move, final Board board) {
+    public boolean playMove(final Move move, final Board board) {
         Optional<Piece> optional = board.getPieceAt(move.getSource());
         if (!optional.isPresent()
                 || !this.book.isLegalMove(optional.get().getType(), move.getSource(), move.getTarget())

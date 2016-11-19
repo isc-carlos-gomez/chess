@@ -21,7 +21,7 @@ import java.util.List;
 import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.Board;
 import org.krloxz.chess.GameEnding;
-import org.krloxz.chess.GameState;
+import org.krloxz.chess.GameResult;
 import org.krloxz.chess.Movement;
 import org.krloxz.chess.PlayerStrategy;
 import org.krloxz.chess.Square;
@@ -81,7 +81,7 @@ public class RecordedGameStrategy implements PlayerStrategy {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.krloxz.chess.PlayerStrategy#moveRejected(org.krloxz.chess.Movement)
      */
     @Override
@@ -104,10 +104,21 @@ public class RecordedGameStrategy implements PlayerStrategy {
     /*
      * (non-Javadoc)
      *
-     * @see org.krloxz.chess.PlayerStrategy#gameOver(org.krloxz.chess.GameState)
+     * @see org.krloxz.chess.PlayerStrategy#gameOver(org.krloxz.chess.GameResult)
      */
     @Override
-    public void gameOver(final GameState gameState) {
+    public void gameOver(final GameResult result) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.krloxz.chess.PlayerStrategy#drawOfferRejected()
+     */
+    @Override
+    public void drawOfferRejected() {
         // TODO Auto-generated method stub
 
     }

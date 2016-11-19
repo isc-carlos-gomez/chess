@@ -17,6 +17,7 @@ package org.krloxz.chess;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -93,6 +94,61 @@ public class PlayerTest {
     }
 
     @Test
+    public void offerDraw() {
+        // Arrange
+        when(this.opponent.acceptDraw())
+                .thenReturn(true);
+
+        // Act
+        this.player.offerDraw();
+
+        // Assert
+        verify(this.strategy).gameOver(GameResult.DRAW_BY_AGREEMENT);
+    }
+
+    @Test
+    public void offerDrawOnDrawRejected() {
+        // Arrange
+        when(this.opponent.acceptDraw())
+                .thenReturn(false);
+
+        // Act
+        this.player.offerDraw();
+
+        // Assert
+        verify(this.strategy).drawOfferRejected();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void offerDrawOnConsecutiveOffers() {
+        // Arrange
+        when(this.opponent.acceptDraw())
+                .thenReturn(false);
+
+        // Act
+        this.player.offerDraw();
+        this.player.offerDraw();
+    }
+
+    @Test
+    public void offerDrawOnOffersAlternatedWithMovements() {
+        // Arrange
+        final Movement movement = mock(Movement.class);
+        when(this.opponent.acceptDraw())
+                .thenReturn(false);
+        when(this.boardBroker.updateBoard(movement))
+                .thenReturn(true);
+
+        // Act
+        this.player.offerDraw();
+        this.player.move(movement);
+        this.player.offerDraw();
+
+        // Assert
+        verify(this.strategy, times(2)).drawOfferRejected();
+    }
+
+    @Test
     public void acceptDraw() {
         // Arrange
         final boolean acceptDraw = true;
@@ -103,18 +159,6 @@ public class PlayerTest {
 
         // Assert
         assertEquals(acceptDraw, result);
-    }
-
-    @Test
-    public void gameOver() {
-        // Arrange
-        final GameState gameState = GameState.DRAW_BY_AGREEMENT;
-
-        // Act
-        this.player.gameOver(gameState);
-
-        // Assert
-        verify(this.strategy).gameOver(gameState);
     }
 
 }

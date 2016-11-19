@@ -24,6 +24,7 @@ public class Player {
     private final Player opponent;
     private final Board board;
     private final BoardBroker boardBroker;
+    private boolean drawAlreadyOffered;
 
     /**
      * @param strategy
@@ -35,6 +36,7 @@ public class Player {
         this.opponent = opponent;
         this.board = board;
         this.boardBroker = boardBroker;
+        this.drawAlreadyOffered = false;
     }
 
     /**
@@ -50,6 +52,7 @@ public class Player {
      */
     public void move(final Movement movement) {
         if (this.boardBroker.updateBoard(movement)) {
+            this.drawAlreadyOffered = false;
             this.opponent.play();
         } else {
             this.strategy.moveRejected(movement);
@@ -58,17 +61,25 @@ public class Player {
     }
 
     /**
+     *
+     */
+    public void offerDraw() {
+        if (this.drawAlreadyOffered) {
+            throw new IllegalStateException("Too much draw offers, only once per turn is allowed");
+        }
+        if (this.opponent.acceptDraw()) {
+            this.strategy.gameOver(GameResult.DRAW_BY_AGREEMENT);
+        } else {
+            this.drawAlreadyOffered = true;
+            this.strategy.drawOfferRejected();
+        }
+    }
+
+    /**
      * @return
      */
     public boolean acceptDraw() {
         return this.strategy.acceptDraw();
-    }
-
-    /**
-     * @param state
-     */
-    public void gameOver(final GameState state) {
-        this.strategy.gameOver(state);
     }
 
 }

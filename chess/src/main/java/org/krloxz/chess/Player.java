@@ -21,16 +21,20 @@ package org.krloxz.chess;
 public class Player {
 
     private final PlayerStrategy strategy;
-    private final Board board;
     private final Player opponent;
+    private final Board board;
+    private final BoardBroker boardBroker;
 
     /**
      * @param strategy
+     * @param boardBroker
      */
-    public Player(final PlayerStrategy strategy, final Board board, final Player opponent) {
+    public Player(final PlayerStrategy strategy, final Player opponent, final Board board,
+            final BoardBroker boardBroker) {
         this.strategy = strategy;
-        this.board = board;
         this.opponent = opponent;
+        this.board = board;
+        this.boardBroker = boardBroker;
     }
 
     /**
@@ -39,6 +43,18 @@ public class Player {
     public void play() {
         this.strategy.play(this.board)
                 .execute(this);
+    }
+
+    /**
+     * @param movement
+     */
+    public void move(final Movement movement) {
+        if (this.boardBroker.updateBoard(movement)) {
+            this.opponent.play();
+        } else {
+            this.strategy.moveRejected(movement);
+            play();
+        }
     }
 
     /**

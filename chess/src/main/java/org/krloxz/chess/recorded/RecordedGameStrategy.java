@@ -22,7 +22,7 @@ import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.Board;
 import org.krloxz.chess.GameEnding;
 import org.krloxz.chess.GameState;
-import org.krloxz.chess.PlayerAction;
+import org.krloxz.chess.Movement;
 import org.krloxz.chess.PlayerStrategy;
 import org.krloxz.chess.Square;
 import org.krloxz.chess.SquareSpecification;
@@ -81,11 +81,11 @@ public class RecordedGameStrategy implements PlayerStrategy {
 
     /*
      * (non-Javadoc)
-     *
-     * @see org.krloxz.chess.PlayerStrategy#actionRejected(org.krloxz.chess.PlayerAction)
+     * 
+     * @see org.krloxz.chess.PlayerStrategy#moveRejected(org.krloxz.chess.Movement)
      */
     @Override
-    public void actionRejected(final PlayerAction action) {
+    public void moveRejected(final Movement movement) {
         // TODO Auto-generated method stub
 
     }

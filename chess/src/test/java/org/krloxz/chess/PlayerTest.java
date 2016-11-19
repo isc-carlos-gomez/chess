@@ -33,15 +33,17 @@ public class PlayerTest {
 
     private Player player;
     private PlayerStrategy strategy;
-    private Board board;
     private Player opponent;
+    private Board board;
+    private BoardBroker boardBroker;
 
     @Before
     public void setUp() {
         this.strategy = mock(PlayerStrategy.class);
-        this.board = mock(Board.class);
         this.opponent = mock(Player.class);
-        this.player = new Player(this.strategy, this.board, this.opponent);
+        this.board = mock(Board.class);
+        this.boardBroker = mock(BoardBroker.class);
+        this.player = new Player(this.strategy, this.opponent, this.board, this.boardBroker);
     }
 
     @Test
@@ -55,6 +57,38 @@ public class PlayerTest {
         this.player.play();
 
         // Assert
+        verify(command).execute(this.player);
+    }
+
+    @Test
+    public void move() {
+        // Arrange
+        final Movement movement = mock(Movement.class);
+        when(this.boardBroker.updateBoard(movement))
+                .thenReturn(true);
+
+        // Act
+        this.player.move(movement);
+
+        // Assert
+        verify(this.opponent).play();
+    }
+
+    @Test
+    public void moveOnIllegalMovement() {
+        // Arrange
+        final Movement movement = mock(Movement.class);
+        final Command command = mock(Command.class);
+        when(this.boardBroker.updateBoard(movement))
+                .thenReturn(false);
+        when(this.strategy.play(this.board))
+                .thenReturn(command);
+
+        // Act
+        this.player.move(movement);
+
+        // Assert
+        verify(this.strategy).moveRejected(movement);
         verify(command).execute(this.player);
     }
 

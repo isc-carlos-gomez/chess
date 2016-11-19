@@ -15,32 +15,11 @@
  */
 package org.krloxz.chess;
 
-import org.krloxz.chess.player.Command;
 
 /**
  * @author Carlos Gomez
+ *
  */
-public interface PlayerStrategy {
-
-    /**
-     * @param board
-     * @return
-     */
-    Command play(Board board);
-
-    /**
-     * @param movement
-     */
-    void moveRejected(Movement movement);
-
-    /**
-     * @return
-     */
-    boolean acceptDraw();
-
-    /**
-     * @param gameState
-     */
-    void gameOver(GameState gameState);
+public interface Movement {
 
 }

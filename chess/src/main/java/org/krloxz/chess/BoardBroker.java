@@ -35,13 +35,23 @@ public class BoardBroker {
 
     /**
      * @param movement
+     * @return
+     */
+    public boolean updateBoard(final Movement movement) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * @param movement
      * @param board
      * @return
      */
     public boolean updateBoard(final BasicMovement movement) {
         Optional<Piece> optional = this.board.getPieceAt(movement.getSource());
         if (!optional.isPresent()
-                || !this.movementPolicy.isLegalMove(optional.get().getType(), movement.getSource(), movement.getTarget())
+                || !this.movementPolicy.isLegalMove(optional.get().getType(), movement.getSource(),
+                        movement.getTarget())
                 || !this.board.isPathClear(movement.getSource(), movement.getTarget())) {
             return false;
         }

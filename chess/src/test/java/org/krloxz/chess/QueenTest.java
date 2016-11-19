@@ -40,17 +40,17 @@ public class QueenTest {
 
     @Test
     public void confirmLegalMoveOnDiagonalMove() {
-        assertTrue("Move should be legal", this.queen.confirmLegalMove(new Move("a1", "h8"), this.board));
+        assertTrue("Move should be legal", this.queen.confirmLegalMove(new BasicMovement("a1", "h8"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnStraightMove() {
-        assertTrue("Move should be legal", this.queen.confirmLegalMove(new Move("a1", "a8"), this.board));
+        assertTrue("Move should be legal", this.queen.confirmLegalMove(new BasicMovement("a1", "a8"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnNoDiagonalAndNoStraightMove() {
-        assertFalse("Move should be ilegal", this.queen.confirmLegalMove(new Move("a1", "b3"), this.board));
+        assertFalse("Move should be ilegal", this.queen.confirmLegalMove(new BasicMovement("a1", "b3"), this.board));
     }
 
 }

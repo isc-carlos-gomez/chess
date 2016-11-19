@@ -40,17 +40,17 @@ public class KnightTest {
 
     @Test
     public void confirmLegalMoveOnVerticalLength() {
-        assertTrue("Move should be legal", this.knight.confirmLegalMove(new Move("a1", "b3"), this.board));
+        assertTrue("Move should be legal", this.knight.confirmLegalMove(new BasicMovement("a1", "b3"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnHorizontalLength() {
-        assertTrue("Move should be legal", this.knight.confirmLegalMove(new Move("a1", "c2"), this.board));
+        assertTrue("Move should be legal", this.knight.confirmLegalMove(new BasicMovement("a1", "c2"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnNotLMove() {
-        assertFalse("Move should be ilegal", this.knight.confirmLegalMove(new Move("a1", "h8"), this.board));
+        assertFalse("Move should be ilegal", this.knight.confirmLegalMove(new BasicMovement("a1", "h8"), this.board));
     }
 
 }

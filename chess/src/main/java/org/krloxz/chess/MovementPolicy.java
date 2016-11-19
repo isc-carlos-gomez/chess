@@ -18,7 +18,7 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class RulesBook {
+public class MovementPolicy {
 
     /**
      * @param type

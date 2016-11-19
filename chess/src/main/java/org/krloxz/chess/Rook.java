@@ -33,7 +33,7 @@ public class Rook extends Piece {
      * @see org.krloxz.chess.Piece#confirmLegalMove(org.krloxz.chess.Move, org.krloxz.chess.Board)
      */
     @Override
-    protected boolean confirmLegalMove(final Move move, final Board board) {
+    protected boolean confirmLegalMove(final BasicMovement move, final Board board) {
         return isLegalMove(move);
     }
 
@@ -41,7 +41,7 @@ public class Rook extends Piece {
      * @param move
      * @return
      */
-    protected static boolean isLegalMove(final Move move) {
+    protected static boolean isLegalMove(final BasicMovement move) {
         return move.getSource().getX() == move.getTarget().getX()
                 || move.getSource().getY() == move.getTarget().getY();
     }

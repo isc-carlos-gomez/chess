@@ -29,7 +29,7 @@ import org.krloxz.chess.Board;
 import org.krloxz.chess.File;
 import org.krloxz.chess.GameEnding;
 import org.krloxz.chess.GameEndingType;
-import org.krloxz.chess.Move;
+import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.PieceType;
 import org.krloxz.chess.PlayerAction;
 import org.krloxz.chess.Rank;
@@ -87,7 +87,7 @@ public class RecordedGameStrategyTest {
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a move", result instanceof Move);
+        assertTrue("Next action should be a move", result instanceof BasicMovement);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class RecordedGameStrategyTest {
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a move", result instanceof Move);
+        assertTrue("Next action should be a move", result instanceof BasicMovement);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class RecordedGameStrategyTest {
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a move", result instanceof Move);
+        assertTrue("Next action should be a move", result instanceof BasicMovement);
     }
 
     @Test
@@ -153,7 +153,7 @@ public class RecordedGameStrategyTest {
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a move", result instanceof Move);
+        assertTrue("Next action should be a move", result instanceof BasicMovement);
     }
 
     @Test
@@ -190,8 +190,8 @@ public class RecordedGameStrategyTest {
         final PlayerAction result = this.strategy.nextAction(this.board);
 
         // Assert
-        assertTrue("Next action should be a move", result instanceof Move);
-        assertTrue("Move should be a promotion", ((Move) result).isPromotion());
+        assertTrue("Next action should be a move", result instanceof BasicMovement);
+        assertTrue("Move should be a promotion", ((BasicMovement) result).isPromotion());
     }
 
     @Test(expected = IllegalArgumentException.class)

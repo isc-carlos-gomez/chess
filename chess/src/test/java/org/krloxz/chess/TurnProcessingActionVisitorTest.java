@@ -35,7 +35,7 @@ public class TurnProcessingActionVisitorTest {
     private Board board;
     private PlayerStrategy strategy;
     private Player opponent;
-    private Move move;
+    private BasicMovement move;
     private DrawOffer drawOffer;
 
     @Before
@@ -44,7 +44,7 @@ public class TurnProcessingActionVisitorTest {
         this.strategy = mock(PlayerStrategy.class);
         this.opponent = mock(Player.class);
         this.visitor = new TurnProcessingActionVisitor(this.board, this.strategy, this.opponent);
-        this.move = mock(Move.class);
+        this.move = mock(BasicMovement.class);
         this.drawOffer = mock(DrawOffer.class);
     }
 

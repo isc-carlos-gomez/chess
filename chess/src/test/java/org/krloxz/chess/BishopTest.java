@@ -40,12 +40,12 @@ public class BishopTest {
 
     @Test
     public void confirmLegalMove() {
-        assertTrue("Move should be legal", this.bishop.confirmLegalMove(new Move("a1", "h8"), this.board));
+        assertTrue("Move should be legal", this.bishop.confirmLegalMove(new BasicMovement("a1", "h8"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnNoDiagonalMove() {
-        assertFalse("Move should be ilegal", this.bishop.confirmLegalMove(new Move("a1", "a8"), this.board));
+        assertFalse("Move should be ilegal", this.bishop.confirmLegalMove(new BasicMovement("a1", "a8"), this.board));
     }
 
 }

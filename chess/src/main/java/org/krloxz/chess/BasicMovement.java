@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
  *
  * @author Carlos Gomez
  */
-public class Move implements PlayerAction {
+public class BasicMovement implements PlayerAction {
 
     private final Square source;
     private final Square target;
@@ -34,7 +34,7 @@ public class Move implements PlayerAction {
      * @param target
      * @param piecePromotedTo
      */
-    public Move(final Square source, final Square target, final PieceType piecePromotedTo) {
+    public BasicMovement(final Square source, final Square target, final PieceType piecePromotedTo) {
         this.source = source;
         this.target = target;
         this.piecePromotedTo = piecePromotedTo;
@@ -44,7 +44,7 @@ public class Move implements PlayerAction {
      * @param sourceSquare
      * @param targetSquare
      */
-    public Move(final Square from, final Square to) {
+    public BasicMovement(final Square from, final Square to) {
         this(from, to, null);
     }
 
@@ -52,7 +52,7 @@ public class Move implements PlayerAction {
      * @param sourceSan
      * @param targetSan
      */
-    public Move(final String sourceSan, final String targetSan) {
+    public BasicMovement(final String sourceSan, final String targetSan) {
         this(new Square(sourceSan), new Square(targetSan));
     }
 

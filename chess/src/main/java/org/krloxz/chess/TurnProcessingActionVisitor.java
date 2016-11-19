@@ -53,7 +53,7 @@ public class TurnProcessingActionVisitor implements ActionVisitor<Boolean> {
      * @see org.krloxz.chess.PlayerActionVisitor#visit(org.krloxz.chess.Move)
      */
     @Override
-    public Boolean visit(final Move move) {
+    public Boolean visit(final BasicMovement move) {
         if (this.board.update(move)) {
             return true;
         } else {

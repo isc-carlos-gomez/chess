@@ -44,42 +44,42 @@ public class PawnTest {
 
     @Test
     public void confirmLegalMove() {
-        assertTrue("Move should be legal", this.lightPawn.confirmLegalMove(new Move("a2", "a3"), this.board));
+        assertTrue("Move should be legal", this.lightPawn.confirmLegalMove(new BasicMovement("a2", "a3"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnDarkPawn() {
-        assertTrue("Move should be legal", this.darkPawn.confirmLegalMove(new Move("a7", "a6"), this.board));
+        assertTrue("Move should be legal", this.darkPawn.confirmLegalMove(new BasicMovement("a7", "a6"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnSideMove() {
-        assertFalse("Move should be ilegal", this.lightPawn.confirmLegalMove(new Move("a2", "b2"), this.board));
+        assertFalse("Move should be ilegal", this.lightPawn.confirmLegalMove(new BasicMovement("a2", "b2"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnSideMoveAndDarkPawn() {
-        assertFalse("Move should be ilegal", this.darkPawn.confirmLegalMove(new Move("a2", "b2"), this.board));
+        assertFalse("Move should be ilegal", this.darkPawn.confirmLegalMove(new BasicMovement("a2", "b2"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnInitialTwoSquare() {
-        assertTrue("Move should be legal", this.lightPawn.confirmLegalMove(new Move("a2", "a4"), this.board));
+        assertTrue("Move should be legal", this.lightPawn.confirmLegalMove(new BasicMovement("a2", "a4"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnInitialTwoSquareAndDarkPawn() {
-        assertTrue("Move should be legal", this.darkPawn.confirmLegalMove(new Move("a7", "a5"), this.board));
+        assertTrue("Move should be legal", this.darkPawn.confirmLegalMove(new BasicMovement("a7", "a5"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnNoInitialTwoSquare() {
-        assertFalse("Move should be ilegal", this.lightPawn.confirmLegalMove(new Move("a3", "a5"), this.board));
+        assertFalse("Move should be ilegal", this.lightPawn.confirmLegalMove(new BasicMovement("a3", "a5"), this.board));
     }
 
     @Test
     public void confirmLegalMoveOnNoInitialTwoSquareAndDarkPawn() {
-        assertFalse("Move should be ilegal", this.darkPawn.confirmLegalMove(new Move("a6", "a4"), this.board));
+        assertFalse("Move should be ilegal", this.darkPawn.confirmLegalMove(new BasicMovement("a6", "a4"), this.board));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class PawnTest {
         when(foundSquare.isOccupied()).thenReturn(true);
 
         // Act
-        final boolean isLegalMove = this.lightPawn.confirmLegalMove(new Move("a2", "b3"), this.board);
+        final boolean isLegalMove = this.lightPawn.confirmLegalMove(new BasicMovement("a2", "b3"), this.board);
 
         // Assert
         assertTrue("Move should be legal", isLegalMove);
@@ -104,7 +104,7 @@ public class PawnTest {
         when(foundSquare.isOccupied()).thenReturn(true);
 
         // Act
-        final boolean isLegalMove = this.darkPawn.confirmLegalMove(new Move("a7", "b6"), this.board);
+        final boolean isLegalMove = this.darkPawn.confirmLegalMove(new BasicMovement("a7", "b6"), this.board);
 
         // Assert
         assertTrue("Move should be legal", isLegalMove);
@@ -118,7 +118,7 @@ public class PawnTest {
         when(foundSquare.isOccupied()).thenReturn(true);
 
         // Act
-        final boolean isLegalMove = this.lightPawn.confirmLegalMove(new Move("a3", "b2"), this.board);
+        final boolean isLegalMove = this.lightPawn.confirmLegalMove(new BasicMovement("a3", "b2"), this.board);
 
         // Assert
         assertFalse("Move should be ilegal", isLegalMove);
@@ -132,7 +132,7 @@ public class PawnTest {
         when(foundSquare.isOccupied()).thenReturn(true);
 
         // Act
-        final boolean isLegalMove = this.darkPawn.confirmLegalMove(new Move("a6", "b7"), this.board);
+        final boolean isLegalMove = this.darkPawn.confirmLegalMove(new BasicMovement("a6", "b7"), this.board);
 
         // Assert
         assertFalse("Move should be ilegal", isLegalMove);

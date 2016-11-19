@@ -43,7 +43,7 @@ public class King extends Piece {
      * @see org.krloxz.chess.Piece#confirmLegalMove(org.krloxz.chess.Move, org.krloxz.chess.Board)
      */
     @Override
-    protected boolean confirmLegalMove(final Move move, final Board board) {
+    protected boolean confirmLegalMove(final BasicMovement move, final Board board) {
         final int xDelta = Math.abs(move.getTarget().getX() - move.getSource().getX());
         final int yDelta = Math.abs(move.getTarget().getY() - move.getSource().getY());
         if (xDelta == XDELTA_ON_CASTLING) {
@@ -52,7 +52,7 @@ public class King extends Piece {
         return xDelta <= 1 && yDelta <= 1;
     }
 
-    private boolean isLegalCastling(final Move move, final Board board) {
+    private boolean isLegalCastling(final BasicMovement move, final Board board) {
         final List<Square> squares = board.findSquares(new OccupiedAndBetweenSquaresSpecification());
         if (squares.isEmpty()) {
             return true;

@@ -56,7 +56,7 @@ public class PieceTest {
         when(piece.getColor()).thenReturn(Color.LIGHT);
 
         // Act
-        final boolean isLegalMove = this.piece.isLegalMove(new Move("a1", "a2"), this.board);
+        final boolean isLegalMove = this.piece.isLegalMove(new BasicMovement("a1", "a2"), this.board);
 
         // Assert
         assertFalse("Move should be ilegal", isLegalMove);
@@ -71,7 +71,7 @@ public class PieceTest {
                 .thenReturn(Arrays.asList(foundSquare));
 
         // Act
-        final boolean isLegalMove = this.piece.isLegalMove(new Move("a1", "a5"), this.board);
+        final boolean isLegalMove = this.piece.isLegalMove(new BasicMovement("a1", "a5"), this.board);
 
         // Assert
         assertFalse("Move should be ilegal", isLegalMove);
@@ -80,7 +80,7 @@ public class PieceTest {
     @Test
     public void isLegalMoveDelagateToSubclass() {
         // Arrange
-        final Move move = new Move("a1", "a5");
+        final BasicMovement move = new BasicMovement("a1", "a5");
         when(this.board.getSquare(any())).thenReturn(mock(Square.class));
 
         // Act
@@ -106,7 +106,7 @@ public class PieceTest {
          * @see org.krloxz.chess.Piece#confirmLegalMove(org.krloxz.chess.Move, org.krloxz.chess.Board)
          */
         @Override
-        protected boolean confirmLegalMove(final Move move, final Board board) {
+        protected boolean confirmLegalMove(final BasicMovement move, final Board board) {
             return true;
         }
 

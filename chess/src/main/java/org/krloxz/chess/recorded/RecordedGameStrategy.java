@@ -21,7 +21,7 @@ import java.util.List;
 import org.krloxz.chess.Board;
 import org.krloxz.chess.GameEnding;
 import org.krloxz.chess.GameState;
-import org.krloxz.chess.Move;
+import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.PlayerAction;
 import org.krloxz.chess.PlayerStrategy;
 import org.krloxz.chess.Square;
@@ -58,7 +58,7 @@ public class RecordedGameStrategy implements PlayerStrategy {
             return new GameEnding(sanMove.getGameEnding());
         }
         final Square sourceSquare = findSourceSquare(board, sanMove);
-        return new Move(sourceSquare, sanMove.getSquare(), sanMove.getPiecePromotedToOrNull());
+        return new BasicMovement(sourceSquare, sanMove.getSquare(), sanMove.getPiecePromotedToOrNull());
     }
 
     private Square findSourceSquare(final Board board, final SanMove sanMove) {

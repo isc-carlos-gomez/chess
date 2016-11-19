@@ -33,7 +33,7 @@ public class Queen extends Piece {
      * @see org.krloxz.chess.Piece#confirmLegalMove(org.krloxz.chess.Move, org.krloxz.chess.Board)
      */
     @Override
-    protected boolean confirmLegalMove(final Move move, final Board board) {
+    protected boolean confirmLegalMove(final BasicMovement move, final Board board) {
         return Bishop.isLegalMove(move)
                 || Rook.isLegalMove(move);
     }

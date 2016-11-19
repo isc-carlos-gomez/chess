@@ -31,7 +31,7 @@ public interface ActionVisitor<R> {
      * @param move
      * @return
      */
-    R visit(Move move);
+    R visit(BasicMovement move);
 
     /**
      * @param resignation

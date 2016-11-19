@@ -20,33 +20,35 @@ import java.util.Optional;
 /**
  * @author Carlos Gomez
  */
-public class PlayingAgent {
+public class BoardBroker {
 
-    private final RulesBook book;
+    private final Board board;
+    private final MovementPolicy movementPolicy;
 
     /**
-     * @param book
+     * @param movementPolicy
      */
-    public PlayingAgent(final RulesBook book) {
-        this.book = book;
+    public BoardBroker(final Board board, final MovementPolicy movementPolicy) {
+        this.board = board;
+        this.movementPolicy = movementPolicy;
     }
 
     /**
-     * @param move
+     * @param movement
      * @param board
      * @return
      */
-    public boolean playMove(final Move move, final Board board) {
-        Optional<Piece> optional = board.getPieceAt(move.getSource());
+    public boolean updateBoard(final BasicMovement movement) {
+        Optional<Piece> optional = this.board.getPieceAt(movement.getSource());
         if (!optional.isPresent()
-                || !this.book.isLegalMove(optional.get().getType(), move.getSource(), move.getTarget())
-                || !board.isPathClear(move.getSource(), move.getTarget())) {
+                || !this.movementPolicy.isLegalMove(optional.get().getType(), movement.getSource(), movement.getTarget())
+                || !this.board.isPathClear(movement.getSource(), movement.getTarget())) {
             return false;
         }
         final Piece pieceAtSource = optional.get();
         Piece pieceAtTarget = null;
         PieceMemento targetMemento = null;
-        optional = board.getPieceAt(move.getTarget());
+        optional = this.board.getPieceAt(movement.getTarget());
         if (optional.isPresent()) {
             pieceAtTarget = optional.get();
             if (pieceAtSource.isFellow(pieceAtTarget)) {
@@ -55,8 +57,8 @@ public class PlayingAgent {
                 targetMemento = pieceAtTarget.captured();
             }
         }
-        final PieceMemento sourceMemento = pieceAtSource.move(move.getTarget());
-        if (board.isKingInCheck()) {
+        final PieceMemento sourceMemento = pieceAtSource.move(movement.getTarget());
+        if (this.board.isKingInCheck()) {
             pieceAtSource.restoreTo(sourceMemento);
             if (targetMemento != null) {
                 pieceAtTarget.restoreTo(targetMemento);

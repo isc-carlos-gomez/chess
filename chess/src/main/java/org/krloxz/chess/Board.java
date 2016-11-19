@@ -26,7 +26,7 @@ public class Board {
     /**
      * @param move
      */
-    public boolean update(final Move move) {
+    public boolean update(final BasicMovement move) {
         return false;
     }
 

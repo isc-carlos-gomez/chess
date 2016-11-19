@@ -18,7 +18,7 @@ package org.krloxz.chess;
 /**
  * @author Carlos Gomez
  */
-public class Promotion extends Move {
+public class Promotion extends BasicMovement {
 
     /**
      * @param sourceSan

@@ -33,7 +33,7 @@ public class Bishop extends Piece {
      * @see org.krloxz.chess.Piece#confirmLegalMove(org.krloxz.chess.Move, org.krloxz.chess.Board)
      */
     @Override
-    protected boolean confirmLegalMove(final Move move, final Board board) {
+    protected boolean confirmLegalMove(final BasicMovement move, final Board board) {
         return isLegalMove(move);
     }
 
@@ -41,7 +41,7 @@ public class Bishop extends Piece {
      * @param move
      * @return
      */
-    protected static boolean isLegalMove(final Move move) {
+    protected static boolean isLegalMove(final BasicMovement move) {
         final int deltaX = Math.abs(move.getTarget().getX() - move.getSource().getX());
         final int deltaY = Math.abs(move.getTarget().getY() - move.getSource().getY());
         return deltaX == deltaY;

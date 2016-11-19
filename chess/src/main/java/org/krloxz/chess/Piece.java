@@ -43,7 +43,7 @@ public abstract class Piece {
      * @param board
      * @return
      */
-    public boolean isLegalMove(final Move move, final Board board) {
+    public boolean isLegalMove(final BasicMovement move, final Board board) {
         final Square targetSquare = board.getSquare(move.getTarget());
         if (targetSquare.isOccupied()
                 && targetSquare.getPiece().getColor() == getColor()) {
@@ -62,7 +62,7 @@ public abstract class Piece {
      * @param board
      * @return
      */
-    protected abstract boolean confirmLegalMove(Move move, Board board);
+    protected abstract boolean confirmLegalMove(BasicMovement move, Board board);
 
     /**
      *

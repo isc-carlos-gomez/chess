@@ -1,0 +1,17 @@
+@startuml
+
+[-> Player: offerDraw()
+alt draw already offered in the turn
+	Player -->[: IllegalDrawOfferException
+end
+Player -> Opponent: acceptDraw()
+alt draw accepted
+	Player -> Strategy: gameOver(DRAW)
+	|||
+else draw not accepted
+	Player -> Strategy: drawRejected()
+	|||
+end
+
+hide footbox
+@enduml

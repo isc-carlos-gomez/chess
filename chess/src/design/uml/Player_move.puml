@@ -1,0 +1,15 @@
+@startuml
+
+[-> Player: move(movement)
+Player -> BoardBroker: updateBoard(movement)
+alt success
+	Player -> Opponent: play()
+	|||
+else not success
+	Player -> Strategy: moveRejected()
+	Player -> Player: play()
+	|||
+end
+
+hide footbox
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+
+[-> Player: endGame(gameResult)
+Player -> Strategy: gameOver(gameResult)
+Player -> Opponent: gameOver(gameResult)
+
+hide footbox
+@enduml

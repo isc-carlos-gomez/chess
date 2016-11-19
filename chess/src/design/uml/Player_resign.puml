@@ -1,0 +1,9 @@
+@startuml
+
+[-> Player: resign()
+Player -> Player: calculateGameResult()
+Player -> Strategy: gameOver(gameResult)
+Player -> Opponent: gameOver(gameResult)
+
+hide footbox
+@enduml

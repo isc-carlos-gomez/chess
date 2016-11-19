@@ -1,0 +1,49 @@
+@startuml
+
+[-> BoardBroker: updateBoard(promotion)
+
+BoardBroker -> Board: getPieceAt(promotion.source)
+alt piece not found or piece is not a pawn
+	BoardBroker -->[: false
+end
+
+BoardBroker -> MovementPolicy: isLegalMovement(PAWN, promotion.source, promotion.target)
+alt not legal movement
+	BoardBroker -->[: false
+end
+
+BoardBroker -> MovementPolicy: isPromotionAllowed(promotion.piece)
+alt not promotion allowed
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Board: isPathClear(promotion.source, promotion.target)
+alt path not clear
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Board: getPieceAt(movement.target)
+alt piece found
+	alt pieces of same color
+		BoardBroker -->[: false
+	else different color
+		BoardBroker -> TargetPiece: captured()
+		TargetPiece --> BoardBroker: targetMemento
+	end
+end
+
+BoardBroker -> Pawn: move(movement.target)
+Pawn --> BoardBroker: pawnMemento
+
+BoardBroker -> Board: isKingInCheck()
+alt king in check
+	BoardBroker -> Pawn: restoreTo(pawnMemento)
+	BoardBroker -> TargetPiece: restoreTo(targetMemento)
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Pawn: promoteTo(promotion.piece)
+BoardBroker -->[: true
+
+hide footbox
+@enduml

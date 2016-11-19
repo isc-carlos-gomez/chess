@@ -1,0 +1,41 @@
+@startuml
+
+[-> BoardBroker: updateBoard(enPassant)
+
+BoardBroker -> Board: getPieceAt(enPassant.source)
+alt piece not found or piece is not a pawn
+	BoardBroker -->[: false
+end
+
+BoardBroker -> MovementPolicy: isLegalMovement(PAWN, enPassant.source, enPassant.target)
+alt not legal movement
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Board: getPieceAt(enPassant.targetPawn)
+alt piece not found or piece is not a pawn
+	BoardBroker -->[: false
+end
+
+BoardBroker -> TargetPawn: movedJustOnce()
+alt moved more than once
+	BoardBroker -->[: false
+end
+
+BoardBroker -> TargetPawn: captured()
+TargetPawn --> BoardBroker: targetMemento
+
+BoardBroker -> SourcePawn: move(enPassant.target)
+SourcePawn --> BoardBroker: sourceMemento
+
+BoardBroker -> Board: isKingInCheck()
+alt king in check
+	BoardBroker -> SourcePawn: restoreTo(sourceMemento)
+	BoardBroker -> TargetPawn: restoreTo(targetMemento)
+	BoardBroker -->[: false
+end
+
+BoardBroker -->[: true
+
+hide footbox
+@enduml

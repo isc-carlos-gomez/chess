@@ -1,0 +1,50 @@
+@startuml
+
+[-> BoardBroker: updateBoard(castling)
+
+BoardBroker -> Board: getPieceAt(castling.king)
+alt piece not found or piece is not a king
+	BoardBroker -->[: false
+end
+
+BoardBroker -> King: movedBefore()
+alt moved before
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Board: getPieceAt(castling.rook)
+alt piece not found or piece is not a rook
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Rook: movedBefore()
+alt moved before
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Board: isPathClear(castling.king, castling.rook)
+alt path not clear
+	BoardBroker -->[: false
+end
+
+BoardBroker -> Board: isKingInCheck()
+alt king in check
+	BoardBroker -->[: false
+end
+
+BoardBroker -> King: move(castling.kingTarget)
+King --> BoardBroker: kingMemento
+BoardBroker -> Rook: move(castling.rookTarget)
+Rook --> BoardBroker: rookMemento
+
+BoardBroker -> Board: isKingInCheck()
+alt king in check
+	BoardBroker -> King: restoreTo(kingMemento)
+	BoardBroker -> Rook: restoreTo(rookMemento)
+	BoardBroker -->[: false
+end
+
+BoardBroker -->[: true
+
+hide footbox
+@enduml

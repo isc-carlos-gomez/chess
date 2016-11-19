@@ -1,15 +1,23 @@
 @startuml
 
 [-> Player: play()
-Player -> Strategy: nextAction
-Strategy -> Action: <<create>>
-Player -> Action: accept(processingVisitor)
-Action -> ProcessingVisitor: visit(this)
-alt move action
-	ProcessingVisitor -> MoveProcessor: process(move)
-	
+Player -> Strategy: play(board)
+Strategy -> Command: <<create>>
+
+Player -> Command: execute(this)
+alt movement command
+	Command -> Player: move(command.movement)
+	|||
+else draw offer command
+	Command -> Player: offerDraw()
+	|||
+else resignation command
+	Command -> Player: resign()
+	|||
+else game ending command
+	Command -> Player: endGame(gameResult)
+	|||
 end
-ProcessingVisitor -> Opponent: notify(event)
 
 hide footbox
 @enduml

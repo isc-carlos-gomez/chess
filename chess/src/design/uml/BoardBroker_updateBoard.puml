@@ -1,0 +1,24 @@
+@startuml
+
+[-> BoardBroker: updateBoard(movement)
+BoardBroker -> Movement: execute(this)
+alt basic movement
+	Movement -> BoardBroker: updateBoard(basicMovement)
+	BoardBroker -> Board: //update()//
+	|||
+else castling
+	Movement -> BoardBroker: updateBoard(castling)
+	BoardBroker -> Board: //update()//
+	|||
+else en passant
+	Movement -> BoardBroker: updateBoard(enPassant)
+	BoardBroker -> Board: //update()//
+	|||
+else promotion
+	Movement -> BoardBroker: updateBoard(promotion)
+	BoardBroker -> Board: //update()//
+	|||
+end
+
+hide footbox
+@enduml

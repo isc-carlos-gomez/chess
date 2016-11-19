@@ -15,10 +15,12 @@
  */
 package org.krloxz.chess;
 
+import org.krloxz.chess.player.Command;
+
 /**
  * @author Carlos Gomez
  */
-public class GameEnding implements PlayerAction {
+public class GameEnding implements PlayerAction, Command {
 
     /**
      * @param type
@@ -29,13 +31,24 @@ public class GameEnding implements PlayerAction {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.krloxz.chess.PlayerAction#accept(org.krloxz.chess.ActionVisitor)
      */
     @Override
     public <R> R accept(final ActionVisitor<R> visitor) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.krloxz.chess.player.Command#execute(org.krloxz.chess.Player)
+     */
+    @Override
+    public void execute(final Player player) {
+        // TODO Auto-generated method stub
+
     }
 
 }

@@ -34,16 +34,11 @@ public class Player {
     }
 
     /**
-     * @return
+     * Play a turn.
      */
-    public PlayerAction yourTurn() {
-        final TurnProcessingActionVisitor visitor = new TurnProcessingActionVisitor(
-                this.board, this.strategy, getOpponent());
-        PlayerAction action = null;
-        do {
-            action = this.strategy.nextAction(this.board.copy());
-        } while (!action.accept(visitor));
-        return action;
+    public void play() {
+        this.strategy.play(this.board)
+                .execute(this);
     }
 
     /**
@@ -58,13 +53,6 @@ public class Player {
      */
     public void gameOver(final GameState state) {
         this.strategy.gameOver(state);
-    }
-
-    /**
-     * @return
-     */
-    public Player getOpponent() {
-        return this.opponent;
     }
 
 }

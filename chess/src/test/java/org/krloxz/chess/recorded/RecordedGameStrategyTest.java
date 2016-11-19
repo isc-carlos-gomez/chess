@@ -25,17 +25,17 @@ import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.Board;
 import org.krloxz.chess.File;
 import org.krloxz.chess.GameEnding;
 import org.krloxz.chess.GameEndingType;
-import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.PieceType;
-import org.krloxz.chess.PlayerAction;
 import org.krloxz.chess.Rank;
 import org.krloxz.chess.Square;
 import org.krloxz.chess.SquareSpecification;
 import org.krloxz.chess.WithPieceTypeThatReachesSquareSpecification;
+import org.krloxz.chess.player.Command;
 
 /**
  * Unit tests {@link RecordedGameStrategy}.
@@ -84,7 +84,7 @@ public class RecordedGameStrategyTest {
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
 
         // Act
-        final PlayerAction result = this.strategy.nextAction(this.board);
+        final Command result = this.strategy.play(this.board);
 
         // Assert
         assertTrue("Next action should be a move", result instanceof BasicMovement);
@@ -108,7 +108,7 @@ public class RecordedGameStrategyTest {
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
 
         // Act
-        final PlayerAction result = this.strategy.nextAction(this.board);
+        final Command result = this.strategy.play(this.board);
 
         // Assert
         assertTrue("Next action should be a move", result instanceof BasicMovement);
@@ -132,7 +132,7 @@ public class RecordedGameStrategyTest {
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
 
         // Act
-        final PlayerAction result = this.strategy.nextAction(this.board);
+        final Command result = this.strategy.play(this.board);
 
         // Assert
         assertTrue("Next action should be a move", result instanceof BasicMovement);
@@ -150,7 +150,7 @@ public class RecordedGameStrategyTest {
         when(this.moveParser.parse(this.move)).thenReturn(sanMove);
 
         // Act
-        final PlayerAction result = this.strategy.nextAction(this.board);
+        final Command result = this.strategy.play(this.board);
 
         // Assert
         assertTrue("Next action should be a move", result instanceof BasicMovement);
@@ -165,7 +165,7 @@ public class RecordedGameStrategyTest {
         when(this.moveParser.parse(this.move)).thenReturn(sanMove);
 
         // Act
-        final PlayerAction result = this.strategy.nextAction(this.board);
+        final Command result = this.strategy.play(this.board);
 
         // Assert
         assertTrue("Next action should be a game ending", result instanceof GameEnding);
@@ -187,7 +187,7 @@ public class RecordedGameStrategyTest {
         when(this.board.findSquares(squareSpecification)).thenReturn(Arrays.asList(this.sourceSquare));
 
         // Act
-        final PlayerAction result = this.strategy.nextAction(this.board);
+        final Command result = this.strategy.play(this.board);
 
         // Assert
         assertTrue("Next action should be a move", result instanceof BasicMovement);
@@ -200,7 +200,7 @@ public class RecordedGameStrategyTest {
         when(this.moveParser.parse(this.move)).thenThrow(new IllegalArgumentException());
 
         // Act
-        this.strategy.nextAction(this.board);
+        this.strategy.play(this.board);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -219,7 +219,7 @@ public class RecordedGameStrategyTest {
                 .thenReturn(Arrays.asList(this.sourceSquare, this.sourceSquare));
 
         // Act
-        this.strategy.nextAction(this.board);
+        this.strategy.play(this.board);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -237,7 +237,7 @@ public class RecordedGameStrategyTest {
         when(this.board.findSquares(squareSpecification)).thenReturn(Collections.emptyList());
 
         // Act
-        this.strategy.nextAction(this.board);
+        this.strategy.play(this.board);
     }
 
 }

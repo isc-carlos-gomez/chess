@@ -17,13 +17,15 @@ package org.krloxz.chess;
 
 import java.util.NoSuchElementException;
 
+import org.krloxz.chess.player.Command;
+
 /**
  * Encapsulates a chess move generated in a player turn. Please note that, for a more convenient processing, a move is
  * also a visitable player action.
  *
  * @author Carlos Gomez
  */
-public class BasicMovement implements PlayerAction {
+public class BasicMovement implements PlayerAction, Command {
 
     private final Square source;
     private final Square target;
@@ -95,6 +97,17 @@ public class BasicMovement implements PlayerAction {
      */
     public boolean isPromotion() {
         return this.piecePromotedTo != null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.krloxz.chess.player.Command#execute(org.krloxz.chess.Player)
+     */
+    @Override
+    public void execute(final Player player) {
+        // TODO Auto-generated method stub
+
     }
 
 }

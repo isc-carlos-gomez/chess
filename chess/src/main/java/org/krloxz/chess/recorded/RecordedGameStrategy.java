@@ -18,15 +18,16 @@ package org.krloxz.chess.recorded;
 import java.util.Iterator;
 import java.util.List;
 
+import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.Board;
 import org.krloxz.chess.GameEnding;
 import org.krloxz.chess.GameState;
-import org.krloxz.chess.BasicMovement;
 import org.krloxz.chess.PlayerAction;
 import org.krloxz.chess.PlayerStrategy;
 import org.krloxz.chess.Square;
 import org.krloxz.chess.SquareSpecification;
 import org.krloxz.chess.WithPieceTypeThatReachesSquareSpecification;
+import org.krloxz.chess.player.Command;
 
 /**
  * @author Carlos Gomez
@@ -51,7 +52,7 @@ public class RecordedGameStrategy implements PlayerStrategy {
      * @see org.krloxz.chess.PlayerStrategy#nextAction(org.krloxz.chess.Board)
      */
     @Override
-    public PlayerAction nextAction(final Board board) {
+    public Command play(final Board board) {
         final String move = this.moves.next();
         final SanMove sanMove = this.moveParser.parse(move);
         if (sanMove.isGameEnding()) {

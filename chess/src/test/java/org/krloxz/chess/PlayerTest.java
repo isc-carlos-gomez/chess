@@ -16,17 +16,13 @@
 package org.krloxz.chess;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
+import org.krloxz.chess.player.Command;
 
 /**
  * Unit tests {@link Player}.
@@ -49,39 +45,17 @@ public class PlayerTest {
     }
 
     @Test
-    public void yourTurn() {
+    public void play() {
         // Arrange
-        final PlayerAction action = mock(PlayerAction.class);
-        final Board boardCopy = mock(Board.class);
-
-        when(this.board.copy()).thenReturn(boardCopy);
-        when(this.strategy.nextAction(boardCopy)).thenReturn(action);
-        when(action.accept(any())).thenReturn(true);
+        final Command command = mock(Command.class);
+        when(this.strategy.play(this.board))
+                .thenReturn(command);
 
         // Act
-        final PlayerAction result = this.player.yourTurn();
+        this.player.play();
 
         // Assert
-        assertEquals(action, result);
-    }
-
-    @Test
-    public void yourTurnOnActionRejected() {
-        // Arrange
-        final PlayerAction action = mock(PlayerAction.class);
-
-        when(this.strategy.nextAction(any())).thenReturn(action);
-        when(action.accept(notNull(TurnProcessingActionVisitor.class))).thenReturn(false, true);
-
-        // Act
-        this.player.yourTurn();
-
-        // Assert
-        final ArgumentCaptor<TurnProcessingActionVisitor> visitorCaptor = ArgumentCaptor
-                .forClass(TurnProcessingActionVisitor.class);
-        verify(action, times(2)).accept(visitorCaptor.capture());
-        assertSame("The same visitor instance must be used along a turn", visitorCaptor.getAllValues().get(0),
-                visitorCaptor.getAllValues().get(1));
+        verify(command).execute(this.player);
     }
 
     @Test
@@ -107,15 +81,6 @@ public class PlayerTest {
 
         // Assert
         verify(this.strategy).gameOver(gameState);
-    }
-
-    @Test
-    public void getOpponent() {
-        // Act
-        final Player result = this.player.getOpponent();
-
-        // Assert
-        assertEquals(this.opponent, result);
     }
 
 }

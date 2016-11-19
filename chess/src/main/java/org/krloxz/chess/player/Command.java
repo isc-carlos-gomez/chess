@@ -13,31 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.krloxz.chess;
+package org.krloxz.chess.player;
 
-import org.krloxz.chess.player.Command;
+import org.krloxz.chess.Player;
 
 /**
  * @author Carlos Gomez
  */
-public interface PlayerStrategy {
+public interface Command {
 
     /**
-     * @param board
-     * @return
+     * @param player
      */
-    Command play(Board board);
-
-    void actionRejected(PlayerAction action);
-
-    /**
-     * @return
-     */
-    boolean acceptDraw();
-
-    /**
-     * @param gameState
-     */
-    void gameOver(GameState gameState);
+    void execute(Player player);
 
 }

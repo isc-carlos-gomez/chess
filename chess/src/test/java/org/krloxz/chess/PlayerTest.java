@@ -44,7 +44,7 @@ public class PlayerTest {
         this.opponent = mock(Player.class);
         this.board = mock(Board.class);
         this.boardBroker = mock(BoardBroker.class);
-        this.player = new Player(this.strategy, this.opponent, this.board, this.boardBroker);
+        this.player = new Player(Color.WHITE, this.strategy, this.opponent, this.board, this.boardBroker);
     }
 
     @Test
@@ -159,6 +159,30 @@ public class PlayerTest {
 
         // Assert
         assertEquals(acceptDraw, result);
+    }
+
+    @Test
+    public void resignOnWhitePlayer() {
+        // Act
+        this.player.resign();
+
+        // Assert
+        verify(this.strategy).gameOver(GameResult.WHITE_RESIGNATION);
+        verify(this.opponent).gameOver(GameResult.WHITE_RESIGNATION);
+    }
+
+    @Test
+    public void resignOnBlackPlayer() {
+        // Arrange
+        final Player whitePlayer = mock(Player.class);
+        final Player blackPlayer = new Player(Color.BLACK, this.strategy, whitePlayer, this.board, this.boardBroker);
+
+        // Act
+        blackPlayer.resign();
+
+        // Assert
+        verify(this.strategy).gameOver(GameResult.BLACK_RESIGNATION);
+        verify(whitePlayer).gameOver(GameResult.BLACK_RESIGNATION);
     }
 
 }

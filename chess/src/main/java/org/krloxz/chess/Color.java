@@ -20,6 +20,6 @@ package org.krloxz.chess;
  */
 public enum Color {
 
-    LIGHT, DARK;
+    WHITE, BLACK;
 
 }

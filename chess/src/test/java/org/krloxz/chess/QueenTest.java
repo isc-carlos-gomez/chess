@@ -34,7 +34,7 @@ public class QueenTest {
 
     @Before
     public void setUp() {
-        this.queen = new Queen(Color.LIGHT);
+        this.queen = new Queen(Color.WHITE);
         this.board = mock(Board.class);
     }
 

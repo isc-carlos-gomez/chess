@@ -34,7 +34,7 @@ public class KnightTest {
 
     @Before
     public void setUp() {
-        this.knight = new Knight(Color.LIGHT);
+        this.knight = new Knight(Color.WHITE);
         this.board = mock(Board.class);
     }
 

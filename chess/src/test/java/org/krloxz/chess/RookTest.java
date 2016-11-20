@@ -34,7 +34,7 @@ public class RookTest {
 
     @Before
     public void setUp() {
-        this.rook = new Rook(Color.LIGHT);
+        this.rook = new Rook(Color.WHITE);
         this.board = mock(Board.class);
     }
 

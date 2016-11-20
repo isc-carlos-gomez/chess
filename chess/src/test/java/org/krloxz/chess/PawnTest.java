@@ -37,8 +37,8 @@ public class PawnTest {
 
     @Before
     public void setUp() {
-        this.lightPawn = new Pawn(Color.LIGHT);
-        this.darkPawn = new Pawn(Color.DARK);
+        this.lightPawn = new Pawn(Color.WHITE);
+        this.darkPawn = new Pawn(Color.BLACK);
         this.board = mock(Board.class);
     }
 

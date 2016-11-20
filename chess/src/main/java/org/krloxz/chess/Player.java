@@ -20,6 +20,7 @@ package org.krloxz.chess;
  */
 public class Player {
 
+    private final Color color;
     private final PlayerStrategy strategy;
     private final Player opponent;
     private final Board board;
@@ -27,11 +28,13 @@ public class Player {
     private boolean drawAlreadyOffered;
 
     /**
+     * @param color
      * @param strategy
      * @param boardBroker
      */
-    public Player(final PlayerStrategy strategy, final Player opponent, final Board board,
+    public Player(final Color color, final PlayerStrategy strategy, final Player opponent, final Board board,
             final BoardBroker boardBroker) {
+        this.color = color;
         this.strategy = strategy;
         this.opponent = opponent;
         this.board = board;
@@ -80,6 +83,26 @@ public class Player {
      */
     public boolean acceptDraw() {
         return this.strategy.acceptDraw();
+    }
+
+    /**
+     *
+     */
+    public void resign() {
+        GameResult result = GameResult.WHITE_RESIGNATION;
+        if (this.color == Color.BLACK) {
+            result = GameResult.BLACK_RESIGNATION;
+        }
+        this.strategy.gameOver(result);
+        this.opponent.gameOver(result);
+    }
+
+    /**
+     * @param result
+     */
+    public void gameOver(final GameResult result) {
+        // TODO Auto-generated method stub
+
     }
 
 }

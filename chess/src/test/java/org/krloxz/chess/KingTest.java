@@ -41,8 +41,8 @@ public class KingTest {
 
     @Before
     public void setUp() {
-        this.lightKing = new King(Color.LIGHT);
-        this.darkKing = new King(Color.DARK);
+        this.lightKing = new King(Color.WHITE);
+        this.darkKing = new King(Color.BLACK);
         this.board = mock(Board.class);
     }
 
@@ -83,7 +83,7 @@ public class KingTest {
         final InSquareSpecification specification = new InSquareSpecification(targetSquare);
         final Piece foundPiece = mock(Piece.class);
         when(this.board.findPiece(specification)).thenReturn(Optional.of(foundPiece));
-        when(foundPiece.getColor()).thenReturn(Color.LIGHT);
+        when(foundPiece.getColor()).thenReturn(Color.WHITE);
 
         // Act
         final boolean moved = this.lightKing.move(targetSquare, this.board);
@@ -100,7 +100,7 @@ public class KingTest {
         final InSquareSpecification specification = new InSquareSpecification(targetSquare);
         final Piece foundPiece = mock(Piece.class);
         when(this.board.findPiece(specification)).thenReturn(Optional.of(foundPiece));
-        when(foundPiece.getColor()).thenReturn(Color.DARK);
+        when(foundPiece.getColor()).thenReturn(Color.BLACK);
 
         // Act
         final boolean moved = this.lightKing.move(targetSquare, this.board);

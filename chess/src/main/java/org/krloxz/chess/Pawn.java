@@ -65,15 +65,15 @@ public class Pawn extends Piece {
     }
 
     private int getOrientation() {
-        return getColor() == Color.LIGHT ? 1 : -1;
+        return getColor() == Color.WHITE ? 1 : -1;
     }
 
     private int getInitialRank() {
-        return getColor() == Color.LIGHT ? 1 : 6;
+        return getColor() == Color.WHITE ? 1 : 6;
     }
 
     private int getPromotionRank() {
-        return getColor() == Color.LIGHT ? 7 : 0;
+        return getColor() == Color.WHITE ? 7 : 0;
     }
 
 }

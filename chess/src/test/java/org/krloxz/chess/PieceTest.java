@@ -53,7 +53,7 @@ public class PieceTest {
         when(this.board.getSquare(any())).thenReturn(foundSquare);
         when(foundSquare.isOccupied()).thenReturn(true);
         when(foundSquare.getPiece()).thenReturn(piece);
-        when(piece.getColor()).thenReturn(Color.LIGHT);
+        when(piece.getColor()).thenReturn(Color.WHITE);
 
         // Act
         final boolean isLegalMove = this.piece.isLegalMove(new BasicMovement("a1", "a2"), this.board);
@@ -97,7 +97,7 @@ public class PieceTest {
          * @param color
          */
         public TestPiece() {
-            super(Color.LIGHT);
+            super(Color.WHITE);
         }
 
         /*

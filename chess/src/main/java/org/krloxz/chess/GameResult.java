@@ -20,6 +20,6 @@ package org.krloxz.chess;
  */
 public enum GameResult {
 
-    DRAW_BY_AGREEMENT
+    DRAW_BY_AGREEMENT, WHITE_RESIGNATION, BLACK_RESIGNATION
 
 }

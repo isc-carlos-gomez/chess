@@ -34,7 +34,7 @@ public class BishopTest {
 
     @Before
     public void setUp() {
-        this.bishop = new Bishop(Color.LIGHT);
+        this.bishop = new Bishop(Color.WHITE);
         this.board = mock(Board.class);
     }
 

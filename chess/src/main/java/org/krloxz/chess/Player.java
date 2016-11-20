@@ -93,6 +93,16 @@ public class Player {
         if (this.color == Color.BLACK) {
             result = GameResult.BLACK_RESIGNATION;
         }
+        endGame(result);
+    }
+
+    /**
+     * Ends the current game notifying the game result to the strategy and the opponent.
+     * 
+     * @param result
+     *        the game result.
+     */
+    public void endGame(final GameResult result) {
         this.strategy.gameOver(result);
         this.opponent.gameOver(result);
     }

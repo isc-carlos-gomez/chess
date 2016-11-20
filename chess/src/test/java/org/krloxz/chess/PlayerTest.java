@@ -185,4 +185,17 @@ public class PlayerTest {
         verify(whitePlayer).gameOver(GameResult.BLACK_RESIGNATION);
     }
 
+    @Test
+    public void endGame() {
+        // Arrange
+        final GameResult result = GameResult.DRAW_BY_AGREEMENT;
+
+        // Act
+        this.player.endGame(result);
+
+        // Assert
+        verify(this.strategy).gameOver(result);
+        verify(this.opponent).gameOver(result);
+    }
+
 }

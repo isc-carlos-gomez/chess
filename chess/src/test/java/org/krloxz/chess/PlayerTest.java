@@ -104,6 +104,7 @@ public class PlayerTest {
 
         // Assert
         verify(this.strategy).gameOver(GameResult.DRAW_BY_AGREEMENT);
+        verify(this.opponent).gameOver(GameResult.DRAW_BY_AGREEMENT);
     }
 
     @Test
@@ -196,6 +197,18 @@ public class PlayerTest {
         // Assert
         verify(this.strategy).gameOver(result);
         verify(this.opponent).gameOver(result);
+    }
+
+    @Test
+    public void gameOver() {
+        // Arrange
+        final GameResult result = GameResult.DRAW_BY_AGREEMENT;
+
+        // Act
+        this.player.gameOver(result);
+
+        // Assert
+        verify(this.strategy).gameOver(result);
     }
 
 }

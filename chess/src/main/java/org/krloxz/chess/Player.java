@@ -16,6 +16,8 @@
 package org.krloxz.chess;
 
 /**
+ * Encapsulates a chess player that uses a strategy to determine it's behavior.
+ *
  * @author Carlos Gomez
  */
 public class Player {
@@ -43,7 +45,7 @@ public class Player {
     }
 
     /**
-     * Play a turn.
+     * Plays a turn.
      */
     public void play() {
         this.strategy.play(this.board)
@@ -64,14 +66,14 @@ public class Player {
     }
 
     /**
-     *
+     * Offers to the opponent to end the game as {@link GameResult#DRAW_BY_AGREEMENT} and, if accepted, ends the game.
      */
     public void offerDraw() {
         if (this.drawAlreadyOffered) {
             throw new IllegalStateException("Too much draw offers, only once per turn is allowed");
         }
         if (this.opponent.acceptDraw()) {
-            this.strategy.gameOver(GameResult.DRAW_BY_AGREEMENT);
+            endGame(GameResult.DRAW_BY_AGREEMENT);
         } else {
             this.drawAlreadyOffered = true;
             this.strategy.drawOfferRejected();
@@ -79,14 +81,16 @@ public class Player {
     }
 
     /**
-     * @return
+     * Determines if the player accepts to end the game as {@link GameResult#DRAW_BY_AGREEMENT}.
+     *
+     * @return whether the player accepted to end the game or not.
      */
     public boolean acceptDraw() {
         return this.strategy.acceptDraw();
     }
 
     /**
-     *
+     * Ends the current game reporting player resignation.
      */
     public void resign() {
         GameResult result = GameResult.WHITE_RESIGNATION;
@@ -97,8 +101,8 @@ public class Player {
     }
 
     /**
-     * Ends the current game notifying the game result to the strategy and the opponent.
-     * 
+     * Ends the current game reporting the given result.
+     *
      * @param result
      *        the game result.
      */
@@ -108,11 +112,13 @@ public class Player {
     }
 
     /**
+     * Processes the end of a game reported by somebody else.
+     *
      * @param result
+     *        the game result.
      */
     public void gameOver(final GameResult result) {
-        // TODO Auto-generated method stub
-
+        this.strategy.gameOver(result);
     }
 
 }

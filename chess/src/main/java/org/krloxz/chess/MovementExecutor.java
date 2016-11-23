@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * @author Carlos Gomez
  */
-public class BoardBroker {
+public class MovementExecutor {
 
     private final Board board;
     private final MovementPolicy movementPolicy;
@@ -28,7 +28,7 @@ public class BoardBroker {
     /**
      * @param movementPolicy
      */
-    public BoardBroker(final Board board, final MovementPolicy movementPolicy) {
+    public MovementExecutor(final Board board, final MovementPolicy movementPolicy) {
         this.board = board;
         this.movementPolicy = movementPolicy;
     }
@@ -37,7 +37,7 @@ public class BoardBroker {
      * @param movement
      * @return
      */
-    public boolean updateBoard(final Movement movement) {
+    public boolean execute(final Movement movement) {
         // TODO Auto-generated method stub
         return false;
     }

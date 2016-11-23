@@ -27,13 +27,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests {@link BoardBroker}.
+ * Unit tests {@link MovementExecutor}.
  *
  * @author Carlos Gomez
  */
-public class BoardBrokerTest {
+public class MovementExecutorTest {
 
-    private BoardBroker broker;
+    private MovementExecutor broker;
     private MovementPolicy movementPolicy;
     private BasicMovement basicMovement;
     private Board board;
@@ -44,7 +44,7 @@ public class BoardBrokerTest {
     public void setUp() {
         this.movementPolicy = mock(MovementPolicy.class);
         this.board = mock(Board.class);
-        this.broker = new BoardBroker(this.board, this.movementPolicy);
+        this.broker = new MovementExecutor(this.board, this.movementPolicy);
         this.basicMovement = new BasicMovement(mock(Square.class), mock(Square.class));
         this.pieceAtSource = mock(Piece.class);
         this.pieceAtTarget = mock(Piece.class);

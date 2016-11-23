@@ -22,25 +22,19 @@ package org.krloxz.chess;
  */
 public class Player {
 
-    private final Color color;
     private final PlayerStrategy strategy;
-    private final Player opponent;
+    private final Color color;
     private final Board board;
-    private final BoardBroker boardBroker;
+    private final Player opponent;
+    private final MovementExecutor movementExecutor;
     private boolean drawAlreadyOffered;
 
-    /**
-     * @param color
-     * @param strategy
-     * @param boardBroker
-     */
-    public Player(final Color color, final PlayerStrategy strategy, final Player opponent, final Board board,
-            final BoardBroker boardBroker) {
-        this.color = color;
-        this.strategy = strategy;
-        this.opponent = opponent;
-        this.board = board;
-        this.boardBroker = boardBroker;
+    private Player(final Builder builder) {
+        this.strategy = builder.strategy;
+        this.color = builder.color;
+        this.board = builder.board;
+        this.opponent = builder.opponent;
+        this.movementExecutor = builder.movementExecutor;
         this.drawAlreadyOffered = false;
     }
 
@@ -56,7 +50,7 @@ public class Player {
      * @param movement
      */
     public void move(final Movement movement) {
-        if (this.boardBroker.updateBoard(movement)) {
+        if (this.movementExecutor.execute(movement)) {
             this.drawAlreadyOffered = false;
             this.opponent.play();
         } else {
@@ -119,6 +113,59 @@ public class Player {
      */
     public void gameOver(final GameResult result) {
         this.strategy.gameOver(result);
+    }
+
+    /**
+     * Creates builder to build {@link Player}.
+     *
+     * @return created builder
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Builder to build {@link Player}.
+     */
+    public static final class Builder {
+
+        private PlayerStrategy strategy;
+        private Color color;
+        private Board board;
+        private Player opponent;
+        private MovementExecutor movementExecutor;
+
+        private Builder() {
+        }
+
+        public Builder strategy(final PlayerStrategy strategy) {
+            this.strategy = strategy;
+            return this;
+        }
+
+        public Builder color(final Color color) {
+            this.color = color;
+            return this;
+        }
+
+        public Builder board(final Board board) {
+            this.board = board;
+            return this;
+        }
+
+        public Builder opponent(final Player opponent) {
+            this.opponent = opponent;
+            return this;
+        }
+
+        public Builder movementExecutor(final MovementExecutor movementExecutor) {
+            this.movementExecutor = movementExecutor;
+            return this;
+        }
+
+        public Player build() {
+            return new Player(this);
+        }
     }
 
 }

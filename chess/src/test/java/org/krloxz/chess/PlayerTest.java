@@ -36,15 +36,21 @@ public class PlayerTest {
     private PlayerStrategy strategy;
     private Player opponent;
     private Board board;
-    private BoardBroker boardBroker;
+    private MovementExecutor movementExecutor;
 
     @Before
     public void setUp() {
         this.strategy = mock(PlayerStrategy.class);
         this.opponent = mock(Player.class);
         this.board = mock(Board.class);
-        this.boardBroker = mock(BoardBroker.class);
-        this.player = new Player(Color.WHITE, this.strategy, this.opponent, this.board, this.boardBroker);
+        this.movementExecutor = mock(MovementExecutor.class);
+        this.player = Player.builder()
+                .strategy(this.strategy)
+                .color(Color.WHITE)
+                .opponent(this.opponent)
+                .board(this.board)
+                .movementExecutor(this.movementExecutor)
+                .build();
     }
 
     @Test
@@ -65,7 +71,7 @@ public class PlayerTest {
     public void move() {
         // Arrange
         final Movement movement = mock(Movement.class);
-        when(this.boardBroker.updateBoard(movement))
+        when(this.movementExecutor.execute(movement))
                 .thenReturn(true);
 
         // Act
@@ -80,7 +86,7 @@ public class PlayerTest {
         // Arrange
         final Movement movement = mock(Movement.class);
         final Command command = mock(Command.class);
-        when(this.boardBroker.updateBoard(movement))
+        when(this.movementExecutor.execute(movement))
                 .thenReturn(false);
         when(this.strategy.play(this.board))
                 .thenReturn(command);
@@ -137,7 +143,7 @@ public class PlayerTest {
         final Movement movement = mock(Movement.class);
         when(this.opponent.acceptDraw())
                 .thenReturn(false);
-        when(this.boardBroker.updateBoard(movement))
+        when(this.movementExecutor.execute(movement))
                 .thenReturn(true);
 
         // Act
@@ -176,7 +182,13 @@ public class PlayerTest {
     public void resignOnBlackPlayer() {
         // Arrange
         final Player whitePlayer = mock(Player.class);
-        final Player blackPlayer = new Player(Color.BLACK, this.strategy, whitePlayer, this.board, this.boardBroker);
+        final Player blackPlayer = Player.builder()
+                .strategy(this.strategy)
+                .color(Color.BLACK)
+                .board(this.board)
+                .opponent(whitePlayer)
+                .movementExecutor(this.movementExecutor)
+                .build();
 
         // Act
         blackPlayer.resign();

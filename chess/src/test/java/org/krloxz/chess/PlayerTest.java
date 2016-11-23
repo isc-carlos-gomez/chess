@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.krloxz.chess.board.BoardAnalyzer;
 import org.krloxz.chess.player.Command;
 
 /**
@@ -37,6 +38,7 @@ public class PlayerTest {
     private Player opponent;
     private Board board;
     private MovementExecutor movementExecutor;
+    private BoardAnalyzer boardAnalyzer;
 
     @Before
     public void setUp() {
@@ -44,12 +46,14 @@ public class PlayerTest {
         this.opponent = mock(Player.class);
         this.board = mock(Board.class);
         this.movementExecutor = mock(MovementExecutor.class);
+        this.boardAnalyzer = mock(BoardAnalyzer.class);
         this.player = Player.builder()
                 .strategy(this.strategy)
                 .color(Color.WHITE)
                 .opponent(this.opponent)
                 .board(this.board)
                 .movementExecutor(this.movementExecutor)
+                .boardAnalyzer(this.boardAnalyzer)
                 .build();
     }
 
@@ -97,6 +101,49 @@ public class PlayerTest {
         // Assert
         verify(this.strategy).moveRejected(movement);
         verify(command).execute(this.player);
+    }
+
+    @Test
+    public void moveOnWhiteCheckmate() {
+        // Arrange
+        final Movement movement = mock(Movement.class);
+        when(this.movementExecutor.execute(movement))
+                .thenReturn(true);
+        when(this.boardAnalyzer.isKingCheckmated(Color.BLACK))
+                .thenReturn(true);
+
+        // Act
+        this.player.move(movement);
+
+        // Assert
+        verify(this.strategy).gameOver(GameResult.WHITE_CHECKMATE);
+        verify(this.opponent).gameOver(GameResult.WHITE_CHECKMATE);
+    }
+
+    @Test
+    public void moveOnBlackCheckmate() {
+        // Arrange
+        final Player whitePlayer = mock(Player.class);
+        final Player blackPlayer = Player.builder()
+                .strategy(this.strategy)
+                .color(Color.BLACK)
+                .board(this.board)
+                .opponent(whitePlayer)
+                .movementExecutor(this.movementExecutor)
+                .boardAnalyzer(this.boardAnalyzer)
+                .build();
+        final Movement movement = mock(Movement.class);
+        when(this.movementExecutor.execute(movement))
+                .thenReturn(true);
+        when(this.boardAnalyzer.isKingCheckmated(Color.WHITE))
+                .thenReturn(true);
+
+        // Act
+        blackPlayer.move(movement);
+
+        // Assert
+        verify(this.strategy).gameOver(GameResult.BLACK_CHECKMATE);
+        verify(whitePlayer).gameOver(GameResult.BLACK_CHECKMATE);
     }
 
     @Test
@@ -188,6 +235,7 @@ public class PlayerTest {
                 .board(this.board)
                 .opponent(whitePlayer)
                 .movementExecutor(this.movementExecutor)
+                .boardAnalyzer(this.boardAnalyzer)
                 .build();
 
         // Act

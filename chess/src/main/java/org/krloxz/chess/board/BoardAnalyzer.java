@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.krloxz.chess;
+package org.krloxz.chess.board;
+
+import org.krloxz.chess.Color;
 
 /**
  * @author Carlos Gomez
  */
-public enum Color {
-
-    WHITE, BLACK;
+public class BoardAnalyzer {
 
     /**
-     * Getter.
-     * 
-     * @return the color that is opposite to this one. {@link #BLACK} if current color is white, {@link #WHITE}
-     *         otherwise.
+     * @param kingColor
+     * @return
      */
-    public Color getOpposite() {
-        if (this == WHITE) {
-            return BLACK;
-        }
-        return WHITE;
+    public boolean isKingCheckmated(final Color kingColor) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

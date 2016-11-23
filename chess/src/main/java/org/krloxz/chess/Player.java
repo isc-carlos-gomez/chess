@@ -15,6 +15,9 @@
  */
 package org.krloxz.chess;
 
+import org.apache.commons.lang3.Validate;
+import org.krloxz.chess.board.BoardAnalyzer;
+
 /**
  * Encapsulates a chess player that uses a strategy to determine it's behavior.
  *
@@ -27,6 +30,7 @@ public class Player {
     private final Board board;
     private final Player opponent;
     private final MovementExecutor movementExecutor;
+    private final BoardAnalyzer boardAnalyzer;
     private boolean drawAlreadyOffered;
 
     private Player(final Builder builder) {
@@ -35,6 +39,7 @@ public class Player {
         this.board = builder.board;
         this.opponent = builder.opponent;
         this.movementExecutor = builder.movementExecutor;
+        this.boardAnalyzer = Validate.notNull(builder.boardAnalyzer);
         this.drawAlreadyOffered = false;
     }
 
@@ -47,12 +52,24 @@ public class Player {
     }
 
     /**
+     * Executes a movement and evaluates the result, if a checkmate is identified the game is ended, otherwise the
+     * opponent is notified to continue the game.
+     *
      * @param movement
+     *        movement to execute.
      */
     public void move(final Movement movement) {
         if (this.movementExecutor.execute(movement)) {
             this.drawAlreadyOffered = false;
-            this.opponent.play();
+            if (this.boardAnalyzer.isKingCheckmated(this.color.getOpposite())) {
+                GameResult result = GameResult.WHITE_CHECKMATE;
+                if (this.color == Color.BLACK) {
+                    result = GameResult.BLACK_CHECKMATE;
+                }
+                endGame(result);
+            } else {
+                this.opponent.play();
+            }
         } else {
             this.strategy.moveRejected(movement);
             play();
@@ -134,6 +151,7 @@ public class Player {
         private Board board;
         private Player opponent;
         private MovementExecutor movementExecutor;
+        private BoardAnalyzer boardAnalyzer;
 
         private Builder() {
         }
@@ -160,6 +178,11 @@ public class Player {
 
         public Builder movementExecutor(final MovementExecutor movementExecutor) {
             this.movementExecutor = movementExecutor;
+            return this;
+        }
+
+        public Builder boardAnalyzer(final BoardAnalyzer boardAnalyzer) {
+            this.boardAnalyzer = boardAnalyzer;
             return this;
         }
 
